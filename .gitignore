@@ -1,0 +1,7 @@
+# Arquivos para ignorar:
+
+## Qt
+/build-DoReMi-*/*
+/DoReMi/DoReMi.pro.user
+
+## Outros
