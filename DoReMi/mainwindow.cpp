@@ -13,3 +13,10 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
+
+// ****************************************************************************
+void
+MainWindow::on_opW_PushButton_TestaSpotify_clicked()
+{
+	ui->opW_TextBrowserOut->setText("oi\ntchau");
+}
