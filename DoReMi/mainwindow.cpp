@@ -14,14 +14,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	ui->setupUi(this);
 
-	spReturnPost = new QByteArray ;
+	mspReturnPost = new QByteArray ;
 }
 
 
 // ****************************************************************************
 MainWindow::~MainWindow()
 {
-	delete spReturnPost  ;
+	delete mspReturnPost  ;
 	delete ui;
 }
 
@@ -51,7 +51,7 @@ MainWindow::on_opW_PushButton_TestaSpotify_clicked()
 	oWebRequest.setRawHeader("Authorization", "Basic " + sKey);
 
 
-	opWebManager->post( oWebRequest, *spReturnPost );
+	opWebManager->post( oWebRequest, *mspReturnPost );
 
 //	delete opWebManager; memory leak!
 }
@@ -87,3 +87,24 @@ MainWindow::replyFinished(QNetworkReply* aopReply)
 }
 
 
+#include "SimpleCryptQt.h"
+void MainWindow::on_opPushButtonCrypto_clicked()
+{
+	QByteArray sOriginalText = "oi cara de boi" ;
+
+	SimpleCryptQt crypto;
+
+
+
+
+
+	crypto.setKey(0x0c2ad4a4acb9f023) ; //same random number: key should match encryption key
+
+	QByteArray sEncrypt = crypto.encryptToByteArray(sOriginalText);
+
+	QByteArray plaintext = crypto.decryptToByteArray(sEncrypt);
+
+	SimpleCryptQt::Error eError = crypto.lastError() ;
+
+	qDebug() << int(eError) ;
+}

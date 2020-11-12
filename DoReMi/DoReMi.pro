@@ -11,11 +11,13 @@ CONFIG += c++17
 
 SOURCES += \
     GaspaSpotifyAPI_c.cpp \
+    SimpleCryptQt.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     GaspaSpotifyAPI_c.h \
+    SimpleCryptQt.h \
     mainwindow.h
 
 FORMS += \

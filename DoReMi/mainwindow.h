@@ -22,10 +22,12 @@ public:
 private slots:
 	void on_opW_PushButton_TestaSpotify_clicked();
 
+	void on_opPushButtonCrypto_clicked();
+
 private:
 	Ui::MainWindow *ui;
 
-	QByteArray* spReturnPost = nullptr ;
+	QByteArray* mspReturnPost = nullptr ;
 
 	void replyFinished(QNetworkReply* aopReply);
 };
