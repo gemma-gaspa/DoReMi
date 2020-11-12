@@ -25,6 +25,7 @@ private slots:
 private:
 	Ui::MainWindow *ui;
 
+	QByteArray* spReturnPost = nullptr ;
 
 	void replyFinished(QNetworkReply* aopReply);
 };
