@@ -157,3 +157,14 @@ ManageUserData_c::mvDataToTable()
 }
 
 
+// **************************************************************************
+ManageUserData_c::UserData_s
+ManageUserData_c::moGetDataItem(uint16_t auItem)
+{
+	UserData_s oRet;
+	if(auItem < movUserData.size()) {
+		oRet = movUserData[auItem];
+	}
+	return oRet;
+}
+

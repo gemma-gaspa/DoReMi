@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+// Prj
+#include "SpotifyUserSecrets_c.h"
 
 // Qt
 #include <QNetworkAccessManager>
@@ -98,9 +100,9 @@ void MainWindow::on_mopW_PushButton_Crypto_clicked()
 
 	QByteArray sEncrypt = oCrypto.mEncryptToByteArray(sOriginalText).toBase64();
 
-	QByteArray sResult  = oCrypto.decryptToByteArray(QByteArray::fromBase64(sEncrypt));
+	QByteArray sResult  = oCrypto.msDecryptToByteArray(QByteArray::fromBase64(sEncrypt));
 
-	SimpleCryptQt::Error_e eError = oCrypto.lastError() ;
+	SimpleCryptQt::Error_e eError = oCrypto.meLastError() ;
 	qDebug() << int(eError) ;
 }
 
@@ -110,7 +112,9 @@ void MainWindow::on_mopW_PushButton_ConfigClienteSpotify_clicked()
 {
 	// Abre nova tela de Dialogo
 	// https://www.youtube.com/watch?v=tP70B-pdTH0&ab_channel=ProgrammingKnowledge
-	DialogClient_d oDialogClient(this);
+	SpotifyUserSecrets_c moSpotifyUserSecrets;
+
+	DialogClient_d oDialogClient(moSpotifyUserSecrets, this);
 	oDialogClient.setModal(true);
 	oDialogClient.exec();
 }

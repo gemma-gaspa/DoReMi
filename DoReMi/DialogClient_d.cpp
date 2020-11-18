@@ -12,6 +12,8 @@
 
 // Prj
 #include "DialogFillData_d.h"
+#include "DialogGetPassword_d.h"
+#include "SimpleCryptQt.h"
 
 // Qt
 #include <QStandardItemModel>
@@ -19,9 +21,10 @@
 #include <QFile>
 
 
-DialogClient_d::DialogClient_d(QWidget *parent) :
+DialogClient_d::DialogClient_d(SpotifyUserSecrets_c& aorSpotifyUserSecrets, QWidget* parent) :
 	QDialog(parent)
 	,ui(new Ui::DialogClient_d)
+	,morSpotifyUserSecrets(aorSpotifyUserSecrets)
 {
 	ui->setupUi(this);
 	// Config Janela
@@ -43,7 +46,8 @@ DialogClient_d::DialogClient_d(QWidget *parent) :
 	ui->mopW_TableWidget->setColumnWidth(1, 220);
 
 	ui->mopW_PushButton_Delete->setEnabled(false);
-	ui->mopW_ButtonBox->button(QDialogButtonBox::Ok)->setEnabled( false );
+	ui->mopW_PushButton_Adopt->setEnabled( false );
+
 
 	moManageUserData.mvSetTableWidget(ui->mopW_TableWidget);
 
@@ -84,15 +88,15 @@ DialogClient_d::on_mopW_PushButton_Delete_clicked()
 	// Se clicou eh porque ha algo selecionado na tabela.
 	int iYpos = ui->mopW_TableWidget->currentRow() ;
 	moManageUserData.mvDelElement(iYpos) ;
-	moManageUserData.mvToFile();
+//	moManageUserData.mvToFile();
 }
 
 
 // **************************************************************************
 void
-DialogClient_d::on_mopW_ButtonBox_rejected()
+DialogClient_d::on_mopW_PushButton_Cancel_clicked()
 {
-
+	mvExit();
 }
 
 
@@ -102,13 +106,54 @@ DialogClient_d::on_mopW_TableWidget_itemSelectionChanged()
 {
 	bool bSelected = ui->mopW_TableWidget->currentRow() >= 0 ;
 	ui->mopW_PushButton_Delete->setEnabled(bSelected);
-	ui->mopW_ButtonBox->button(QDialogButtonBox::Ok)->setEnabled( bSelected );
+	ui->mopW_PushButton_Adopt->setEnabled( bSelected );
 }
 
 
 // **************************************************************************
 void
-DialogClient_d::on_mopW_ButtonBox_accepted()
+DialogClient_d::on_mopW_PushButton_Save_clicked()
 {
 	moManageUserData.mvToFile();
+
+
+	mvExit();
 }
+
+
+// **************************************************************************
+void
+DialogClient_d::on_mopW_PushButton_Adopt_clicked()
+{
+	int iRow = ui->mopW_TableWidget->currentRow() ;
+	bool bSelected = iRow >= 0 ;
+	if(bSelected) {
+		ManageUserData_c::UserData_s oUserData = moManageUserData.moGetDataItem(uint16_t(iRow));
+
+		quint64 uKey = 0;
+		DialogGetPassword_d DialogGetPassword_d(uKey, nullptr, this);
+		DialogGetPassword_d.setModal(true);
+		DialogGetPassword_d.exec(); // espera sair
+
+		// Fill unencrypted data
+		SimpleCryptQt oCrypto;
+		oCrypto.mSetKey(uKey) ;
+		morSpotifyUserSecrets.ID     = oCrypto.msDecryptToByteArray(oUserData.sClient_ID);
+		morSpotifyUserSecrets.Secret = oCrypto.msDecryptToByteArray(oUserData.sClient_Secret);
+	}
+
+	// Password
+	mvExit();
+}
+
+
+// **************************************************************************
+void
+DialogClient_d::mvExit()
+{
+	this->done(QDialog::Accepted);
+}
+
+
+
+

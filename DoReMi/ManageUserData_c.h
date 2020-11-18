@@ -33,6 +33,8 @@ public:
 	bool mbSetOrder(bool abCrescent) ;
 	void mvSetTableWidget(QTableWidget* aopW_Table);
 
+	UserData_s moGetDataItem(uint16_t auItem);
+
 private:
 	void mvDataToTable() ;
 	constexpr static char msFileName[] = "Tokens.json" ;

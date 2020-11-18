@@ -31,8 +31,6 @@ private slots:
 
 	void on_mopW_LineEdit_ClientSecret_textChanged(const QString&);
 
-	void on_mopW_LineEdit_Password_textChanged(const QString&);
-
 	void on_mopW_PushButton_VerSenha_clicked();
 
 private:
