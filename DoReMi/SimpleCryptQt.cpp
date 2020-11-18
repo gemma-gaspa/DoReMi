@@ -43,163 +43,171 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // ********************************************************************
 SimpleCryptQt::SimpleCryptQt():
-	m_key(0),
-	m_compressionMode(CompressionMode::Auto),
-	m_protectionMode(IntegrityProtectionMode::Checksum),
-	m_lastError(Error::NoError)
+	mu8Key(0),
+	meCompressionMode(CompressionMode_e::Auto),
+	meProtectionMode(IntegrityProtectionMode_e::Checksum),
+	meLastError(Error_e::NoError)
 {
 	qsrand(uint(QDateTime::currentMSecsSinceEpoch() & 0xFFFF));
 }
 
 
 // ********************************************************************
-SimpleCryptQt::SimpleCryptQt(quint64 key):
-	m_key(key),
-	m_compressionMode(CompressionMode::Auto),
-	m_protectionMode(IntegrityProtectionMode::Checksum),
-	m_lastError(Error::NoError)
+SimpleCryptQt::SimpleCryptQt(quint64 au8Key):
+	mu8Key(au8Key),
+	meCompressionMode(CompressionMode_e::Auto),
+	meProtectionMode(IntegrityProtectionMode_e::Checksum),
+	meLastError(Error_e::NoError)
 {
 	qsrand(uint(QDateTime::currentMSecsSinceEpoch() & 0xFFFF));
-	splitKey();
+	mSplitKey();
 }
 
 
 // ********************************************************************
-void SimpleCryptQt::setKey(quint64 key)
+void
+SimpleCryptQt::mSetKey(quint64 au8Key)
 {
-	m_key = key;
-	splitKey();
+	mu8Key = au8Key;
+	mSplitKey();
 }
 
 
 // ********************************************************************
-void SimpleCryptQt::splitKey()
+void
+SimpleCryptQt::mSplitKey()
 {
-	m_keyParts.clear();
-	m_keyParts.resize(8);
+	muvKeyParts.clear();
+	muvKeyParts.resize(8);
 	for (int i=0;i<8;i++) {
-		quint64 part = m_key;
+		quint64 u8Part = mu8Key;
 		for (int j=i; j>0; j--) {
-			part = part >> 8;
+			u8Part = u8Part >> 8;
 		}
-		part = part & 0xff;
-		m_keyParts[i] = static_cast<char>(part);
+		u8Part = u8Part & 0xff;
+		muvKeyParts[i] = static_cast<char>(u8Part);
 	}
 }
 
 
 // ********************************************************************
-QByteArray SimpleCryptQt::encryptToByteArray(const QString& plaintext)
+QByteArray
+SimpleCryptQt::mEncryptToByteArray(const QString& asrPlaintext)
 {
-	QByteArray plaintextArray = plaintext.toUtf8();
-	return encryptToByteArray(plaintextArray);
+	QByteArray sPlaintextArray = asrPlaintext.toUtf8();
+	return mEncryptToByteArray(sPlaintextArray);
 }
 
 
 // ********************************************************************
-QByteArray SimpleCryptQt::encryptToByteArray(QByteArray plaintext)
+QByteArray
+SimpleCryptQt::mEncryptToByteArray(QByteArray asPlaintext)
 {
-	if (m_keyParts.isEmpty()) {
+	if (muvKeyParts.isEmpty()) {
 		qWarning() << "No key set.";
-		m_lastError = Error::NoKeySet;
+		meLastError = Error_e::NoKeySet;
 		return QByteArray();
 	}
 
+	QByteArray sBa = asPlaintext;
 
-	QByteArray ba = plaintext;
-
-	CryptoFlags flags = CryptoFlagNone;
-	if (m_compressionMode == CompressionMode::Always) {
-		ba = qCompress(ba, 9); //maximum compression
-		flags |= CryptoFlagCompression;
-	} else if (m_compressionMode == CompressionMode::Auto) {
-		QByteArray compressed = qCompress(ba, 9);
-		if (compressed.count() < ba.count()) {
-			ba = compressed;
-			flags |= CryptoFlagCompression;
+	CryptoFlags eFlags = CryptoFlag_e::None;
+	if (meCompressionMode == CompressionMode_e::Always) {
+		sBa = qCompress(sBa, 9); //maximum compression
+		eFlags |= CryptoFlag_e::Compression;
+	} else if (meCompressionMode == CompressionMode_e::Auto) {
+		QByteArray compressed = qCompress(sBa, 9);
+		if (compressed.count() < sBa.count()) {
+			sBa = compressed;
+			eFlags |= CryptoFlag_e::Compression;
 		}
 	}
 
-	QByteArray integrityProtection;
-	if (m_protectionMode == IntegrityProtectionMode::Checksum) {
-		flags |= CryptoFlagChecksum;
-		QDataStream s(&integrityProtection, QIODevice::WriteOnly);
-		s << qChecksum(ba.constData(), ba.length());
-	} else if (m_protectionMode == IntegrityProtectionMode::Hash) {
-		flags |= CryptoFlagHash;
+	QByteArray sIntegrityProtection;
+	if (meProtectionMode == IntegrityProtectionMode_e::Checksum) {
+		eFlags |= CryptoFlag_e::Checksum;
+		QDataStream s(&sIntegrityProtection, QIODevice::WriteOnly);
+		s << qChecksum(sBa.constData(), sBa.length());
+	} else if (meProtectionMode == IntegrityProtectionMode_e::Hash) {
+		eFlags |= CryptoFlag_e::Hash;
 		QCryptographicHash hash(QCryptographicHash::Sha1);
-		hash.addData(ba);
+		hash.addData(sBa);
 
-		integrityProtection += hash.result();
+		sIntegrityProtection += hash.result();
 	}
 
 	//prepend a random char to the string
-	char randomChar = char(qrand() & 0xFF);
-	ba = randomChar + integrityProtection + ba;
+	char  cRandomChar = char(qrand() & 0xFF);
+	sBa = cRandomChar + sIntegrityProtection + sBa;
 
-	int pos(0);
-	char lastChar(0);
+	int  iPos(0);
+	char cLastChar(0);
 
-	int cnt = ba.count();
+	int  iCnt = sBa.count();
 
-	while (pos < cnt) {
-		ba[pos] = ba.at(pos) ^ m_keyParts.at(pos % 8) ^ lastChar;
-		lastChar = ba.at(pos);
-		++pos;
+	while (iPos <  iCnt) {
+		sBa[iPos] = sBa.at(iPos) ^ muvKeyParts.at(iPos % 8) ^ cLastChar;
+		cLastChar = sBa.at(iPos);
+		++iPos;
 	}
 
-	QByteArray resultArray;
-	resultArray.append(char(0x03));  //version for future updates to algorithm
-	resultArray.append(char(flags)); //encryption flags
-	resultArray.append(ba);
+	QByteArray sResultArray;
+	sResultArray.append(char(0x03));  //version for future updates to algorithm
+	sResultArray.append(char(eFlags)); //encryption flags
+	sResultArray.append(sBa);
 
-	m_lastError = Error::NoError;
-	return resultArray;
+	meLastError = Error_e::NoError;
+	return sResultArray;
 }
 
 
 // ********************************************************************
-QString SimpleCryptQt::encryptToString(const QString& plaintext)
+QString
+SimpleCryptQt::encryptToString(const QString& asrPlaintext)
 {
-	QByteArray plaintextArray = plaintext.toUtf8();
-	QByteArray cypher = encryptToByteArray(plaintextArray);
-	QString cypherString = QString::fromLatin1(cypher.toBase64());
-	return cypherString;
+	QByteArray asPlaintextArray = asrPlaintext.toUtf8();
+	QByteArray asCypher = mEncryptToByteArray(asPlaintextArray);
+	QString asCypherString = QString::fromLatin1(asCypher.toBase64());
+	return asCypherString;
 }
 
 
 // ********************************************************************
-QString SimpleCryptQt::encryptToString(QByteArray plaintext)
+QString
+SimpleCryptQt::encryptToString(QByteArray asPlaintext)
 {
-	QByteArray cypher = encryptToByteArray(plaintext);
-	QString cypherString = QString::fromLatin1(cypher.toBase64());
-	return cypherString;
+	QByteArray sCypher = mEncryptToByteArray(asPlaintext);
+	QString sCypherString = QString::fromLatin1(sCypher.toBase64());
+	return sCypherString;
 }
 
 
 // ********************************************************************
-QString SimpleCryptQt::decryptToString(const QString &cyphertext)
+QString
+SimpleCryptQt::decryptToString(const QString& asrCyphertext)
 {
-	QByteArray cyphertextArray = QByteArray::fromBase64(cyphertext.toLatin1());
-	QByteArray plaintextArray = decryptToByteArray(cyphertextArray);
-	QString plaintext = QString::fromUtf8(plaintextArray, plaintextArray.size());
+	QByteArray sCyphertextArray = QByteArray::fromBase64(asrCyphertext.toLatin1());
+	QByteArray sPlaintextArray = decryptToByteArray(sCyphertextArray);
+	QString sPlaintext = QString::fromUtf8(sPlaintextArray, sPlaintextArray.size());
 
-	return plaintext;
+	return sPlaintext;
 }
 
 
 // ********************************************************************
-QString SimpleCryptQt::decryptToString(QByteArray cypher)
+QString
+SimpleCryptQt::decryptToString(QByteArray asCypher)
 {
-	QByteArray ba = decryptToByteArray(cypher);
-	QString plaintext = QString::fromUtf8(ba, ba.size());
+	QByteArray ba = decryptToByteArray(asCypher);
+	QString sPlaintext = QString::fromUtf8(ba, ba.size());
 
-	return plaintext;
+	return sPlaintext;
 }
 
 
 // ********************************************************************
-QByteArray SimpleCryptQt::decryptToByteArray(const QString& cyphertext)
+QByteArray
+SimpleCryptQt::decryptToByteArray(const QString& cyphertext)
 {
 	QByteArray cyphertextArray = QByteArray::fromBase64(cyphertext.toLatin1());
 	QByteArray ba = decryptToByteArray(cyphertextArray);
@@ -209,24 +217,25 @@ QByteArray SimpleCryptQt::decryptToByteArray(const QString& cyphertext)
 
 
 // ********************************************************************
-QByteArray SimpleCryptQt::decryptToByteArray(QByteArray cypher)
+QByteArray
+SimpleCryptQt::decryptToByteArray(QByteArray asCypher)
 {
-	if (m_keyParts.isEmpty()) {
+	if (muvKeyParts.isEmpty()) {
 		qWarning() << "No key set.";
-		m_lastError = Error::NoKeySet;
+		meLastError = Error_e::NoKeySet;
 		return QByteArray();
 	}
 
-	QByteArray ba = cypher;
+	QByteArray ba = asCypher;
 
-	if( cypher.count() < 3 ) {
+	if( asCypher.count() < 3 ) {
 		return QByteArray();
 	}
 
 	char version = ba.at(0);
 
 	if (version !=3) {  //we only work with version 3
-		m_lastError = Error::UnknownVersion;
+		meLastError = Error_e::UnknownVersion;
 		qWarning() << "Invalid version or not a cyphertext.";
 		return QByteArray();
 	}
@@ -234,53 +243,53 @@ QByteArray SimpleCryptQt::decryptToByteArray(QByteArray cypher)
 	CryptoFlags flags = CryptoFlags(ba.at(1));
 
 	ba = ba.mid(2);
-	int pos(0);
-	int cnt(ba.count());
-	char lastChar = 0;
+	int  iPos(0);
+	int  iCnt(ba.count());
+	char cLastChar = 0;
 
-	while (pos < cnt) {
-		char currentChar = ba[pos];
-		ba[pos] = ba.at(pos) ^ lastChar ^ m_keyParts.at(pos % 8);
-		lastChar = currentChar;
-		++pos;
+	while (iPos <  iCnt) {
+		char currentChar = ba[iPos];
+		ba[iPos] = ba.at(iPos) ^ cLastChar ^ muvKeyParts.at(iPos % 8);
+		cLastChar = currentChar;
+		++iPos;
 	}
 
 	ba = ba.mid(1); //chop off the random number at the start
 
-	bool integrityOk(true);
-	if (flags.testFlag(CryptoFlagChecksum)) {
+	bool bIntegrityOk(true);
+	if (flags.testFlag(CryptoFlag_e::Checksum)) {
 		if (ba.length() < 2) {
-			m_lastError = Error::IntegrityFailed;
+			meLastError = Error_e::IntegrityFailed;
 			return QByteArray();
 		}
-		quint16 storedChecksum;
+		quint16 uStoredChecksum;
 		{
 			QDataStream s(&ba, QIODevice::ReadOnly);
-			s >> storedChecksum;
+			s >> uStoredChecksum;
 		}
 		ba = ba.mid(2);
 		quint16 checksum = qChecksum(ba.constData(), ba.length());
-		integrityOk = (checksum == storedChecksum);
-	} else if (flags.testFlag(CryptoFlagHash)) {
+		bIntegrityOk = (checksum == uStoredChecksum);
+	} else if (flags.testFlag(CryptoFlag_e::Hash)) {
 		if (ba.length() < 20) {
-			m_lastError = Error::IntegrityFailed;
+			meLastError = Error_e::IntegrityFailed;
 			return QByteArray();
 		}
 		QByteArray storedHash = ba.left(20);
 		ba = ba.mid(20);
-		QCryptographicHash hash(QCryptographicHash::Sha1);
-		hash.addData(ba);
-		integrityOk = (hash.result() == storedHash);
+		QCryptographicHash oHash(QCryptographicHash::Sha1);
+		oHash.addData(ba);
+		bIntegrityOk = (oHash.result() == storedHash);
 	}
 
-	if (!integrityOk) {
-		m_lastError = Error::IntegrityFailed;
+	if (!bIntegrityOk) {
+		meLastError = Error_e::IntegrityFailed;
 		return QByteArray();
 	}
 
-	if (flags.testFlag(CryptoFlagCompression))
+	if (flags.testFlag(CryptoFlag_e::Compression))
 		ba = qUncompress(ba);
 
-	m_lastError = Error::NoError;
+	meLastError = Error_e::NoError;
 	return ba;
 }

@@ -63,7 +63,7 @@ public:
 	  CompressionMode describes if compression will be applied to the data to be
 	  encrypted.
 	  */
-	enum class CompressionMode {
+	enum class CompressionMode_e {
 		Auto,    /*!< Only apply compression if that results in a shorter plaintext. */
 		Always,  /*!< Always apply compression. Note that for short inputs, a compression may result in longer data */
 		Never    /*!< Never apply compression. */
@@ -77,7 +77,7 @@ public:
 	  increases the length of the resulting cypertext, but makes it possible to check if the plaintext
 	  appears to be valid after decryption.
 	*/
-	enum class IntegrityProtectionMode {
+	enum class IntegrityProtectionMode_e {
 		None,    /*!< The integerity of the encrypted data is not protected. It is not really possible to detect a wrong key, for instance. */
 		Checksum,/*!< A simple checksum is used to verify that the data is in order. If not, an empty string is returned. */
 		Hash     /*!< A cryptographic hash is used to verify the integrity of the data. This method produces a much stronger, but longer check */
@@ -86,7 +86,7 @@ public:
 	/**
 	  Error describes the type of error that occured.
 	  */
-	enum class Error {
+	enum class Error_e {
 		NoError,         /*!< No error occurred. */
 		NoKeySet,        /*!< No key was set. You can not encrypt or decrypt without a valid key. */
 		UnknownVersion,  /*!< The version of this data is unknown, or the data is otherwise not valid. */
@@ -105,17 +105,17 @@ public:
 
 	  Constructs a SimpleCrypt instance and initializes it with the given @arg key.
 	 */
-	explicit SimpleCryptQt(quint64 key);
+	explicit SimpleCryptQt(quint64 au8Key);
 
 	/**
 	  (Re-) initializes the key with the given @arg key.
 	  */
-	void setKey(quint64 key);
+	void mSetKey(quint64 au8Key);
 
 	/**
 	  Returns true if SimpleCrypt has been initialized with a key.
 	  */
-	bool hasKey() const {return !m_keyParts.isEmpty();}
+	bool hasKey() const {return !muvKeyParts.isEmpty();}
 
 	/**
 	  Sets the compression mode to use when encrypting data. The default mode is Auto.
@@ -123,12 +123,12 @@ public:
 	  Note that decryption is not influenced by this mode, as the decryption recognizes
 	  what mode was used when encrypting.
 	  */
-	void setCompressionMode(CompressionMode mode) {m_compressionMode = mode;}
+	void setCompressionMode(CompressionMode_e mode) {meCompressionMode = mode;}
 
 	/**
 	  Returns the CompressionMode that is currently in use.
 	  */
-	CompressionMode compressionMode() const {return m_compressionMode;}
+	CompressionMode_e compressionMode() const {return meCompressionMode;}
 
 	/**
 	  Sets the integrity mode to use when encrypting data. The default mode is Checksum.
@@ -136,31 +136,31 @@ public:
 	  Note that decryption is not influenced by this mode, as the decryption recognizes
 	  what mode was used when encrypting.
 	  */
-	void setIntegrityProtectionMode(IntegrityProtectionMode mode) {m_protectionMode = mode;}
+	void setIntegrityProtectionMode(IntegrityProtectionMode_e mode) {meProtectionMode = mode;}
 
 	/**
 	  Returns the IntegrityProtectionMode that is currently in use.
 	  */
-	IntegrityProtectionMode integrityProtectionMode() const {return m_protectionMode;}
+	IntegrityProtectionMode_e integrityProtectionMode() const {return meProtectionMode;}
 
 	/**
 	  Returns the last error that occurred.
 	  */
-	Error lastError() const {return m_lastError;}
+	Error_e lastError() const {return meLastError;}
 
 	/**
 	  Encrypts the @arg plaintext string with the key the class was initialized with, and returns
 	  a cyphertext the result. The result is a base64 encoded version of the binary array that is the
 	  actual result of the string, so it can be stored easily in a text format.
 	  */
-	QString encryptToString(const QString& plaintext) ;
+	QString encryptToString(const QString& asrPlaintext) ;
 
 	/**
 	  Encrypts the @arg plaintext QByteArray with the key the class was initialized with, and returns
 	  a cyphertext the result. The result is a base64 encoded version of the binary array that is the
 	  actual result of the encryption, so it can be stored easily in a text format.
 	  */
-	QString encryptToString(QByteArray plaintext) ;
+	QString encryptToString(QByteArray asPlaintext) ;
 
 	/**
 	  Encrypts the @arg plaintext string with the key the class was initialized with, and returns
@@ -169,7 +169,7 @@ public:
 	  This method returns a byte array, that is useable for storing a binary format. If you need
 	  a string you can store in a text file, use encryptToString() instead.
 	  */
-	QByteArray encryptToByteArray(const QString& plaintext) ;
+	QByteArray mEncryptToByteArray(const QString& asrPlaintext) ;
 
 	/**
 	  Encrypts the @arg plaintext QByteArray with the key the class was initialized with, and returns
@@ -178,7 +178,7 @@ public:
 	  This method returns a byte array, that is useable for storing a binary format. If you need
 	  a string you can store in a text file, use encryptToString() instead.
 	  */
-	QByteArray encryptToByteArray(QByteArray plaintext) ;
+	QByteArray mEncryptToByteArray(QByteArray asPlaintext) ;
 
 	/**
 	  Decrypts a cyphertext string encrypted with this class with the set key back to the
@@ -187,7 +187,7 @@ public:
 	  If an error occured, such as non-matching keys between encryption and decryption,
 	  an empty string or a string containing nonsense may be returned.
 	  */
-	QString decryptToString(const QString& cyphertext) ;
+	QString decryptToString(const QString& asrCyphertext) ;
 
 	/**
 	  Decrypts a cyphertext string encrypted with this class with the set key back to the
@@ -205,7 +205,7 @@ public:
 	  If an error occured, such as non-matching keys between encryption and decryption,
 	  an empty string or a string containing nonsense may be returned.
 	  */
-	QString decryptToString(QByteArray cypher) ;
+	QString decryptToString(QByteArray asCypher) ;
 
 	/**
 	  Decrypts a cyphertext binary encrypted with this class with the set key back to the
@@ -214,26 +214,26 @@ public:
 	  If an error occured, such as non-matching keys between encryption and decryption,
 	  an empty string or a string containing nonsense may be returned.
 	  */
-	QByteArray decryptToByteArray(QByteArray cypher) ;
+	QByteArray decryptToByteArray(QByteArray asCypher) ;
 
 	//enum to describe options that have been used for the encryption. Currently only one, but
 	//that only leaves room for future extensions like adding a cryptographic hash...
-	enum CryptoFlag{
-		CryptoFlagNone = 0,
-		CryptoFlagCompression = 0x01,
-		CryptoFlagChecksum = 0x02,
-		CryptoFlagHash = 0x04
+	enum class CryptoFlag_e {
+		None        = 0,
+		Compression = 0x01,
+		Checksum    = 0x02,
+		Hash        = 0x04
 	};
-	Q_DECLARE_FLAGS(CryptoFlags, CryptoFlag)
+	Q_DECLARE_FLAGS(CryptoFlags, CryptoFlag_e)
+
 private:
+	void mSplitKey();
 
-	void splitKey();
-
-	quint64 m_key;
-	QVector<char> m_keyParts;
-	CompressionMode m_compressionMode;
-	IntegrityProtectionMode m_protectionMode;
-	Error m_lastError;
+	quint64 mu8Key;
+	QVector<char> muvKeyParts;
+	CompressionMode_e meCompressionMode;
+	IntegrityProtectionMode_e meProtectionMode;
+	Error_e meLastError;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(SimpleCryptQt::CryptoFlags)
 
