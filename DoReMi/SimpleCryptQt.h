@@ -146,7 +146,7 @@ public:
 	/**
 	  Returns the last error that occurred.
 	  */
-	Error_e lastError() const {return meLastError;}
+	Error_e meLastError() const {return meLast_Error;}
 
 	/**
 	  Encrypts the @arg plaintext string with the key the class was initialized with, and returns
@@ -233,7 +233,7 @@ private:
 	QVector<char> muvKeyParts;
 	CompressionMode_e meCompressionMode;
 	IntegrityProtectionMode_e meProtectionMode;
-	Error_e meLastError;
+	Error_e meLast_Error;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(SimpleCryptQt::CryptoFlags)
 

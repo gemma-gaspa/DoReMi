@@ -46,7 +46,7 @@ SimpleCryptQt::SimpleCryptQt():
 	mu8Key(0),
 	meCompressionMode(CompressionMode_e::Auto),
 	meProtectionMode(IntegrityProtectionMode_e::Checksum),
-	meLastError(Error_e::NoError)
+	meLast_Error(Error_e::NoError)
 {
 	qsrand(uint(QDateTime::currentMSecsSinceEpoch() & 0xFFFF));
 }
@@ -57,7 +57,7 @@ SimpleCryptQt::SimpleCryptQt(quint64 au8Key):
 	mu8Key(au8Key),
 	meCompressionMode(CompressionMode_e::Auto),
 	meProtectionMode(IntegrityProtectionMode_e::Checksum),
-	meLastError(Error_e::NoError)
+	meLast_Error(Error_e::NoError)
 {
 	qsrand(uint(QDateTime::currentMSecsSinceEpoch() & 0xFFFF));
 	mSplitKey();
@@ -105,7 +105,7 @@ SimpleCryptQt::mEncryptToByteArray(QByteArray asPlaintext)
 {
 	if (muvKeyParts.isEmpty()) {
 		qWarning() << "No key set.";
-		meLastError = Error_e::NoKeySet;
+		meLast_Error = Error_e::NoKeySet;
 		return QByteArray();
 	}
 
@@ -156,7 +156,7 @@ SimpleCryptQt::mEncryptToByteArray(QByteArray asPlaintext)
 	sResultArray.append(char(eFlags)); //encryption flags
 	sResultArray.append(sBa);
 
-	meLastError = Error_e::NoError;
+	meLast_Error = Error_e::NoError;
 	return sResultArray;
 }
 
@@ -222,7 +222,7 @@ SimpleCryptQt::msDecryptToByteArray(QByteArray asCypher)
 {
 	if (muvKeyParts.isEmpty()) {
 		qWarning() << "No key set.";
-		meLastError = Error_e::NoKeySet;
+		meLast_Error = Error_e::NoKeySet;
 		return QByteArray();
 	}
 
@@ -235,7 +235,7 @@ SimpleCryptQt::msDecryptToByteArray(QByteArray asCypher)
 	char cVersion = ba.at(0);
 
 	if (cVersion !=3) {  //we only work with version 3
-		meLastError = Error_e::UnknownVersion;
+		meLast_Error = Error_e::UnknownVersion;
 		qWarning() << "Invalid version or not a cyphertext.";
 		return QByteArray();
 	}
@@ -259,7 +259,7 @@ SimpleCryptQt::msDecryptToByteArray(QByteArray asCypher)
 	bool bIntegrityOk(true);
 	if (eFlags.testFlag(CryptoFlag_e::Checksum)) {
 		if (ba.length() < 2) {
-			meLastError = Error_e::IntegrityFailed;
+			meLast_Error = Error_e::IntegrityFailed;
 			return QByteArray();
 		}
 		quint16 uStoredChecksum;
@@ -273,7 +273,7 @@ SimpleCryptQt::msDecryptToByteArray(QByteArray asCypher)
 
 	} else if (eFlags.testFlag(CryptoFlag_e::Hash)) {
 		if (ba.length() < 20) {
-			meLastError = Error_e::IntegrityFailed;
+			meLast_Error = Error_e::IntegrityFailed;
 			return QByteArray();
 		}
 		QByteArray storedHash = ba.left(20);
@@ -284,13 +284,13 @@ SimpleCryptQt::msDecryptToByteArray(QByteArray asCypher)
 	}
 
 	if (!bIntegrityOk) {
-		meLastError = Error_e::IntegrityFailed;
+		meLast_Error = Error_e::IntegrityFailed;
 		return QByteArray();
 	}
 
 	if (eFlags.testFlag(CryptoFlag_e::Compression))
 		ba = qUncompress(ba);
 
-	meLastError = Error_e::NoError;
+	meLast_Error = Error_e::NoError;
 	return ba;
 }
