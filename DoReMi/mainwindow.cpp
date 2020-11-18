@@ -28,14 +28,14 @@ MainWindow::~MainWindow()
 
 // ****************************************************************************
 void
-MainWindow::on_opW_PushButton_TestaSpotify_clicked()
+MainWindow::on_mopW_PushButton_TestaSpotify_clicked()
 {
 	QByteArray  sClient_ID     = "c7964ee8177b6" ;
 	QByteArray  sClient_Secret = "2f71244f" ;
 	QByteArray  sKey =  (sClient_ID + ":" + sClient_Secret).toBase64(); // Codifica para Base64
 
 
-	ui->opW_TextBrowserOut->setText("Requisitando autorização de cliente...");
+	ui->mopW_TextBrowser_Out->setText("Requisitando autorização de cliente...");
 
 //	QUrl sEndpoint("https://api.spotify.com/authorize");
 //	QUrl sEndpoint("https://api.spotify.com/api/token");
@@ -80,31 +80,37 @@ MainWindow::replyFinished(QNetworkReply* aopReply)
 		sToText += "\n\n" + sContent ;
 	}
 
-	ui->opW_TextBrowserOut->setText( sToText );
+	ui->mopW_TextBrowser_Out->setText( sToText );
 
 
 //	aopReply->deleteLater();
 }
 
 
+// ****************************************************************************
 #include "SimpleCryptQt.h"
-void MainWindow::on_opPushButtonCrypto_clicked()
+void MainWindow::on_mopW_PushButton_Crypto_clicked()
 {
 	QByteArray sOriginalText = "oi cara de boi" ;
+	SimpleCryptQt oCrypto;
 
-	SimpleCryptQt crypto;
+	oCrypto.mSetKey(0xDEADBEEF) ; //same random number: key should match encryption key
 
+	QByteArray sEncrypt = oCrypto.mEncryptToByteArray(sOriginalText).toBase64();
 
+	QByteArray sResult  = oCrypto.decryptToByteArray(QByteArray::fromBase64(sEncrypt));
 
-
-
-	crypto.setKey(0x0c2ad4a4acb9f023) ; //same random number: key should match encryption key
-
-	QByteArray sEncrypt = crypto.encryptToByteArray(sOriginalText);
-
-	QByteArray plaintext = crypto.decryptToByteArray(sEncrypt);
-
-	SimpleCryptQt::Error eError = crypto.lastError() ;
-
+	SimpleCryptQt::Error_e eError = oCrypto.lastError() ;
 	qDebug() << int(eError) ;
+}
+
+
+// ****************************************************************************
+void MainWindow::on_mopW_PushButton_ConfigClienteSpotify_clicked()
+{
+	// Abre nova tela de Dialogo
+	// https://www.youtube.com/watch?v=tP70B-pdTH0&ab_channel=ProgrammingKnowledge
+	DialogClient_d oDialogClient(this);
+	oDialogClient.setModal(true);
+	oDialogClient.exec();
 }

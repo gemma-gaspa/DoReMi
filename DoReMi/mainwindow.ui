@@ -11,13 +11,13 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string extracomment="Melhor Playlister do mundo!">DoReMi - Seu SetList de Spotify</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="opW_PushButton_TestaSpotify">
+   <widget class="QPushButton" name="mopW_PushButton_TestaSpotify">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>540</x>
       <y>20</y>
       <width>75</width>
       <height>23</height>
@@ -27,7 +27,7 @@
      <string>Teste</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="opW_TextBrowserOut">
+   <widget class="QTextBrowser" name="mopW_TextBrowser_Out">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -37,7 +37,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="opPushButtonCrypto">
+   <widget class="QPushButton" name="mopW_PushButton_Crypto">
     <property name="geometry">
      <rect>
       <x>680</x>
@@ -48,6 +48,19 @@
     </property>
     <property name="text">
      <string>Testa Crypto</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="mopW_PushButton_ConfigClienteSpotify">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Configurar Cliente Spotify</string>
     </property>
    </widget>
   </widget>
