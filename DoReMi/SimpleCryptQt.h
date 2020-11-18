@@ -123,7 +123,7 @@ public:
 	  Note that decryption is not influenced by this mode, as the decryption recognizes
 	  what mode was used when encrypting.
 	  */
-	void setCompressionMode(CompressionMode_e mode) {meCompressionMode = mode;}
+	void mvSetCompressionMode(CompressionMode_e mode) {meCompressionMode = mode;}
 
 	/**
 	  Returns the CompressionMode that is currently in use.
@@ -136,7 +136,7 @@ public:
 	  Note that decryption is not influenced by this mode, as the decryption recognizes
 	  what mode was used when encrypting.
 	  */
-	void setIntegrityProtectionMode(IntegrityProtectionMode_e mode) {meProtectionMode = mode;}
+	void mvSetIntegrityProtectionMode(IntegrityProtectionMode_e mode) {meProtectionMode = mode;}
 
 	/**
 	  Returns the IntegrityProtectionMode that is currently in use.
@@ -153,14 +153,14 @@ public:
 	  a cyphertext the result. The result is a base64 encoded version of the binary array that is the
 	  actual result of the string, so it can be stored easily in a text format.
 	  */
-	QString encryptToString(const QString& asrPlaintext) ;
+	QString msEncryptToString(const QString& asrPlaintext) ;
 
 	/**
 	  Encrypts the @arg plaintext QByteArray with the key the class was initialized with, and returns
 	  a cyphertext the result. The result is a base64 encoded version of the binary array that is the
 	  actual result of the encryption, so it can be stored easily in a text format.
 	  */
-	QString encryptToString(QByteArray asPlaintext) ;
+	QString msEncryptToString(QByteArray asPlaintext) ;
 
 	/**
 	  Encrypts the @arg plaintext string with the key the class was initialized with, and returns
@@ -187,7 +187,7 @@ public:
 	  If an error occured, such as non-matching keys between encryption and decryption,
 	  an empty string or a string containing nonsense may be returned.
 	  */
-	QString decryptToString(const QString& asrCyphertext) ;
+	QString msDecryptToString(const QString& asrCyphertext) ;
 
 	/**
 	  Decrypts a cyphertext string encrypted with this class with the set key back to the
@@ -196,7 +196,7 @@ public:
 	  If an error occured, such as non-matching keys between encryption and decryption,
 	  an empty string or a string containing nonsense may be returned.
 	  */
-	QByteArray decryptToByteArray(const QString& cyphertext) ;
+	QByteArray msDecryptToByteArray(const QString& msrCypherText) ;
 
 	/**
 	  Decrypts a cyphertext binary encrypted with this class with the set key back to the
@@ -205,7 +205,7 @@ public:
 	  If an error occured, such as non-matching keys between encryption and decryption,
 	  an empty string or a string containing nonsense may be returned.
 	  */
-	QString decryptToString(QByteArray asCypher) ;
+	QString msDecryptToString(QByteArray asCypher) ;
 
 	/**
 	  Decrypts a cyphertext binary encrypted with this class with the set key back to the
@@ -214,7 +214,7 @@ public:
 	  If an error occured, such as non-matching keys between encryption and decryption,
 	  an empty string or a string containing nonsense may be returned.
 	  */
-	QByteArray decryptToByteArray(QByteArray asCypher) ;
+	QByteArray msDecryptToByteArray(QByteArray asCypher) ;
 
 	//enum to describe options that have been used for the encryption. Currently only one, but
 	//that only leaves room for future extensions like adding a cryptographic hash...
