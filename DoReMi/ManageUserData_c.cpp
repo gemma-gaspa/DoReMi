@@ -12,6 +12,7 @@
 const char ManageUserData_c::msCryptoTest[] ="123";
 
 
+// **************************************************************************
 ManageUserData_c::ManageUserData_c()
 {
 
@@ -35,12 +36,12 @@ ManageUserData_c::mvFromFile()
 		QJsonArray oArray = oJsonDoc.array() ;
 		foreach(const QJsonValue& oJsonElem, oArray) {
 			UserData_s oElem;
-			oElem.sName          = oJsonElem.toObject().value("sName"         ).toString();
-			oElem.sDateTime      = oJsonElem.toObject().value("sDateTime"     ).toString();
-			oElem.sClient_ID     = oJsonElem.toObject().value("sClient_ID"    ).toString().toUtf8();
-			oElem.sClient_Secret = oJsonElem.toObject().value("sClient_Secret").toString().toUtf8();
-			oElem.sCryptoTest    = oJsonElem.toObject().value("sCryptoTest"   ).toString().toUtf8();
-			oElem.sReminder      = oJsonElem.toObject().value("sLembrete"     ).toString();
+			oElem.sName          = oJsonElem["sName"         ].toString();
+			oElem.sDateTime      = oJsonElem["sDateTime"     ].toString();
+			oElem.sClient_ID     = oJsonElem["sClient_ID"    ].toString().toUtf8();
+			oElem.sClient_Secret = oJsonElem["sClient_Secret"].toString().toUtf8();
+			oElem.sCryptoTest    = oJsonElem["sCryptoTest"   ].toString().toUtf8();
+			oElem.sReminder      = oJsonElem["sLembrete"     ].toString();
 
 			// Dados criptografados:
 			oElem.sClient_ID     = QByteArray::fromBase64(oElem.sClient_ID);
@@ -51,7 +52,6 @@ ManageUserData_c::mvFromFile()
 		}
 	}
 
-	// QDateTime::fromString( sTemp, msTimeFormat );
 	// pra tela
 	mvDataToTable() ;
 }
