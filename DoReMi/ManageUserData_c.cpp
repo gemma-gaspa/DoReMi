@@ -142,14 +142,14 @@ ManageUserData_c::mvDataToTable()
 		for(uint16_t u=0 ; u<movUserData.size() ; u++) {
 			mopW_TableWidget->insertRow(u);
 			// Nao ha vazamento de memoria: QTableWidget apagara os QTableWidgetItem
-			QTableWidgetItem* opNome = new QTableWidgetItem(movUserData[u].sName);
-			QTableWidgetItem* opData = new QTableWidgetItem(movUserData[u].sDateTime);
+			QTableWidgetItem* opName = new QTableWidgetItem(movUserData[u].sName);
+			QTableWidgetItem* opDate = new QTableWidgetItem(movUserData[u].sDateTime);
 
 			// Itens nao-editaveis:
-			opNome->setFlags( opNome->flags() &~Qt::ItemIsEditable );
-			opData->setFlags( opData->flags() &~Qt::ItemIsEditable );
-			mopW_TableWidget->setItem(u, 0, opNome);
-			mopW_TableWidget->setItem(u, 1, opData);
+			opName->setFlags( opName->flags() &~Qt::ItemIsEditable );
+			opDate->setFlags( opDate->flags() &~Qt::ItemIsEditable );
+			mopW_TableWidget->setItem(u, 0, opName);
+			mopW_TableWidget->setItem(u, 1, opDate);
 		}
 	}
 
