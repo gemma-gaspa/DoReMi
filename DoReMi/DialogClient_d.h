@@ -3,7 +3,7 @@
 
 //Prj
 #include "ManageUserData_c.h"
-#include "SpotifyUserSecrets_c.h"
+#include "SpotifyAPI/SpotifyUserSecrets_c.h"
 
 // moc
 #include <QDialog>

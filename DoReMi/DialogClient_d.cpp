@@ -13,7 +13,7 @@
 // Prj
 #include "DialogFillData_d.h"
 #include "DialogGetPassword_d.h"
-#include "SimpleCryptQt.h"
+#include "SimpleCrypt/SimpleCryptQt.h"
 
 // Qt
 #include <QStandardItemModel>

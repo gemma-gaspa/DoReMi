@@ -85,7 +85,7 @@ DialogFillData_d::mvEnableOkBtnTest()
 
 
 // ****************************************************************************
-#include "SimpleCryptQt.h"
+#include "SimpleCrypt/SimpleCryptQt.h"
 #include "DialogGetPassword_d.h"
 #include <QTime>
 void

@@ -6,7 +6,7 @@
 
 // Projeto
 #include "DialogClient_d.h"
-#include "SpotifyAPI_c.h"
+#include "SpotifyAPI/SpotifyAPI_c.h"
 
 // Qt
 #include <QNetworkAccessManager>

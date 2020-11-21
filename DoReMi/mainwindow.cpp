@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 
 // Prj
-#include "SpotifyUserSecrets_c.h"
+#include "SpotifyAPI/SpotifyUserSecrets_c.h"
 
 // Qt
 #include <QNetworkAccessManager>

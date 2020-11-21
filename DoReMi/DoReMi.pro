@@ -15,10 +15,10 @@ SOURCES += \
 	DialogFillData_d.cpp \
 	DialogGetPassword_d.cpp \
 	ManageUserData_c.cpp \
-	SearchItems_s.cpp \
-	SimpleCryptQt.cpp \
-	SpotifyAPI_c.cpp \
-	TestProbe_b.cpp \
+	SimpleCrypt/SimpleCryptQt.cpp \
+	SpotifyAPI/SearchItems_s.cpp \
+	SpotifyAPI/SpotifyAPI_c.cpp \
+	TestProbe/TestProbe_b.cpp \
 	main.cpp \
 	mainwindow.cpp
 
@@ -27,11 +27,11 @@ HEADERS += \
 	DialogFillData_d.h \
 	DialogGetPassword_d.h \
 	ManageUserData_c.h \
-	SearchItems_s.h \
-	SimpleCryptQt.h \
-	SpotifyAPI_c.h \
-	SpotifyUserSecrets_c.h \
-	TestProbe_b.h \
+	SimpleCrypt/SimpleCryptQt.h \
+	SpotifyAPI/SearchItems_s.h \
+	SpotifyAPI/SpotifyAPI_c.h \
+	SpotifyAPI/SpotifyUserSecrets_c.h \
+	TestProbe/TestProbe_b.h \
 	mainwindow.h
 
 FORMS += \
