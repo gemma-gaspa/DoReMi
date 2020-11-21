@@ -6,6 +6,7 @@
 
 // Projeto
 #include "DialogClient_d.h"
+#include "SpotifyAPI_c.h"
 
 // Qt
 #include <QNetworkAccessManager>
@@ -25,15 +26,20 @@ public:
 
 private slots:
 	void on_mopW_PushButton_TestaSpotify_clicked();
-	void on_mopW_PushButton_Crypto_clicked();
 	void on_mopW_PushButton_ConfigClienteSpotify_clicked();
+
+	void on_mopW_PushButton_Search_clicked();
 
 private:
 	Ui::MainWindow *ui;
 
 	QByteArray* mspReturnPost = nullptr ; // verificar importancia desta coisa.
 
+	SpotifyAPI_c moSpotifyAPI ; // Manager de comunicacao com a API do Spotify
+
 	void replyFinished(QNetworkReply* aopReply);
+
+
 };
 #endif // MAINWINDOW_H
 

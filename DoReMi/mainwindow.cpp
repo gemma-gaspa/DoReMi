@@ -90,31 +90,31 @@ MainWindow::replyFinished(QNetworkReply* aopReply)
 
 
 // ****************************************************************************
-#include "SimpleCryptQt.h"
-void MainWindow::on_mopW_PushButton_Crypto_clicked()
+void
+MainWindow::on_mopW_PushButton_ConfigClienteSpotify_clicked()
 {
-	QByteArray sOriginalText = "oi cara de boi" ;
-	SimpleCryptQt oCrypto;
+	// Abre nova tela de Dialogo
+	// https://www.youtube.com/watch?v=tP70B-pdTH0&ab_channel=ProgrammingKnowledge
+	SpotifyUserSecrets_c oSpotifyUserSecrets;
 
-	oCrypto.mSetKey(0xDEADBEEF) ; //same random number: key should match encryption key
+	DialogClient_d oDialogClient(oSpotifyUserSecrets, this);
+	oDialogClient.setModal(true);
+	oDialogClient.exec();
 
-	QByteArray sEncrypt = oCrypto.mEncryptToByteArray(sOriginalText).toBase64();
-
-	QByteArray sResult  = oCrypto.msDecryptToByteArray(QByteArray::fromBase64(sEncrypt));
-
-	SimpleCryptQt::Error_e eError = oCrypto.meLastError() ;
-	qDebug() << int(eError) ;
+	uint32_t uDelay_ms = 3500 ;
+	uint32_t uRespTime_ms = moSpotifyAPI.mvSetConnection(oSpotifyUserSecrets, uDelay_ms);
+	uRespTime_ms;
 }
 
 
 // ****************************************************************************
-void MainWindow::on_mopW_PushButton_ConfigClienteSpotify_clicked()
+void MainWindow::on_mopW_PushButton_Search_clicked()
 {
-	// Abre nova tela de Dialogo
-	// https://www.youtube.com/watch?v=tP70B-pdTH0&ab_channel=ProgrammingKnowledge
-	SpotifyUserSecrets_c moSpotifyUserSecrets;
+	SpotifyAPI_c::ResultSearch_x ovResult;
+	QString sSentence = ui->mopW_LineEdit_Search->text();
+	moSpotifyAPI.movSearchMusic(sSentence, ovResult);
 
-	DialogClient_d oDialogClient(moSpotifyUserSecrets, this);
-	oDialogClient.setModal(true);
-	oDialogClient.exec();
+	for(uint16_t u=0 ; u<ovResult.size() ; u++) {
+
+	}
 }

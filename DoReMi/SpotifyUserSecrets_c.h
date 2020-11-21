@@ -8,8 +8,6 @@ class SpotifyUserSecrets_c {
 public:
 	QByteArray ID ;
 	QByteArray Secret;
-	QByteArray Token ;
-	QDateTime  LastUpdate;
 };
 
 #endif // SPOTIFY_USER_SECRETS_C_H

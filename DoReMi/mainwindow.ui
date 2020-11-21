@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>792</width>
-    <height>600</height>
+    <width>1078</width>
+    <height>657</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="mopW_PushButton_TestaSpotify">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>20</y>
+      <x>530</x>
+      <y>10</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -31,17 +31,17 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>80</y>
-      <width>761</width>
-      <height>461</height>
+      <y>500</y>
+      <width>751</width>
+      <height>111</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="mopW_PushButton_Crypto">
     <property name="geometry">
      <rect>
-      <x>680</x>
-      <y>20</y>
+      <x>620</x>
+      <y>10</y>
       <width>80</width>
       <height>21</height>
      </rect>
@@ -54,7 +54,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>30</y>
+      <y>10</y>
       <width>161</width>
       <height>21</height>
      </rect>
@@ -63,13 +63,69 @@
      <string>Configurar Cliente Spotify</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="mopW_LineEdit_Search">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>311</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Procure no Spotify!</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="mopW_PushButton_Search">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>40</y>
+      <width>41</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Cadê</string>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>15</x>
+      <y>70</y>
+      <width>371</width>
+      <height>421</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>40</y>
+      <width>331</width>
+      <height>451</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>40</y>
+      <width>311</width>
+      <height>451</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>792</width>
+     <width>1078</width>
      <height>20</height>
     </rect>
    </property>
