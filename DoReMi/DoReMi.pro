@@ -11,7 +11,6 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-	../TestProbe/TestProbe_b.cpp \
 	DialogClient_d.cpp \
 	DialogFillData_d.cpp \
 	DialogGetPassword_d.cpp \
@@ -24,7 +23,6 @@ SOURCES += \
 	mainwindow.cpp
 
 HEADERS += \
-	../TestProbe/TestProbe_b.h \
 	DialogClient_d.h \
 	DialogFillData_d.h \
 	DialogGetPassword_d.h \
