@@ -133,6 +133,14 @@ MainWindow::on_mopW_PushButton_ConfigClienteSpotify_clicked()
 // Bora procurar
 void MainWindow::on_mopW_PushButton_Search_clicked()
 {
+	// Clear Table
+	ui->mopW_TableWidget_Search->setRowCount(0);
+
+	ui->mopW_PushButton_Search->setEnabled(false);
+	ui->mopW_TableWidget_Search->setEnabled(false);
+	ui->mopW_LineEdit_Search->setEnabled(false);
+
+
 	std::vector<SpotifyAPI_c::SearchTrackItems_s> ovResult;
 	QString sSentence = ui->mopW_LineEdit_Search->text();
 
@@ -149,8 +157,6 @@ void MainWindow::on_mopW_PushButton_Search_clicked()
 
 	ui->mopW_TextBrowser_Out->setText("Tempo total de acesso: "+QString::number(uAccessTime_ms/1000.0));
 
-	// Clear Table
-	ui->mopW_TableWidget_Search->setRowCount(0);
 
 	// Populate Data
 	for(uint16_t u=0 ; u<ovResult.size() ; u++) {
@@ -175,5 +181,10 @@ void MainWindow::on_mopW_PushButton_Search_clicked()
 	}
 
 	ui->mopW_TableWidget_Search->repaint();
+	ui->mopW_PushButton_Search->setEnabled(true);
+	ui->mopW_TableWidget_Search->setEnabled(true);
+	ui->mopW_LineEdit_Search->setEnabled(true);
+
+
 
 }
