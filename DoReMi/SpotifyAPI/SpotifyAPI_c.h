@@ -63,7 +63,7 @@ public:
 	//		id
 			std::vector<Images_s> ovImages;
 			QString sName;
-			QString sRelease_date;
+			QString sReleaseDate;
 	//		release_date_precision
 	//		total_tracks
 	//		QString sType;

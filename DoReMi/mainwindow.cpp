@@ -16,6 +16,28 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	ui->setupUi(this);
 
+	// Configura tabela
+	ui->mopW_TableWidget_Search->insertColumn(0);
+	ui->mopW_TableWidget_Search->insertColumn(1);
+	ui->mopW_TableWidget_Search->insertColumn(2);
+	ui->mopW_TableWidget_Search->insertColumn(3);
+	//ui->mopW_TableWidget->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+	ui->mopW_TableWidget_Search->resizeColumnToContents(1);
+
+	// https://www.qtcentre.org/threads/21008-Change-QTableWidget-header-name-or-text
+	// https://www.embeddeduse.com/2016/04/29/using-cpp-11-initializer-lists-in-qt-ways/
+	QStringList svList = { "Música", "Artista", "Álbum","Data Lançamento"} ;
+	ui->mopW_TableWidget_Search->setHorizontalHeaderLabels(svList);
+
+	ui->mopW_TableWidget_Search->setColumnWidth(0, 220);
+	ui->mopW_TableWidget_Search->setColumnWidth(1, 220);
+
+
+
+
+
+
+
 	mspReturnPost = new QByteArray ;
 }
 
@@ -127,7 +149,31 @@ void MainWindow::on_mopW_PushButton_Search_clicked()
 
 	ui->mopW_TextBrowser_Out->setText("Tempo total de acesso: "+QString::number(uAccessTime_ms/1000.0));
 
-	for(size_t u=0 ; u<ovResult.size() ; u++) {
-		// Fill the table
+	// Clear Table
+	ui->mopW_TableWidget_Search->setRowCount(0);
+
+	// Populate Data
+	for(uint16_t u=0 ; u<ovResult.size() ; u++) {
+		ui->mopW_TableWidget_Search->insertRow(u);
+
+		// Nao ha vazamento de memoria: QTableWidget apagara os QTableWidgetItem
+		QTableWidgetItem* opName   = new QTableWidgetItem(ovResult[u].sName);
+		QTableWidgetItem* opArtist = new QTableWidgetItem(ovResult[u].ovArtists[0].sName);
+		QTableWidgetItem* opAlbum  = new QTableWidgetItem(ovResult[u].oAlbum.sName);
+		QTableWidgetItem* opDate   = new QTableWidgetItem(ovResult[u].oAlbum.sReleaseDate);
+
+		// Itens nao-editaveis:
+		opName->setFlags  ( opName->flags()   &~Qt::ItemIsEditable );
+		opArtist->setFlags( opArtist->flags() &~Qt::ItemIsEditable );
+		opAlbum->setFlags ( opAlbum->flags()  &~Qt::ItemIsEditable );
+		opDate->setFlags  ( opDate->flags()   &~Qt::ItemIsEditable );
+		ui->mopW_TableWidget_Search->setItem(u, 0, opName);
+		ui->mopW_TableWidget_Search->setItem(u, 1, opArtist);
+		ui->mopW_TableWidget_Search->setItem(u, 2, opAlbum);
+		ui->mopW_TableWidget_Search->setItem(u, 3, opDate);
+
 	}
+
+	ui->mopW_TableWidget_Search->repaint();
+
 }

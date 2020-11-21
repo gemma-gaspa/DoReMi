@@ -175,9 +175,9 @@ SpotifyAPI_c::movSearchTrackAuxiliar(
 				oItemTrack.sType        = oObjT["type"       ].toString();
 
 				QJsonObject oObjAlbum = oObjT["album"].toObject();
-				oItemTrack.oAlbum.sAlbum_type   = oObjAlbum["album_type"  ].toString();
-				oItemTrack.oAlbum.sName         = oObjAlbum["name"        ].toString();
-				oItemTrack.oAlbum.sRelease_date = oObjAlbum["release_date"].toString();
+				oItemTrack.oAlbum.sAlbum_type  = oObjAlbum["album_type"  ].toString();
+				oItemTrack.oAlbum.sName        = oObjAlbum["name"        ].toString();
+				oItemTrack.oAlbum.sReleaseDate = oObjAlbum["release_date"].toString();
 
 				QJsonArray oArrayImages = oObjAlbum["images"].toArray();
 				for (auto itIm : oArrayImages) {
