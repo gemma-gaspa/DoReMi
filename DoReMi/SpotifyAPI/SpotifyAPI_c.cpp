@@ -85,87 +85,179 @@ SpotifyAPI_c::meGetConnectionStatus() const
 }
 
 
+
 // ****************************************************************************
+// retorno: tempo de procura
 uint32_t
-SpotifyAPI_c::movSearchMusic(const QString& asrExpression, ResultSearch_x& avrReturn)
+SpotifyAPI_c::movSearchTrackAuxiliar(
+		const QString&       asrExpression,
+		uint32_t             auNumTracks,
+		uint32_t             auOffestTrack,
+		std::vector<SearchTrackItems_s>& avrReturnTracks,
+		SearchStepInfo_s&    aorSearchStep)
 {
+	QNetworkAccessManager *opWebManager = new QNetworkAccessManager(this); // tirar de ponteiro
+
+	QString sError ;
+	bool bReturned = false ;
+	bool bFinished = false ;
+
+	QByteArray sContent ;
+
+	QTimer oTimeOut;
+	//      source         signal                           dest          function to execute
+	connect(opWebManager, &QNetworkAccessManager::finished, opWebManager, &QNetworkAccessManager::deleteLater);
+	connect(opWebManager, &QNetworkAccessManager::finished, this        ,
+			// Lambda Construct! :-)
+			[&sError, &bReturned, &bFinished, &oTimeOut, &sContent]
+			(QNetworkReply* aopReply)
+			{
+				bFinished = aopReply->isFinished() ;
+				sError    = aopReply->errorString();
+				bReturned = true;
+				sContent  = aopReply->readAll() ;
+				oTimeOut.stop(); // ultimo evento nesta funcao
+			});
+
+	// Adiciona queries
+	QUrl oURL(msEndpointSearch);
+	QUrlQuery oQuery;
+
+	oQuery.addQueryItem("q"     , asrExpression);
+	oQuery.addQueryItem("limit" , QString::number( std::min(muMAX_SEARCH_TRACKS, auNumTracks) ));
+	oQuery.addQueryItem("offset", QString::number(auOffestTrack));
+	oQuery.addQueryItem("type"  , "track");
+	oQuery.addQueryItem("market", "BR");
+	oURL.setQuery(oQuery);
+
+	// Adiciona Headers e faz requisicao get
+	// https://developer.spotify.com/documentation/web-api/reference/search/search/
+	QNetworkRequest oWebRequest(oURL) ;
+	// curl -X "GET"
+	// https://api.spotify.com/v1/search?q=lazy&type=track
+	// -H "Accept: application/json"
+	// -H "Content-Type: application/json"
+	// -H "Authorization: Bearer BQAV4DAkHQWn6lXjdHvQ3wvrLbfIro5nwhZhxQZudZQDJIc3IifxzWbSwAbbvfNOIP0iXAttDadXkaQsvPbPbzd5wlqrFEDbVpvxvjplowmSxh5ZvhxClzsVe5xl-pch8cPMTpauj02UxjLaVxHrGvI"
+	oWebRequest.setRawHeader("Accept:", "application/json");
+	oWebRequest.setRawHeader("Content-Type:", "application/json");
+	oWebRequest.setRawHeader("Authorization:", "Bearer " + msToken);
+	opWebManager->get( oWebRequest );
+
+	oTimeOut.start(  int(muTimeout_ms)  ); // Inicia contagem de timeout
 	uint32_t uNumIter= 0 ;
-	if(ConnectionStatus_e::eOK == meConnectionStatus) {
-		QNetworkAccessManager *opWebManager = new QNetworkAccessManager(this); // tirar de ponteiro
 
-		QString sError ;
-		bool bReturned = false ;
-		bool bFinished = false ;
+	for( ; uNumIter<(muTimeout_ms/muTimeQuantaWait) && !bReturned; uNumIter++) {
+		QTest::qWait(int(muTimeQuantaWait)); // Dorme sem paralisar a lambda por 100ms
+	}
 
-		QByteArray sContent ;
+	if(bReturned) {
+		QJsonParseError oErrorParser;
+		QJsonDocument   oJsonDoc    = QJsonDocument::fromJson(sContent, &oErrorParser);
+		QJsonObject     oJsonTracks = oJsonDoc["tracks"].toObject();
+		if (!oJsonDoc.isNull()) {
+			aorSearchStep.iLimit   = oJsonTracks["limit"   ].toInt();
+			aorSearchStep.iOffset   = oJsonTracks["offset"  ].toInt();
+			aorSearchStep.iTotal    = oJsonTracks["total"   ].toInt();
+			aorSearchStep.sNext     = oJsonTracks["next"    ].toString();
+			aorSearchStep.sPrevious = oJsonTracks["previous"].toString();
 
-		QTimer oTimeOut;
-		//      source         signal                           dest          function to execute
-		connect(opWebManager, &QNetworkAccessManager::finished, opWebManager, &QNetworkAccessManager::deleteLater);
-		connect(opWebManager, &QNetworkAccessManager::finished, this        ,
-				// Lambda Construct! :-)
-				[&sError, &bReturned, &bFinished, &oTimeOut, &sContent]
-				(QNetworkReply* aopReply)
-				{
-					bFinished = aopReply->isFinished() ;
-					sError    = aopReply->errorString();
-					bReturned = true;
-					sContent  = aopReply->readAll() ;
-					oTimeOut.stop(); // ultimo evento nesta funcao
-				});
+			QJsonArray oArrayTracks = oJsonTracks["items"].toArray();
 
-		// Adiciona queries
-		QUrl oURL(msEndpointSearch);
-		QUrlQuery oQuery;
+			for (auto itT : oArrayTracks) {
+				QJsonObject oObjT = itT.toObject();
+				SearchTrackItems_s oItemTrack;
 
-		oQuery.addQueryItem("q", asrExpression);
-		oQuery.addQueryItem("type", "track");
-		oQuery.addQueryItem("market", "BR");
-		oURL.setQuery(oQuery);
+				oItemTrack.iDuration_ms = oObjT["duration_ms"].toInt() ;
+				oItemTrack.sId          = oObjT["id"         ].toString();
+				oItemTrack.sName        = oObjT["name"       ].toString();
+				oItemTrack.iPopularity  = oObjT["popularity" ].toInt();
+				oItemTrack.sPreview_url = oObjT["preview_url"].toString().toUtf8() ;
+				oItemTrack.sType        = oObjT["type"       ].toString();
 
-		// Adiciona Headers e faz requisicao get
-		// https://developer.spotify.com/documentation/web-api/reference/search/search/
-		QNetworkRequest oWebRequest(oURL) ;
-		// curl -X "GET"
-		// https://api.spotify.com/v1/search?q=lazy&type=track
-		// -H "Accept: application/json"
-		// -H "Content-Type: application/json"
-		// -H "Authorization: Bearer BQAV4DAkHQWn6lXjdHvQ3wvrLbfIro5nwhZhxQZudZQDJIc3IifxzWbSwAbbvfNOIP0iXAttDadXkaQsvPbPbzd5wlqrFEDbVpvxvjplowmSxh5ZvhxClzsVe5xl-pch8cPMTpauj02UxjLaVxHrGvI"
-		oWebRequest.setRawHeader("Accept:", "application/json");
-		oWebRequest.setRawHeader("Content-Type:", "application/json");
-		oWebRequest.setRawHeader("Authorization:", "Bearer " + msToken);
-		opWebManager->get( oWebRequest );
+				QJsonObject oObjAlbum = oObjT["album"].toObject();
+				oItemTrack.oAlbum.sAlbum_type   = oObjAlbum["album_type"  ].toString();
+				oItemTrack.oAlbum.sName         = oObjAlbum["name"        ].toString();
+				oItemTrack.oAlbum.sRelease_date = oObjAlbum["release_date"].toString();
 
-		oTimeOut.start(  int(muTimeout_ms)  ); // Inicia contagem de timeout
+				QJsonArray oArrayImages = oObjAlbum["images"].toArray();
+				for (auto itIm : oArrayImages) {
+					QJsonObject oObjImg = itIm.toObject();
+					SearchTrackItems_s::Images_s oItemImg;
+					oItemImg.iHeight = oObjImg["height"].toInt();
+					oItemImg.iWidth  = oObjImg["width" ].toInt();
+					oItemImg.sUrl    = oObjImg["url"   ].toString();
 
-		for( ; uNumIter<(muTimeout_ms/muTimeQuantaWait) && !bReturned; uNumIter++) {
-			QTest::qWait(int(muTimeQuantaWait)); // Dorme sem paralisar a lambda por 100ms
-		}
+					oItemTrack.oAlbum.ovImages.push_back(oItemImg);
+				}
 
-		if(bReturned) {
-			QFile oFileTemp("SearchResultLazy.json");
-			bool   b = oFileTemp.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Unbuffered);
-			qint64 q = oFileTemp.write(sContent) ;
-			oFileTemp.close();
+				QJsonArray oArrayArtists = oObjT["artists"].toArray();
+				for (auto itA : oArrayArtists) {
+					QJsonObject oObjA = itA.toObject();
+					SearchTrackItems_s::Artist_s oItemArt;
+					oItemArt.sName = oObjA["name"].toString();
+					oItemArt.sType = oObjA["type"].toString();
 
+					oItemTrack.ovArtists.push_back(oItemArt);
+				}
 
-//			AddSearchStructure();
-
-			QJsonParseError oErrorParser;
-			QJsonDocument   oJsonDoc = QJsonDocument::fromJson(sContent, &oErrorParser);
-			if (!oJsonDoc.isNull()) {
-//				msToken           = oJsonDoc["access_token"].toString().toUtf8();
-//				QString sTokenType = oJsonDoc["token_type"  ].toString(); // Espera: "Bearer"
-//				int iLifeTime     = oJsonDoc["expires_in"  ].toInt(); // Espera: 3600
-				//QString x4      = oJsonDoc["scope     "  ].toString();
-//				moRenewToken.setInterval((3*iLifeTime)/4); // 3/4 of the time
-
-//				meConnectionStatus = ("Bearer" == sTokenType) ? ConnectionStatus_e::eOK :ConnectionStatus_e::eERROR ;
+				avrReturnTracks.push_back(oItemTrack);
 			}
 		}
 	}
+
 	uint32_t uTimeRet_ms = uNumIter*muTimeQuantaWait ;
 	return uTimeRet_ms ;
+}
+
+
+// ****************************************************************************
+// retorno: tempo de procura
+uint32_t
+SpotifyAPI_c::movSearchTrack(
+		const QString& asrExpression,
+		uint32_t auNumTracks,
+		uint32_t auSearchFlags,
+		std::vector<SearchTrackItems_s>& avrReturnSearch)
+{
+	uint32_t uSumTime= 0 ;
+	avrReturnSearch.clear();
+	if(ConnectionStatus_e::eOK == meConnectionStatus) {
+
+		SearchStepInfo_s oSearchStep ;
+
+		uint32_t uOffestTrack=0;
+
+		bool bStop = false;
+		do {
+			uint32_t uTime = 0;
+			std::vector<SearchTrackItems_s> ovResultTemp;
+			uTime = SpotifyAPI_c::movSearchTrackAuxiliar(
+						asrExpression,
+						muMAX_SEARCH_TRACKS,
+						uOffestTrack,
+						ovResultTemp,
+						oSearchStep) ;
+
+			// Includes only filtered by the flags.
+			for(uint16_t u=0 ; u<ovResultTemp.size() && !bStop ; u++){
+				// Nand entre
+				bool bIns = true ;
+				if(auSearchFlags!=0) {
+					bIns = (auSearchFlags & uint32_t(Flags_e::eIS_PLAYABLE_30s)) && (ovResultTemp[u].sPreview_url!="");
+				}
+				if (bIns){
+					avrReturnSearch.push_back(ovResultTemp[u]) ;
+					bStop |= avrReturnSearch.size() == auNumTracks ; // Encheu
+				}
+			}
+			uSumTime     += uTime;
+			uOffestTrack += uint32_t(oSearchStep.iLimit);
+			bStop |= ovResultTemp.size() < muMAX_SEARCH_TRACKS ;  // Nao tem mais
+
+			// inserir até encher
+		} while (!bStop) ;
+	}
+	return uSumTime ;
 }
 
 
@@ -181,10 +273,10 @@ SpotifyAPI_c::mvSetTimeQuantaWait(uint32_t auTimeQuantaWait)
 void
 SpotifyAPI_c::mvRenewTokenSlot()
 {
-	moRenewToken.setInterval((3*miLifeTime)/4); // 3/4 do tempo
+	moRenewToken.setInterval((3*miLifeTime)/4) ; // 3/4 do tempo
 
-	mvRenewTokenCommon();
-	moRenewToken.start(miLifeTime); // E vamos nos de novo...
+	mvRenewTokenCommon() ;
+	moRenewToken.start(miLifeTime) ; // E vamos nos de novo...
 }
 
 

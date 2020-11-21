@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1078</width>
-    <height>657</height>
+    <width>1081</width>
+    <height>738</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="mopW_PushButton_TestaSpotify">
     <property name="geometry">
      <rect>
-      <x>530</x>
+      <x>890</x>
       <y>10</y>
       <width>75</width>
       <height>23</height>
@@ -31,18 +31,18 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>500</y>
-      <width>751</width>
-      <height>111</height>
+      <y>570</y>
+      <width>1051</width>
+      <height>121</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="mopW_PushButton_Crypto">
     <property name="geometry">
      <rect>
-      <x>620</x>
+      <x>980</x>
       <y>10</y>
-      <width>80</width>
+      <width>71</width>
       <height>21</height>
      </rect>
     </property>
@@ -103,9 +103,9 @@
     <property name="geometry">
      <rect>
       <x>400</x>
-      <y>40</y>
+      <y>70</y>
       <width>331</width>
-      <height>451</height>
+      <height>421</height>
      </rect>
     </property>
    </widget>
@@ -113,10 +113,114 @@
     <property name="geometry">
      <rect>
       <x>750</x>
-      <y>40</y>
+      <y>70</y>
       <width>311</width>
-      <height>451</height>
+      <height>421</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="mopW_CheckBox_30s">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>540</y>
+      <width>91</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>30 segundos</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="mopW_LineEdit_MaxTracks">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>510</y>
+      <width>113</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>50</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>510</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Max Faixas:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="mopW_PushButton_TestaSpotify_2">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>500</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>===&gt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="mopW_PushButton_TestaSpotify_3">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>500</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>-</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>50</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PlayLists:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>50</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Músicas:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="mopW_PushButton_TestaSpotify_4">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>500</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>-</string>
     </property>
    </widget>
   </widget>
@@ -125,7 +229,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1078</width>
+     <width>1081</width>
      <height>20</height>
     </rect>
    </property>

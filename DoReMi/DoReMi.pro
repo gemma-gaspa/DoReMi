@@ -16,7 +16,6 @@ SOURCES += \
 	DialogGetPassword_d.cpp \
 	ManageUserData_c.cpp \
 	SimpleCrypt/SimpleCryptQt.cpp \
-	SpotifyAPI/SearchItems_s.cpp \
 	SpotifyAPI/SpotifyAPI_c.cpp \
 	TestProbe/TestProbe_b.cpp \
 	main.cpp \
@@ -28,7 +27,6 @@ HEADERS += \
 	DialogGetPassword_d.h \
 	ManageUserData_c.h \
 	SimpleCrypt/SimpleCryptQt.h \
-	SpotifyAPI/SearchItems_s.h \
 	SpotifyAPI/SpotifyAPI_c.h \
 	SpotifyAPI/SpotifyUserSecrets_c.h \
 	TestProbe/TestProbe_b.h \
