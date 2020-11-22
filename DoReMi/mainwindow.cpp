@@ -64,7 +64,10 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 	//moManageSetLists
-	moManageSetLists.mvSetWidgets(ui->mopW_TableWidget_Playlists, ui->mopW_ComboBox_Users);
+	moManageSetLists.mvSetWidgets(
+				ui->mopW_TableWidget_Playlists,
+				ui->mopW_TableWidget_Tracks,
+				ui->mopW_ComboBox_Users);
 	moManageSetLists.mvFromFile() ;
 }
 
@@ -149,15 +152,29 @@ void MainWindow::on_mopW_PushButton_Search_clicked()
 	ui->mopW_PushButton_Search->setEnabled(true);
 	ui->mopW_TableWidget_Search->setEnabled(true);
 	ui->mopW_LineEdit_Search->setEnabled(true);
-
-
-
 }
 
 
 // ****************************************************************************
 // Seleciona um dos usuarios!
-void MainWindow::on_mopW_ComboBox_Users_currentIndexChanged(int aiIndex)
+void
+MainWindow::on_mopW_ComboBox_Users_currentIndexChanged(int aiIndex)
 {
-	moManageSetLists.mvSetUser(aiIndex);
+	moManageSetLists.mvSetActiveUser(aiIndex);
+}
+
+
+// ****************************************************************************
+// Seleciona um dos usuarios!
+void
+MainWindow::on_mopW_TableWidget_Playlists_currentCellChanged(
+		int currentRow,
+		int /*currentColumn*/,
+		int previousRow,
+		int /*previousColumn*/)
+{
+	if(currentRow != previousRow) {
+		moManageSetLists.mvSetActiveSetlist(currentRow);
+
+	}
 }

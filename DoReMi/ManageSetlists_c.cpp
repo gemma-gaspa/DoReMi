@@ -151,9 +151,10 @@ ManageSetlists_c::mbSetOrder(bool abCrescent)
 
 // **************************************************************************
 void
-ManageSetlists_c::mvSetWidgets(QTableWidget *aopW_TableSetlists, QComboBox* aopW_ComboBoxUsers)
+ManageSetlists_c::mvSetWidgets(QTableWidget *aopW_TableSetlists, QTableWidget* aopW_TableTracks, QComboBox* aopW_ComboBoxUsers)
 {
 	mopW_TableSetlists = aopW_TableSetlists ;
+	mopW_TableTracks   = aopW_TableTracks;
 	mopW_ComboBoxUsers = aopW_ComboBoxUsers ;
 }
 
@@ -180,6 +181,52 @@ ManageSetlists_c::mvDataToSetlistTable()
 				mopW_TableSetlists->setItem(uSL, 0, opName);
 			}
 			mopW_TableSetlists->repaint();
+		}
+	}
+}
+
+
+// **************************************************************************
+void
+ManageSetlists_c::mvDataToTracksTable()
+{
+	if(miCurrentSetlistIndex >=0 && miCurrentUserIndex >=0) {
+		mopW_TableTracks->setRowCount(0); // Erase All
+
+		if( movUsersData.size() != 0) {
+			auto& orSL = movUsersData[size_t(miCurrentUserIndex)].ovSetLists;
+
+			if(orSL.size() >0) {
+				auto& orTracks = orSL[size_t(miCurrentSetlistIndex)].ovTracks;
+
+
+				// Fill the table
+				for(uint16_t uTr=0 ; uTr<orTracks.size() ; uTr++) {
+					mopW_TableTracks->insertRow(uTr);
+					// Nao ha vazamento de memoria: QTableWidget apagara os QTableWidgetItem
+					QString sTrack  = orTracks[uTr].sTrackName ;
+					QString sArtist = orTracks[uTr].sArtist ;
+					QString sAlbum  = orTracks[uTr].sAlbumName ;
+					QString sDate   = orTracks[uTr].sReleaseDate ;
+
+					QTableWidgetItem* opTrack  = new QTableWidgetItem(sTrack );
+					QTableWidgetItem* opArtist = new QTableWidgetItem(sArtist);
+					QTableWidgetItem* opAlbum  = new QTableWidgetItem(sAlbum );
+					QTableWidgetItem* opDate   = new QTableWidgetItem(sDate  );
+
+					// Itens nao-editaveis:
+					opTrack ->setFlags( opTrack ->flags() &~Qt::ItemIsEditable );
+					opArtist->setFlags( opArtist->flags() &~Qt::ItemIsEditable );
+					opAlbum ->setFlags( opAlbum ->flags() &~Qt::ItemIsEditable );
+					opDate  ->setFlags( opDate  ->flags() &~Qt::ItemIsEditable );
+
+					mopW_TableTracks->setItem(uTr, 0, opTrack );
+					mopW_TableTracks->setItem(uTr, 1, opArtist);
+					mopW_TableTracks->setItem(uTr, 2, opAlbum );
+					mopW_TableTracks->setItem(uTr, 3, opDate  );
+				}
+				mopW_TableTracks->repaint(); // Verificar necessidade
+			}
 		}
 	}
 }
@@ -214,11 +261,28 @@ ManageSetlists_c::moGetDataItem(uint16_t auItem)
 
 // **************************************************************************
 void
-ManageSetlists_c::mvSetUser(int aiIndex)
+ManageSetlists_c::mvSetActiveUser(int aiIndex)
 {
 	if( aiIndex < int(movUsersData.size()) ) {
 		miCurrentUserIndex = aiIndex;
 		mvDataToSetlistTable();
+	} else {
+		miCurrentUserIndex = -1; // sem selecao
 	}
 }
+
+
+// **************************************************************************
+void
+ManageSetlists_c::mvSetActiveSetlist(int aiIndex)
+{
+	if( movUsersData.size() > 0) {
+		if(miCurrentUserIndex != -1) {
+			miCurrentSetlistIndex = aiIndex;
+			mvDataToTracksTable();
+		}
+	}
+
+}
+
 

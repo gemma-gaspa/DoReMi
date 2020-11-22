@@ -31,11 +31,13 @@ private slots:
 
 	void on_mopW_ComboBox_Users_currentIndexChanged(int index);
 
+	void on_mopW_TableWidget_Playlists_currentCellChanged(int currentRow, int, int previousRow, int);
+
 private:
 	Ui::MainWindow *ui;
 
 	ManageSetlists_c moManageSetLists ;
-	SpotifyAPI_c moSpotifyAPI ; // Manager de comunicacao com a API do Spotify
+	SpotifyAPI_c     moSpotifyAPI ; // Manager de comunicacao com a API do Spotify
 };
 #endif // MAINWINDOW_H
 

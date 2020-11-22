@@ -43,23 +43,30 @@ public:
 	void mvFromFile() ;
 	void mvToFile() ;
 
-	void mvSetUser(int aiIndex);
+	void mvSetActiveUser(int aiIndex);
+	void mvSetActiveSetlist(int aiIndex);
 
 	void mvAddElement(UsersData_s& aorUserData) ;
 	void mvDelElement(int aiIndex) ;
 
 	bool mbSetOrder(bool abCrescent) ;
-	void mvSetWidgets(QTableWidget* aopW_TableSetlists, QComboBox* aopW_ComboBoxUsers);
+	void mvSetWidgets(
+			QTableWidget* aopW_TableSetlists,
+			QTableWidget* aopW_TableTracks,
+			QComboBox* aopW_ComboBoxUsers);
 
 	UsersData_s moGetDataItem(uint16_t auItem);
 
 private:
 	void mvDataToSetlistTable() ;
+	void mvDataToTracksTable() ;
 	void mvDataToComboBox();
 	constexpr static char msFileName[] = "UsersData.json" ;
 
 	QTableWidget* mopW_TableSetlists = nullptr;
+	QTableWidget* mopW_TableTracks   = nullptr;
 	QComboBox*    mopW_ComboBoxUsers = nullptr;
+
 	std::vector<UsersData_s> movUsersData ;
 
 	int miCurrentUserIndex = -1;
