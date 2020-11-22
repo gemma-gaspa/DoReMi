@@ -16,98 +16,63 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	ui->setupUi(this);
 
-	// Configura tabela
-	ui->mopW_TableWidget_Search->insertColumn(0);
-	ui->mopW_TableWidget_Search->insertColumn(1);
-	ui->mopW_TableWidget_Search->insertColumn(2);
-	ui->mopW_TableWidget_Search->insertColumn(3);
-	//ui->mopW_TableWidget->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
-	ui->mopW_TableWidget_Search->resizeColumnToContents(1);
+	// Configura tabela Search
+	{
+		ui->mopW_TableWidget_Search->insertColumn(0);
+		ui->mopW_TableWidget_Search->insertColumn(1);
+		ui->mopW_TableWidget_Search->insertColumn(2);
+		ui->mopW_TableWidget_Search->insertColumn(3);
+		//ui->mopW_TableWidget_Search->setResizeMode(QHeaderView::ResizeToContents);
+		ui->mopW_TableWidget_Search->resizeColumnToContents(1);
 
-	// https://www.qtcentre.org/threads/21008-Change-QTableWidget-header-name-or-text
-	// https://www.embeddeduse.com/2016/04/29/using-cpp-11-initializer-lists-in-qt-ways/
-	QStringList svList = { "Música", "Artista", "Álbum","Data Lançamento"} ;
-	ui->mopW_TableWidget_Search->setHorizontalHeaderLabels(svList);
+		QStringList svList = { "Música", "Artista", "Álbum","Data Lançamento"} ;
+		ui->mopW_TableWidget_Search->setHorizontalHeaderLabels(svList);
 
-	ui->mopW_TableWidget_Search->setColumnWidth(0, 220);
-	ui->mopW_TableWidget_Search->setColumnWidth(1, 220);
+		ui->mopW_TableWidget_Search->setColumnWidth(0, 220);
+		ui->mopW_TableWidget_Search->setColumnWidth(1, 220);
+	}
+
+	// Configura tabela Tracks
+	{
+		ui->mopW_TableWidget_Tracks->insertColumn(0);
+		ui->mopW_TableWidget_Tracks->insertColumn(1);
+		ui->mopW_TableWidget_Tracks->insertColumn(2);
+		ui->mopW_TableWidget_Tracks->insertColumn(3);
+		//ui->mopW_TableWidget_Tracks->setResizeMode(QHeaderView::ResizeToContents);
+		ui->mopW_TableWidget_Tracks->resizeColumnToContents(1);
+
+		QStringList svList = { "Música", "Artista", "Álbum","Data Lançamento"} ;
+		ui->mopW_TableWidget_Tracks->setHorizontalHeaderLabels(svList);
+	}
+
+
+	// Configura tabela Playlists
+	{
+		ui->mopW_TableWidget_Playlists->insertColumn(0);
+		ui->mopW_TableWidget_Playlists->insertColumn(1);
+		//ui->mopW_TableWidget_Playlists->setResizeMode(QHeaderView::ResizeToContents);
+		ui->mopW_TableWidget_Playlists->resizeColumnToContents(1);
+
+		QStringList svList = { "Nome", "Data"} ;
+		ui->mopW_TableWidget_Playlists->setHorizontalHeaderLabels(svList);
+
+		ui->mopW_TableWidget_Playlists->setColumnWidth(0, 150);
+		ui->mopW_TableWidget_Playlists->setColumnWidth(1, 50);
+	}
 
 
 
 
-
-
-
-	mspReturnPost = new QByteArray ;
+	//moManageSetLists
+	moManageSetLists.mvSetWidgets(ui->mopW_TableWidget_Playlists, ui->mopW_ComboBox_Users);
+	moManageSetLists.mvFromFile() ;
 }
 
 
 // ****************************************************************************
 MainWindow::~MainWindow()
 {
-	delete mspReturnPost  ;
 	delete ui;
-}
-
-
-// ****************************************************************************
-void
-MainWindow::on_mopW_PushButton_TestaSpotify_clicked()
-{
-	QByteArray  sClient_ID     = "c7964ee8177b6" ;
-	QByteArray  sClient_Secret = "2f71244f" ;
-	QByteArray  sKey =  (sClient_ID + ":" + sClient_Secret).toBase64(); // Codifica para Base64
-
-
-	ui->mopW_TextBrowser_Out->setText("Requisitando autorização de cliente...");
-
-//	QUrl sEndpoint("https://api.spotify.com/authorize");
-//	QUrl sEndpoint("https://api.spotify.com/api/token");
-	QUrl sEndpoint("https://accounts.spotify.com/api/token?grant_type=client_credentials");
-
-	QNetworkAccessManager *opWebManager = new QNetworkAccessManager(this);
-
-	//      source         signal                           dest          function to execute
-	connect(opWebManager, &QNetworkAccessManager::finished, this        , &MainWindow::replyFinished);
-	connect(opWebManager, &QNetworkAccessManager::finished, opWebManager, &QNetworkAccessManager::deleteLater);
-
-	QNetworkRequest oWebRequest(sEndpoint) ;
-	oWebRequest.setRawHeader("Authorization", "Basic " + sKey);
-
-
-	opWebManager->post( oWebRequest, *mspReturnPost );
-
-//	delete opWebManager; memory leak!
-}
-
-
-// ****************************************************************************
-void
-MainWindow::replyFinished(QNetworkReply* aopReply)
-{
-	QByteArray sContent = aopReply->readAll();
-
-	QString sToText = "MainWindow::replyFinished: " + QString(aopReply->isFinished() ? "Terminou" : "Esperandoooo" ) ;
-
-	QString sError = aopReply->errorString();
-
-	// Relatoriozinho:
-	if("" == sError) {
-		sToText += "\n\n" + sContent ;
-
-	} else {
-		sToText += "\n  " + sError ;
-		if(sError == "TLS initialization failed") {
-			sToText += "\n       https://stackoverflow.com/questions/53805704/tls-initialization-failed-on-get-request/53809217" ;
-		}
-
-		sToText += "\n\n" + sContent ;
-	}
-
-	ui->mopW_TextBrowser_Out->setText( sToText );
-
-
-//	aopReply->deleteLater();
 }
 
 
@@ -187,4 +152,12 @@ void MainWindow::on_mopW_PushButton_Search_clicked()
 
 
 
+}
+
+
+// ****************************************************************************
+// Seleciona um dos usuarios!
+void MainWindow::on_mopW_ComboBox_Users_currentIndexChanged(int aiIndex)
+{
+	moManageSetLists.mvSetUser(aiIndex);
 }

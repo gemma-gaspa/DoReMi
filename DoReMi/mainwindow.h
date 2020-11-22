@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <ManageSetlists_c.h>
 
 // Projeto
 #include "DialogClient_d.h"
@@ -25,21 +25,17 @@ public:
 	~MainWindow();
 
 private slots:
-	void on_mopW_PushButton_TestaSpotify_clicked();
 	void on_mopW_PushButton_ConfigClienteSpotify_clicked();
 
 	void on_mopW_PushButton_Search_clicked();
 
+	void on_mopW_ComboBox_Users_currentIndexChanged(int index);
+
 private:
 	Ui::MainWindow *ui;
 
-	QByteArray* mspReturnPost = nullptr ; // verificar importancia desta coisa.
-
+	ManageSetlists_c moManageSetLists ;
 	SpotifyAPI_c moSpotifyAPI ; // Manager de comunicacao com a API do Spotify
-
-	void replyFinished(QNetworkReply* aopReply);
-
-
 };
 #endif // MAINWINDOW_H
 

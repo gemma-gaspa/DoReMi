@@ -41,9 +41,6 @@ private:
 
 	QTableWidget* mopW_TableWidget = nullptr;
 	std::vector<ClientData_s> movClientData ;
-
-	void DrawTable() ;
-
 } ;
 
 #endif // MANAGE_CLIENT_DATA_C_H
