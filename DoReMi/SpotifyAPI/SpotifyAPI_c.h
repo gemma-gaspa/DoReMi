@@ -108,9 +108,10 @@ public:
 
 	ConnectionStatus_e meGetConnectionStatus() const ;
 
-private:
-
+private slots:
 	void     mvRenewTokenSlot() ;
+
+private:
 	uint32_t muTimeout_ms = 3500 ;
 
 	uint32_t mvRenewTokenCommon() ;
@@ -167,8 +168,8 @@ private:
 
 	bool mbEnableSpotifyAPI = false ;
 
-	int miLifeTime = 3600;
-	QTimer moRenewToken ;
+	int miLifeTime_ms = 3600*1000; // valor padrao da documentacao
+	QTimer moTimerRenewToken ;
 };
 
 #endif // GASPASPOTIFYAPI_C_H

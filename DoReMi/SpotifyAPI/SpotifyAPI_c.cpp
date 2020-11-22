@@ -47,8 +47,9 @@ SpotifyAPI_c::SpotifyAPI_c():
 	msEndpointAuth("https://accounts.spotify.com/api/token")
 	,msEndpointSearch("https://api.spotify.com/v1/search")
 {
-	//      source         signal         dest  function to execute
-	connect(&moRenewToken, &QTimer::stop, this, &SpotifyAPI_c::mvRenewTokenSlot); // signal para renovar token, depois de menos que 1h
+	//      source              signal            dest obj  function to execute (slot)
+	connect(&moTimerRenewToken, &QTimer::timeout, this    , &SpotifyAPI_c::mvRenewTokenSlot); // signal para renovar token, depois de menos que 1h
+
 }
 
 
@@ -273,10 +274,7 @@ SpotifyAPI_c::mvSetTimeQuantaWait(uint32_t auTimeQuantaWait)
 void
 SpotifyAPI_c::mvRenewTokenSlot()
 {
-	moRenewToken.setInterval((3*miLifeTime)/4) ; // 3/4 do tempo
-
 	mvRenewTokenCommon() ;
-	moRenewToken.start(miLifeTime) ; // E vamos nos de novo...
 }
 
 
@@ -335,11 +333,13 @@ SpotifyAPI_c::mvRenewTokenCommon() {
 		if (!oJsonDoc.isNull()) {
 			msToken            = oJsonDoc["access_token"].toString().toUtf8();
 			QString sTokenType = oJsonDoc["token_type"  ].toString(); // Espera: "Bearer"
-			int iLifeTime      = oJsonDoc["expires_in"  ].toInt(); // Espera: 3600
+			miLifeTime_ms      = oJsonDoc["expires_in"  ].toInt()*(1000*3)/(4*1); // fire on 3/4 of the time
 			QString x4         = oJsonDoc["scope     "  ].toString();
-			moRenewToken.setInterval((3*iLifeTime)/4); // 3/4 of the time
 
+			//moTimerRenewToken.setInterval(miLifeTime_ms);
 			meConnectionStatus = ("Bearer" == sTokenType) ? ConnectionStatus_e::eOK :ConnectionStatus_e::eERROR ;
+
+			moTimerRenewToken.start(miLifeTime_ms) ; // E vamos nos de novo...
 		}
 	}
 
