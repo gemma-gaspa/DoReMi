@@ -2,7 +2,7 @@
 #define DIALOG_CLIENT_D_H
 
 //Prj
-#include "ManageUserData_c.h"
+#include "ManageClientsData_c.h"
 #include "SpotifyAPI/SpotifyUserSecrets_c.h"
 
 // moc
@@ -50,7 +50,7 @@ private:
 
 	// Classe auxiliar para manusear dados de users entre tela/memória/arquivo
 	// Podera ser destacada e seguir "vida propria"
-	ManageUserData_c moManageUserData;
+	ManageClientsData_c moManageUserData;
 
 	// Retorno da janela:
 	SpotifyUserSecrets_c& morSpotifyUserSecrets;

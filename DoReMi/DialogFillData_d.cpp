@@ -3,7 +3,7 @@
 
 
 // ****************************************************************************
-DialogFillData_d::DialogFillData_d(ManageUserData_c::UserData_s& aorData, QWidget *parent) :
+DialogFillData_d::DialogFillData_d(ManageClientsData_c::ClientData_s& aorData, QWidget *parent) :
 	QDialog(parent)
 	,ui(new Ui::DialogFillData_d)
 	,morData(aorData)
@@ -105,7 +105,7 @@ DialogFillData_d::on_mopW_ButtonBox_accepted()
 	// Criptografar e salvar na struct
 	morData.sClient_ID     = oCrypto.mEncryptToByteArray(ui->mopW_LineEdit_ClientID->text(    ).toUtf8());
 	morData.sClient_Secret = oCrypto.mEncryptToByteArray(ui->mopW_LineEdit_ClientSecret->text().toUtf8());
-	morData.sCryptoTest    = oCrypto.mEncryptToByteArray(QByteArray(ManageUserData_c::msCryptoTest));
+	morData.sCryptoTest    = oCrypto.mEncryptToByteArray(QByteArray(ManageClientsData_c::msCryptoTest));
 
 	// Sem rastros na memoria da chave original:
 	if(1) {

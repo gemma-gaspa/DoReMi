@@ -1,6 +1,6 @@
 
 // Prj
-#include "ManageUserData_c.h"
+#include "ManageClientsData_c.h"
 
 // Qt
 #include <QJsonDocument>
@@ -9,11 +9,11 @@
 #include <QFile>
 
 
-const char ManageUserData_c::msCryptoTest[] ="123";
+const char ManageClientsData_c::msCryptoTest[] ="123";
 
 
 // **************************************************************************
-ManageUserData_c::ManageUserData_c()
+ManageClientsData_c::ManageClientsData_c()
 {
 
 }
@@ -21,7 +21,7 @@ ManageUserData_c::ManageUserData_c()
 
 // **************************************************************************
 void
-ManageUserData_c::mvFromFile()
+ManageClientsData_c::mvFromFile()
 {
 	QFile sDataFile(msFileName);
 	sDataFile.open(QIODevice::ReadOnly | QIODevice::Text | QIODevice::Unbuffered);
@@ -31,11 +31,11 @@ ManageUserData_c::mvFromFile()
 	QJsonParseError oErrorParser;
 	QJsonDocument   oJsonDoc = QJsonDocument::fromJson(sRawDataFile, &oErrorParser);
 
-	movUserData.clear();
+	movClientData.clear();
 	if (!oJsonDoc.isNull()) {
 		QJsonArray oArray = oJsonDoc.array() ;
 		foreach(const QJsonValue& oJsonElem, oArray) {
-			UserData_s oElem;
+			ClientData_s oElem;
 			oElem.sName          = oJsonElem["sName"         ].toString();
 			oElem.sDateTime      = oJsonElem["sDateTime"     ].toString();
 			oElem.sClient_ID     = oJsonElem["sClient_ID"    ].toString().toUtf8();
@@ -48,7 +48,7 @@ ManageUserData_c::mvFromFile()
 			oElem.sClient_Secret = QByteArray::fromBase64(oElem.sClient_Secret);
 			oElem.sCryptoTest    = QByteArray::fromBase64(oElem.sCryptoTest);
 
-			movUserData.push_back(oElem) ;
+			movClientData.push_back(oElem) ;
 		}
 	}
 
@@ -59,11 +59,11 @@ ManageUserData_c::mvFromFile()
 
 // **************************************************************************
 void
-ManageUserData_c::mvToFile()
+ManageClientsData_c::mvToFile()
 {
 	QJsonArray oArray ;
-	for(uint16_t u=0 ; u<movUserData.size() ; u++) { // sim, eu sei que dá pra usar iterator.
-		UserData_s oElem = movUserData[u];
+	for(uint16_t u=0 ; u<movClientData.size() ; u++) { // sim, eu sei que dá pra usar iterator.
+		ClientData_s oElem = movClientData[u];
 
 		oElem.sClient_ID     = oElem.sClient_ID.toBase64();
 		oElem.sClient_Secret = oElem.sClient_Secret.toBase64();
@@ -94,20 +94,20 @@ ManageUserData_c::mvToFile()
 
 // **************************************************************************
 void
-ManageUserData_c::mvAddElement(UserData_s& aorUserData)
+ManageClientsData_c::mvAddElement(ClientData_s& aorUserData)
 {
-	movUserData.push_back(aorUserData) ;
+	movClientData.push_back(aorUserData) ;
 	mvDataToTable() ;
 }
 
 
 // **************************************************************************
 void
-ManageUserData_c::mvDelElement(int aiIndex)
+ManageClientsData_c::mvDelElement(int aiIndex)
 {
-	if(aiIndex >=0  && aiIndex < int(movUserData.size())) {
-		auto it = movUserData.begin();
-		movUserData.erase(it);
+	if(aiIndex >=0  && aiIndex < int(movClientData.size())) {
+		auto it = movClientData.begin();
+		movClientData.erase(it);
 	}
 	mvDataToTable() ;
 }
@@ -115,7 +115,7 @@ ManageUserData_c::mvDelElement(int aiIndex)
 
 // **************************************************************************
 bool
-ManageUserData_c::mbSetOrder(bool abCrescent)
+ManageClientsData_c::mbSetOrder(bool abCrescent)
 {
 
 }
@@ -123,7 +123,7 @@ ManageUserData_c::mbSetOrder(bool abCrescent)
 
 // **************************************************************************
 void
-ManageUserData_c::mvSetTableWidget(QTableWidget *aopW_Table)
+ManageClientsData_c::mvSetTableWidget(QTableWidget *aopW_Table)
 {
 	mopW_TableWidget = aopW_Table ;
 }
@@ -131,7 +131,7 @@ ManageUserData_c::mvSetTableWidget(QTableWidget *aopW_Table)
 
 // **************************************************************************
 void
-ManageUserData_c::mvDataToTable()
+ManageClientsData_c::mvDataToTable()
 {
 	if(nullptr != mopW_TableWidget) {
 		mopW_TableWidget->setRowCount(0); // Erase All
@@ -139,11 +139,11 @@ ManageUserData_c::mvDataToTable()
 		// Reorder
 
 
-		for(uint16_t u=0 ; u<movUserData.size() ; u++) {
+		for(uint16_t u=0 ; u<movClientData.size() ; u++) {
 			mopW_TableWidget->insertRow(u);
 			// Nao ha vazamento de memoria: QTableWidget apagara os QTableWidgetItem
-			QTableWidgetItem* opName = new QTableWidgetItem(movUserData[u].sName);
-			QTableWidgetItem* opDate = new QTableWidgetItem(movUserData[u].sDateTime);
+			QTableWidgetItem* opName = new QTableWidgetItem(movClientData[u].sName);
+			QTableWidgetItem* opDate = new QTableWidgetItem(movClientData[u].sDateTime);
 
 			// Itens nao-editaveis:
 			opName->setFlags( opName->flags() &~Qt::ItemIsEditable );
@@ -158,13 +158,14 @@ ManageUserData_c::mvDataToTable()
 
 
 // **************************************************************************
-ManageUserData_c::UserData_s
-ManageUserData_c::moGetDataItem(uint16_t auItem)
+ManageClientsData_c::ClientData_s
+ManageClientsData_c::moGetDataItem(uint16_t auItem)
 {
-	UserData_s oRet;
-	if(auItem < movUserData.size()) {
-		oRet = movUserData[auItem];
+	ClientData_s oRet;
+	if(auItem < movClientData.size()) {
+		oRet = movClientData[auItem];
 	}
 	return oRet;
 }
+
 

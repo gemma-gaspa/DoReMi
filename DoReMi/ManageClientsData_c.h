@@ -1,19 +1,19 @@
-#ifndef MANAGEUSERDATA_C_H
-#define MANAGEUSERDATA_C_H
+#ifndef MANAGE_CLIENT_DATA_C_H
+#define MANAGE_CLIENT_DATA_C_H
 
-
+// Qt
 #include <QTableWidget>
 #include <QString>
 
 
 // Classe auxiliar para manusear dados de users entre tela/memória/arquivo
 // Podera ser destacada e seguir "vida propria"
-class ManageUserData_c {
+class ManageClientsData_c {
 public:
 
 	const static char msCryptoTest[] ;
 
-	struct UserData_s {
+	struct ClientData_s {
 		QString     sName ;
 		QString     sDateTime ;      // da Criacao do registro
 		QByteArray  sCryptoTest ;    // precisa dar sempre o mesmo número.
@@ -22,28 +22,28 @@ public:
 		QString     sReminder ;
 	};
 
-	ManageUserData_c();
+	ManageClientsData_c();
 
 	void mvFromFile() ;
 	void mvToFile() ;
 
-	void mvAddElement(UserData_s& aorUserData) ;
+	void mvAddElement(ClientData_s& aorUserData) ;
 	void mvDelElement(int aiIndex) ;
 
 	bool mbSetOrder(bool abCrescent) ;
 	void mvSetTableWidget(QTableWidget* aopW_Table);
 
-	UserData_s moGetDataItem(uint16_t auItem);
+	ClientData_s moGetDataItem(uint16_t auItem);
 
 private:
 	void mvDataToTable() ;
 	constexpr static char msFileName[] = "Tokens.json" ;
 
 	QTableWidget* mopW_TableWidget = nullptr;
-	std::vector<UserData_s> movUserData ;
+	std::vector<ClientData_s> movClientData ;
 
 	void DrawTable() ;
 
 } ;
 
-#endif // MANAGEUSERDATA_C_H
+#endif // MANAGE_CLIENT_DATA_C_H

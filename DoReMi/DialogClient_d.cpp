@@ -68,7 +68,7 @@ DialogClient_d::~DialogClient_d()
 void
 DialogClient_d::on_mopW_PushButton_Insert_clicked()
 {
-	ManageUserData_c::UserData_s oGetUserData ;
+	ManageClientsData_c::ClientData_s oGetUserData ;
 
 	DialogFillData_d oDialogFillData(oGetUserData, this);
 	oDialogFillData.setModal(true);
@@ -128,7 +128,7 @@ DialogClient_d::on_mopW_PushButton_Adopt_clicked()
 	int iRow = ui->mopW_TableWidget->currentRow() ;
 	bool bSelected = iRow >= 0 ;
 	if(bSelected) {
-		ManageUserData_c::UserData_s oUserData = moManageUserData.moGetDataItem(uint16_t(iRow));
+		ManageClientsData_c::ClientData_s oUserData = moManageUserData.moGetDataItem(uint16_t(iRow));
 
 		quint64 uKey = 0;
 		DialogGetPassword_d DialogGetPassword_d(uKey, nullptr, this);

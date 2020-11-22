@@ -5,7 +5,7 @@
 #include <QDialog>
 
 // Prj
-#include "ManageUserData_c.h"
+#include "ManageClientsData_c.h"
 
 
 namespace Ui {
@@ -17,7 +17,7 @@ class DialogFillData_d : public QDialog
 	Q_OBJECT
 
 public:
-	explicit DialogFillData_d(ManageUserData_c::UserData_s& aorData, QWidget *parent = nullptr);
+	explicit DialogFillData_d(ManageClientsData_c::ClientData_s& aorData, QWidget *parent = nullptr);
 	~DialogFillData_d();
 
 private slots:
@@ -38,7 +38,7 @@ private:
 
 	const QString msTimeFormat = "yyyy/MM/dd  -  HH:mm:ss";
 
-	ManageUserData_c::UserData_s& morData;
+	ManageClientsData_c::ClientData_s& morData;
 
 	void mvEnableOkBtnTest();
 };
