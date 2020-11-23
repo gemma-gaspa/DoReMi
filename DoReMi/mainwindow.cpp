@@ -63,6 +63,8 @@ MainWindow::MainWindow(QWidget *parent)
 	// Alguns botoes desligados:
 	ui->mopW_PushButton_AdicionarTrack->setEnabled( false );
 	ui->mopW_PushButton_AddUser->setEnabled(false);
+	ui->mopW_PushButton_DelUser->setEnabled(false);
+
 
 
 
@@ -167,6 +169,8 @@ void
 MainWindow::on_mopW_ComboBox_Users_currentIndexChanged(int aiIndex)
 {
 	moManageSetLists.mvSetActiveUser(aiIndex);
+	bool bEnableDelBtn = (aiIndex>=0);  //Nenhum item selecionado
+	ui->mopW_PushButton_DelUser->setEnabled(bEnableDelBtn);
 }
 
 
@@ -229,6 +233,7 @@ void MainWindow::on_mopW_PushButton_AddUser_clicked()
 {
 	QString sName = ui->mopW_LineEdit_NewUser->text();
 	moManageSetLists.mvAddUser(sName);
+	ui->mopW_LineEdit_NewUser->setText("");
 }
 
 
