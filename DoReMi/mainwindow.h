@@ -49,6 +49,10 @@ private slots:
 
 	void on_mopW_LineEdit_NewPlaylist_textChanged(const QString& asrNewPlaylist);
 
+	void on_mopW_PushButton_DelTrack_clicked();
+
+	void on_mopW_TableWidget_Tracks_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
 private:
 	Ui::MainWindow* ui;
 

@@ -189,7 +189,6 @@ MainWindow::on_mopW_TableWidget_Playlists_currentCellChanged(
 {
 	if(currentRow != previousRow) {
 		moManageSetLists.mvSetActiveSetlist(currentRow);
-
 	}
 }
 
@@ -296,4 +295,24 @@ MainWindow::on_mopW_LineEdit_NewPlaylist_textChanged(const QString &asrNewPlayli
 
 	bool bEnableAdd = (asrNewPlaylist!="") && !bDuplicate ;
 	ui->mopW_PushButton_AddPlaylist->setEnabled(bEnableAdd);
+}
+
+
+// **************************************************************************
+void
+MainWindow::on_mopW_PushButton_DelTrack_clicked()
+{
+	int iIndex = ui->mopW_TableWidget_Tracks->currentRow();
+	moManageSetLists.mvDelTrack(iIndex);
+}
+
+
+// **************************************************************************
+void MainWindow::on_mopW_TableWidget_Tracks_currentCellChanged(
+		int currentRow,
+		int /*currentColumn*/,
+		int previousRow,
+		int /*previousColumn*/)
+{
+	ui->mopW_PushButton_DelTrack->setEnabled(currentRow != -1);
 }

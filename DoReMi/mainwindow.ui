@@ -239,7 +239,7 @@
      <string>Sequencial</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="mopW_PushButton_TestaSpotify_7">
+   <widget class="QPushButton" name="mopW_PushButton_DelTrack">
     <property name="geometry">
      <rect>
       <x>1020</x>

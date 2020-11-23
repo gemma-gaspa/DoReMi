@@ -184,7 +184,19 @@ ManageSetlists_c::mvAddTrack(UsersData_s::SetLists_s::Track_s& aorTrack)
 void
 ManageSetlists_c::mvDelTrack(int aiIndex)
 {
+	if(miCurrentUserIndex>=0  && miCurrentUserIndex<int(movUsersData.size()) ) {
+		auto& orSL = movUsersData[uint32_t(miCurrentUserIndex)].ovSetLists;
 
+		if(aiIndex>=0 && aiIndex<int(orSL.size())) {
+
+			if(miCurrentSetlistIndex>=0 && miCurrentSetlistIndex<int(orSL.size())){
+				auto& orTrk = orSL[uint32_t(miCurrentSetlistIndex)].ovTracks;
+
+				orTrk.erase(orTrk.begin()+aiIndex);
+				mvDataToTracksTable();
+			}
+		}
+	}
 }
 
 /*
