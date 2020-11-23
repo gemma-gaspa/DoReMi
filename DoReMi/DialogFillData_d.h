@@ -6,13 +6,15 @@
 
 // Prj
 #include "ManageClientsData_c.h"
+#include "TestProbe/TestProbe_b.h"
+
 
 
 namespace Ui {
 	class DialogFillData_d;
 }
 
-class DialogFillData_d : public QDialog
+class DialogFillData_d : public QDialog, public TestProbe_b
 {
 	Q_OBJECT
 
@@ -41,6 +43,13 @@ private:
 	ManageClientsData_c::ClientData_s& morData;
 
 	void mvEnableOkBtnTest();
+
+private: //TestProbe_b Interface
+	std::string vsMyName() {return "";}
+	uint32_t vsTestOrdinary()    {return 0;}
+	uint32_t vsTestRegressions() {return 0;}
+	uint32_t vsTestMembers()     {return 0;}
+	uint32_t vsTestInherited()   {return 0;}
 };
 
 #endif // DIALOG_FILL_DATA_D_H

@@ -1,13 +1,15 @@
 #ifndef DIALOGGETPASSWORD_D_H
 #define DIALOGGETPASSWORD_D_H
 
+#include "TestProbe/TestProbe_b.h"
+
 #include <QDialog>
 
 namespace Ui {
 class DialogGetPassword_d;
 }
 
-class DialogGetPassword_d : public QDialog
+class DialogGetPassword_d : public QDialog, public TestProbe_b
 {
 	Q_OBJECT
 
@@ -28,6 +30,13 @@ private:
 	// Retorno:
 	quint64& murKey;
 	QString* mspReminder = nullptr;
+
+private: //TestProbe_b Interface
+	std::string vsMyName() {return "";}
+	uint32_t vsTestOrdinary()    {return 0;}
+	uint32_t vsTestRegressions() {return 0;}
+	uint32_t vsTestMembers()     {return 0;}
+	uint32_t vsTestInherited()   {return 0;}
 };
 
 #endif // DIALOGGETPASSWORD_D_H

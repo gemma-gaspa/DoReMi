@@ -5,13 +5,22 @@
 #include <typeinfo>
 
 
+std::ostream* TestProbe_b::mopDump = nullptr;
+
+
 // **************************************************************************
-TestProbe_b::TestProbe_b(std::ostream& aorDump):
-	morDump(aorDump)
+TestProbe_b::TestProbe_b()
 {
 	std::string funcMacro=__FUNCTION__;
 
 	std::string info = typeid(*this).name();
+}
+
+
+// **************************************************************************
+void
+TestProbe_b::svSetOutput(std::ostream* aopDump){
+	mopDump = aopDump;
 
 }
 
@@ -41,7 +50,7 @@ TestProbe_b::msTestAll()
 uint32_t
 TestProbe_b::vsTestOrdinary()
 {
-	morDump << "Not Tested" ;
+	*mopDump << "Not Tested" ;
 	return 0;
 }
 
@@ -51,7 +60,7 @@ TestProbe_b::vsTestOrdinary()
 uint32_t
 TestProbe_b::vsTestRegressions()
 {
-	morDump << "Not Tested" ;
+	*mopDump << "Not Tested" ;
 	return 0;
 }
 
@@ -60,7 +69,7 @@ TestProbe_b::vsTestRegressions()
 uint32_t
 TestProbe_b::vsTestMembers()
 {
-	morDump << "No members"  ;
+	*mopDump << "No members"  ;
 	return 0;
 }
 
@@ -69,7 +78,7 @@ TestProbe_b::vsTestMembers()
 uint32_t
 TestProbe_b::vsTestInherited()
 {
-	morDump << "No inheritance"  ;
+	*mopDump << "No inheritance"  ;
 	return 0;
 }
 

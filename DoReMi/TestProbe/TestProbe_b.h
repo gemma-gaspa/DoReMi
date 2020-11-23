@@ -19,8 +19,10 @@
 class TestProbe_b
 {
 public:
-	TestProbe_b(std::ostream& aorDump);
+	TestProbe_b();
 	virtual ~TestProbe_b() ;
+
+	static void svSetOutput(std::ostream* aopDump);
 
 	static void result();
 
@@ -37,7 +39,7 @@ private:
 	virtual uint32_t vsTestMembers() ;
 	virtual uint32_t vsTestInherited() ;
 
-	std::ostream& morDump ;
+	static std::ostream* mopDump ;
 };
 
 #endif // TESTPROBE_B_H

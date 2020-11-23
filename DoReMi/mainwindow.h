@@ -6,17 +6,19 @@
 // Prj
 #include "DialogClient_d.h"
 #include "ManageSetlists_c.h"
+#include "MediaPlayer_c.h"
 #include "SpotifyAPI/SpotifyAPI_c.h"
+#include "TestProbe/TestProbe_b.h"
+
 
 // Qt
-#include "MediaPlayer_c.h"
 
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public TestProbe_b
 {
 	Q_OBJECT
 
@@ -77,6 +79,14 @@ private:
 	void mvSignalsTableWidget_Search() ;
 	void mvSignalsTableWidget_Playlists() ;
 	void mvSignalsTableWidget_Tracks() ;
+
+
+private: //TestProbe_b Interface
+	std::string vsMyName() {return "";}
+	uint32_t vsTestOrdinary()    {return 0;}
+	uint32_t vsTestRegressions() {return 0;}
+	uint32_t vsTestMembers()     {return 0;}
+	uint32_t vsTestInherited()   {return 0;}
 
 };
 #endif // MAINWINDOW_H

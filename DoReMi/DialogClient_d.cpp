@@ -49,10 +49,10 @@ DialogClient_d::DialogClient_d(SpotifyUserSecrets_c& aorSpotifyUserSecrets, QWid
 	ui->mopW_PushButton_Adopt->setEnabled( false );
 
 
-	moManageUserData.mvSetTableWidget(ui->mopW_TableWidget);
+	moManageClientsData.mvSetTableWidget(ui->mopW_TableWidget);
 
 	// Ler arquivo
-	moManageUserData.mvFromFile();
+	moManageClientsData.mvFromFile();
 }
 
 
@@ -76,7 +76,7 @@ DialogClient_d::on_mopW_PushButton_Insert_clicked()
 
 	// Insere dados
 	if(oGetUserData.sName != "") {
-		moManageUserData.mvAddElement(oGetUserData);
+		moManageClientsData.mvAddElement(oGetUserData);
 	}
 }
 
@@ -87,7 +87,7 @@ DialogClient_d::on_mopW_PushButton_Delete_clicked()
 {
 	// Se clicou eh porque ha algo selecionado na tabela.
 	int iYpos = ui->mopW_TableWidget->currentRow() ;
-	moManageUserData.mvDelElement(iYpos) ;
+	moManageClientsData.mvDelElement(iYpos) ;
 //	moManageUserData.mvToFile();
 }
 
@@ -114,7 +114,7 @@ DialogClient_d::on_mopW_TableWidget_itemSelectionChanged()
 void
 DialogClient_d::on_mopW_PushButton_Save_clicked()
 {
-	moManageUserData.mvToFile();
+	moManageClientsData.mvToFile();
 
 
 	mvExit();
@@ -128,7 +128,7 @@ DialogClient_d::on_mopW_PushButton_Adopt_clicked()
 	int iRow = ui->mopW_TableWidget->currentRow() ;
 	bool bSelected = iRow >= 0 ;
 	if(bSelected) {
-		ManageClientsData_c::ClientData_s oUserData = moManageUserData.moGetDataItem(uint16_t(iRow));
+		ManageClientsData_c::ClientData_s oUserData = moManageClientsData.moGetDataItem(uint16_t(iRow));
 
 		quint64 uKey = 0;
 		DialogGetPassword_d DialogGetPassword_d(uKey, nullptr, this);

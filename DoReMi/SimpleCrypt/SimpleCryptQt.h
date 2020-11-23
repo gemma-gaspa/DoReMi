@@ -27,6 +27,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef SIMPLECRYPT_H
 #define SIMPLECRYPT_H
+
+// Prj
+#include "TestProbe/TestProbe_b.h"
+
+// Qt
 #include <QString>
 #include <QVector>
 #include <QFlags>
@@ -56,7 +61,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   */
 
 
-class SimpleCryptQt
+class SimpleCryptQt: public TestProbe_b
 {
 public:
 	/**
@@ -234,6 +239,13 @@ private:
 	CompressionMode_e meCompressionMode;
 	IntegrityProtectionMode_e meProtectionMode;
 	Error_e meLast_Error;
+
+private: //TestProbe_b Interface
+	std::string vsMyName() {return "";}
+	uint32_t vsTestOrdinary()    {return 0;}
+	uint32_t vsTestRegressions() {return 0;}
+	uint32_t vsTestMembers()     {return 0;}
+	uint32_t vsTestInherited()   {return 0;}
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(SimpleCryptQt::CryptoFlags)
 

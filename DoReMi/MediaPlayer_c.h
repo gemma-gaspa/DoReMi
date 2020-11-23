@@ -1,10 +1,14 @@
 #ifndef MEDIA_PLAYER_C_H
 #define MEDIA_PLAYER_C_H
 
+// Prj
+#include "TestProbe/TestProbe_b.h"
+
+// Qt
 #include <QObject>
 #include <QMediaPlayer>
 
-class MediaPlayer_c : public QObject
+class MediaPlayer_c : public QObject, public TestProbe_b
 {
 	Q_OBJECT
 public:
@@ -39,6 +43,15 @@ private:
 	uint32_t muPlayPosition = 0;
 
 	bool mbKeepPaused  = false ;
+
+
+private: //TestProbe_b Interface
+	std::string vsMyName() {return "";}
+	uint32_t vsTestOrdinary()    {return 0;}
+	uint32_t vsTestRegressions() {return 0;}
+	uint32_t vsTestMembers()     {return 0;}
+	uint32_t vsTestInherited()   {return 0;}
+
 };
 
 #endif // MEDIA_PLAYER_C_H

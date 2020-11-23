@@ -6,6 +6,8 @@
 
 // Proj
 #include "SpotifyUserSecrets_c.h"
+#include "TestProbe/TestProbe_b.h"
+
 
 // C/C++ Libs
 #include <map>
@@ -21,7 +23,7 @@
 
 // ******************************************************************
 // ******************************************************************
-class SpotifyAPI_c : public QObject
+class SpotifyAPI_c : public QObject, public TestProbe_b
 {
 	Q_OBJECT
 public:
@@ -173,6 +175,14 @@ private:
 
 	int miLifeTime_ms = 3600*1000; // valor padrao da documentacao
 	QTimer moTimerRenewToken ;
+
+
+private: //TestProbe_b Interface
+	std::string vsMyName() {return "";}
+	uint32_t vsTestOrdinary()    {return 0;}
+	uint32_t vsTestRegressions() {return 0;}
+	uint32_t vsTestMembers()     {return 0;}
+	uint32_t vsTestInherited()   {return 0;}
 };
 
 #endif // GASPASPOTIFYAPI_C_H

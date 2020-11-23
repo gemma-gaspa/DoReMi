@@ -1,6 +1,9 @@
 #ifndef MANAGE_SETLISTS_C_H
 #define MANAGE_SETLISTS_C_H
 
+// Prj
+#include "TestProbe/TestProbe_b.h"
+
 // C/C++
 #include <vector>
 
@@ -12,7 +15,7 @@
 
 // Classe auxiliar para manusear dados de users entre tela/memória/arquivo
 // Podera ser destacada e seguir "vida propria"
-class ManageSetlists_c {
+class ManageSetlists_c : public TestProbe_b {
 public:
 
 	const static char msCryptoTest[] ;
@@ -77,6 +80,15 @@ private:
 
 	int miCurrentUserIndex = -1;
 	int miCurrentSetlistIndex = -1;
+
+
+private: //TestProbe_b Interface
+	std::string vsMyName() {return "";}
+	uint32_t vsTestOrdinary()    {return 0;}
+	uint32_t vsTestRegressions() {return 0;}
+	uint32_t vsTestMembers()     {return 0;}
+	uint32_t vsTestInherited()   {return 0;}
+
 } ;
 
 #endif // MANAGE_SETLISTS_C_H
