@@ -60,6 +60,9 @@ MainWindow::MainWindow(QWidget *parent)
 		ui->mopW_TableWidget_Playlists->setColumnWidth(1, 50);
 	}
 
+	// Alguns botoes desligados:
+	ui->mopW_PushButton_AdicionarTrack->setEnabled( false );
+
 
 
 
@@ -75,6 +78,7 @@ MainWindow::MainWindow(QWidget *parent)
 // ****************************************************************************
 MainWindow::~MainWindow()
 {
+	moManageSetLists.mvToFile(); // Salva todos dados no drive.
 	delete ui;
 }
 
@@ -109,7 +113,7 @@ void MainWindow::on_mopW_PushButton_Search_clicked()
 	ui->mopW_LineEdit_Search->setEnabled(false);
 
 
-	std::vector<SpotifyAPI_c::SearchTrackItems_s> ovResult;
+	movResult.clear();
 	QString sSentence = ui->mopW_LineEdit_Search->text();
 
 	uint32_t uNumTracks = ui->mopW_LineEdit_MaxTracks->text().toUInt();
@@ -121,20 +125,20 @@ void MainWindow::on_mopW_PushButton_Search_clicked()
 				sSentence,
 				uNumTracks,
 				uSearchFlags,
-				ovResult);
+				movResult);
 
 	ui->mopW_TextBrowser_Out->setText("Tempo total de acesso: "+QString::number(uAccessTime_ms/1000.0));
 
 
 	// Populate Data
-	for(uint16_t u=0 ; u<ovResult.size() ; u++) {
+	for(uint16_t u=0 ; u<movResult.size() ; u++) {
 		ui->mopW_TableWidget_Search->insertRow(u);
 
 		// Nao ha vazamento de memoria: QTableWidget apagara os QTableWidgetItem
-		QTableWidgetItem* opName   = new QTableWidgetItem(ovResult[u].sName);
-		QTableWidgetItem* opArtist = new QTableWidgetItem(ovResult[u].ovArtists[0].sName);
-		QTableWidgetItem* opAlbum  = new QTableWidgetItem(ovResult[u].oAlbum.sName);
-		QTableWidgetItem* opDate   = new QTableWidgetItem(ovResult[u].oAlbum.sReleaseDate);
+		QTableWidgetItem* opName   = new QTableWidgetItem(movResult[u].sName);
+		QTableWidgetItem* opArtist = new QTableWidgetItem(movResult[u].ovArtists[0].sName);
+		QTableWidgetItem* opAlbum  = new QTableWidgetItem(movResult[u].oAlbum.sName);
+		QTableWidgetItem* opDate   = new QTableWidgetItem(movResult[u].oAlbum.sReleaseDate);
 
 		// Itens nao-editaveis:
 		opName->setFlags  ( opName->flags()   &~Qt::ItemIsEditable );
@@ -165,7 +169,7 @@ MainWindow::on_mopW_ComboBox_Users_currentIndexChanged(int aiIndex)
 
 
 // ****************************************************************************
-// Seleciona um dos usuarios!
+// Seleciona uma das playlists!
 void
 MainWindow::on_mopW_TableWidget_Playlists_currentCellChanged(
 		int currentRow,
@@ -177,4 +181,41 @@ MainWindow::on_mopW_TableWidget_Playlists_currentCellChanged(
 		moManageSetLists.mvSetActiveSetlist(currentRow);
 
 	}
+}
+
+
+// ****************************************************************************
+// Ativa Botao de Inserir Musica
+void MainWindow::on_mopW_TableWidget_Search_currentCellChanged(
+		int currentRow,
+		int /*currentColumn*/,
+		int /*previousRow*/,
+		int /*previousColumn*/)
+{
+	bool bLigarBtn = (currentRow != -1) && (ui->mopW_TableWidget_Playlists->currentRow() >=0);
+	ui->mopW_PushButton_AdicionarTrack->setEnabled( bLigarBtn );
+}
+
+
+// ****************************************************************************
+// Insere musica na setlist!
+void MainWindow::on_mopW_PushButton_AdicionarTrack_clicked()
+{
+	ManageSetlists_c::UsersData_s::SetLists_s::Track_s oTrack;
+
+	uint32_t uPos = uint32_t(  ui->mopW_TableWidget_Search->currentRow()  );
+	oTrack.sTrackName   = movResult[uPos].sName ;
+	oTrack.sAlbumName   = movResult[uPos].oAlbum.sName;
+	oTrack.sReleaseDate = movResult[uPos].oAlbum.sReleaseDate;
+	oTrack.sPreviewURL  = movResult[uPos].sPreview_url;
+
+	if(movResult[uPos].ovArtists.size() !=0) {
+		oTrack.sArtist      = movResult[uPos].ovArtists[0].sName; // Sim, pega so o primeiro
+	}
+
+	if(movResult[uPos].oAlbum.ovImages.size() !=0) {
+		oTrack.sImage       = movResult[uPos].oAlbum.ovImages[0].sUrl;
+	}
+
+	moManageSetLists.mvAddTrack(oTrack);
 }

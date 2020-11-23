@@ -112,7 +112,7 @@ ManageSetlists_c::mvToFile()
 
 	QByteArray sRawDataFile = QJsonDocument(oJsonArrayUsers).toJson() ;
 
-	QFile sDataFile( QString("S_")+msFileName ) ;
+	QFile sDataFile( msFileName ) ;
 	sDataFile.open( QIODevice::WriteOnly | QIODevice::Text | QIODevice::Unbuffered ) ;
 	sDataFile.write( sRawDataFile ) ;
 	sDataFile.close() ;
@@ -121,23 +121,21 @@ ManageSetlists_c::mvToFile()
 
 // **************************************************************************
 void
-ManageSetlists_c::mvAddElement(UsersData_s& aorUserData)
+ManageSetlists_c::mvAddTrack(UsersData_s::SetLists_s::Track_s& aorTrack)
 {
-	movUsersData.push_back(aorUserData) ;
-	mvDataToSetlistTable() ;
+	if(miCurrentSetlistIndex >=0 && miCurrentUserIndex >=0) {
+		auto& orTracks = movUsersData[uint32_t(miCurrentUserIndex)].ovSetLists[uint32_t(miCurrentSetlistIndex)].ovTracks ;
+		orTracks.push_back(aorTrack);
+		mvDataToTracksTable();
+	}
 }
 
 
 // **************************************************************************
 void
-ManageSetlists_c::mvDelElement(int aiIndex)
+ManageSetlists_c::mvDelTrack(int aiIndex)
 {
-	if(aiIndex >=0  && aiIndex < int(movUsersData.size())) {
-		auto it = movUsersData.begin();
-		movUsersData.erase(it);
-	}
-	mvDataToSetlistTable() ;
-	mvDataToComboBox();
+
 }
 
 /*
@@ -284,5 +282,7 @@ ManageSetlists_c::mvSetActiveSetlist(int aiIndex)
 	}
 
 }
+
+
 
 

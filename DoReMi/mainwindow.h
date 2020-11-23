@@ -33,8 +33,14 @@ private slots:
 
 	void on_mopW_TableWidget_Playlists_currentCellChanged(int currentRow, int, int previousRow, int);
 
+	void on_mopW_TableWidget_Search_currentCellChanged(int currentRow, int currentColumn, int, int previousColumn);
+
+	void on_mopW_PushButton_AdicionarTrack_clicked();
+
 private:
 	Ui::MainWindow *ui;
+
+	std::vector<SpotifyAPI_c::SearchTrackItems_s> movResult;
 
 	ManageSetlists_c moManageSetLists ;
 	SpotifyAPI_c     moSpotifyAPI ; // Manager de comunicacao com a API do Spotify

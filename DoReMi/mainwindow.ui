@@ -156,7 +156,7 @@
      <string>Max Faixas:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="mopW_PushButton_TestaSpotify_2">
+   <widget class="QPushButton" name="mopW_PushButton_AdicionarTrack">
     <property name="geometry">
      <rect>
       <x>660</x>

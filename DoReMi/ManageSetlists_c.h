@@ -46,8 +46,8 @@ public:
 	void mvSetActiveUser(int aiIndex);
 	void mvSetActiveSetlist(int aiIndex);
 
-	void mvAddElement(UsersData_s& aorUserData) ;
-	void mvDelElement(int aiIndex) ;
+	void mvAddTrack(UsersData_s::SetLists_s::Track_s& aorTrack);
+	void mvDelTrack(int aiIndex) ;
 
 	bool mbSetOrder(bool abCrescent) ;
 	void mvSetWidgets(
