@@ -61,7 +61,7 @@ public:
 			QTableWidget* aopW_TableTracks,
 			QComboBox*    aopW_ComboBoxUsers);
 
-	UsersData_s moGetDataItem(uint16_t auItem);
+	UsersData_s::SetLists_s::Track_s moGetDataTrack(int aiTrackIndex);
 
 private:
 	void mvDataToSetlistTable() ;

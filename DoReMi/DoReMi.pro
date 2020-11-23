@@ -1,6 +1,7 @@
 QT  += core gui
 QT  += network
 QT  += testlib
+QT  += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,6 +17,7 @@ SOURCES += \
 	DialogGetPassword_d.cpp \
 	ManageClientsData_c.cpp \
 	ManageSetlists_c.cpp \
+	MediaPlayer_c.cpp \
 	SimpleCrypt/SimpleCryptQt.cpp \
 	SpotifyAPI/SpotifyAPI_c.cpp \
 	TestProbe/TestProbe_b.cpp \
@@ -28,6 +30,7 @@ HEADERS += \
 	DialogGetPassword_d.h \
 	ManageClientsData_c.h \
 	ManageSetlists_c.h \
+	MediaPlayer_c.h \
 	SimpleCrypt/SimpleCryptQt.h \
 	SpotifyAPI/SpotifyAPI_c.h \
 	SpotifyAPI/SpotifyUserSecrets_c.h \

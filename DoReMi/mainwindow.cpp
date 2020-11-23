@@ -2,17 +2,21 @@
 #include "ui_mainwindow.h"
 
 // Prj
+#include "ManageSetlists_c.h"
 #include "SpotifyAPI/SpotifyUserSecrets_c.h"
+#include "MediaPlayer_c.h"
+
+// C/C++
+#include <vector>
 
 // Qt
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
 
 
 // ****************************************************************************
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MainWindow)
+	, moAudioPlayer(this)
 {
 	ui->setupUi(this);
 
@@ -120,7 +124,7 @@ void MainWindow::on_mopW_PushButton_Search_clicked()
 	ui->mopW_LineEdit_Search->setEnabled(false);
 
 
-	movResult.clear();
+	movSearchResult.clear();
 	QString sSentence = ui->mopW_LineEdit_Search->text();
 
 	uint32_t uNumTracks = ui->mopW_LineEdit_MaxTracks->text().toUInt();
@@ -132,20 +136,20 @@ void MainWindow::on_mopW_PushButton_Search_clicked()
 				sSentence,
 				uNumTracks,
 				uSearchFlags,
-				movResult);
+				movSearchResult);
 
 	ui->mopW_TextBrowser_Out->setText("Tempo total de acesso: "+QString::number(uAccessTime_ms/1000.0));
 
 
 	// Populate Data
-	for(uint16_t u=0 ; u<movResult.size() ; u++) {
+	for(uint16_t u=0 ; u<movSearchResult.size() ; u++) {
 		ui->mopW_TableWidget_Search->insertRow(u);
 
 		// Nao ha vazamento de memoria: QTableWidget apagara os QTableWidgetItem
-		QTableWidgetItem* opName   = new QTableWidgetItem(movResult[u].sName);
-		QTableWidgetItem* opArtist = new QTableWidgetItem(movResult[u].ovArtists[0].sName);
-		QTableWidgetItem* opAlbum  = new QTableWidgetItem(movResult[u].oAlbum.sName);
-		QTableWidgetItem* opDate   = new QTableWidgetItem(movResult[u].oAlbum.sReleaseDate);
+		QTableWidgetItem* opName   = new QTableWidgetItem(movSearchResult[u].sName);
+		QTableWidgetItem* opArtist = new QTableWidgetItem(movSearchResult[u].ovArtists[0].sName);
+		QTableWidgetItem* opAlbum  = new QTableWidgetItem(movSearchResult[u].oAlbum.sName);
+		QTableWidgetItem* opDate   = new QTableWidgetItem(movSearchResult[u].oAlbum.sReleaseDate);
 
 		// Itens nao-editaveis:
 		opName->setFlags  ( opName->flags()   &~Qt::ItemIsEditable );
@@ -179,51 +183,23 @@ MainWindow::on_mopW_ComboBox_Users_currentIndexChanged(int aiIndex)
 
 
 // ****************************************************************************
-// Seleciona uma das playlists!
-void
-MainWindow::on_mopW_TableWidget_Playlists_currentCellChanged(
-		int currentRow,
-		int /*currentColumn*/,
-		int previousRow,
-		int /*previousColumn*/)
-{
-	if(currentRow != previousRow) {
-		moManageSetLists.mvSetActiveSetlist(currentRow);
-	}
-}
-
-
-// ****************************************************************************
-// Ativa Botao de Inserir Musica
-void MainWindow::on_mopW_TableWidget_Search_currentCellChanged(
-		int currentRow,
-		int /*currentColumn*/,
-		int /*previousRow*/,
-		int /*previousColumn*/)
-{
-	bool bLigarBtn = (currentRow != -1) && (ui->mopW_TableWidget_Playlists->currentRow() >=0);
-	ui->mopW_PushButton_AdicionarTrack->setEnabled( bLigarBtn );
-}
-
-
-// ****************************************************************************
 // Insere musica na setlist!
 void MainWindow::on_mopW_PushButton_AdicionarTrack_clicked()
 {
 	ManageSetlists_c::UsersData_s::SetLists_s::Track_s oTrack;
 
 	uint32_t uPos = uint32_t(  ui->mopW_TableWidget_Search->currentRow()  );
-	oTrack.sTrackName   = movResult[uPos].sName ;
-	oTrack.sAlbumName   = movResult[uPos].oAlbum.sName;
-	oTrack.sReleaseDate = movResult[uPos].oAlbum.sReleaseDate;
-	oTrack.sPreviewURL  = movResult[uPos].sPreview_url;
+	oTrack.sTrackName   = movSearchResult[uPos].sName ;
+	oTrack.sAlbumName   = movSearchResult[uPos].oAlbum.sName;
+	oTrack.sReleaseDate = movSearchResult[uPos].oAlbum.sReleaseDate;
+	oTrack.sPreviewURL  = movSearchResult[uPos].sPreview_url;
 
-	if(movResult[uPos].ovArtists.size() !=0) {
-		oTrack.sArtist      = movResult[uPos].ovArtists[0].sName; // Sim, pega so o primeiro
+	if(movSearchResult[uPos].ovArtists.size() !=0) {
+		oTrack.sArtist      = movSearchResult[uPos].ovArtists[0].sName; // Sim, pega so o primeiro
 	}
 
-	if(movResult[uPos].oAlbum.ovImages.size() !=0) {
-		oTrack.sImage       = movResult[uPos].oAlbum.ovImages[0].sUrl;
+	if(movSearchResult[uPos].oAlbum.ovImages.size() !=0) {
+		oTrack.sImage       = movSearchResult[uPos].oAlbum.ovImages[0].sUrl;
 	}
 
 	moManageSetLists.mvAddTrack(oTrack);
@@ -307,12 +283,208 @@ MainWindow::on_mopW_PushButton_DelTrack_clicked()
 }
 
 
+
+
+
 // **************************************************************************
-void MainWindow::on_mopW_TableWidget_Tracks_currentCellChanged(
-		int currentRow,
-		int /*currentColumn*/,
-		int previousRow,
-		int /*previousColumn*/)
+void
+MainWindow::on_mopW_PushButton_PlayAudio_clicked()
 {
-	ui->mopW_PushButton_DelTrack->setEnabled(currentRow != -1);
+
+	moAudioPlayer.mvPlay();
+
+	// ▐ ▌■
 }
+
+
+// **************************************************************************
+void
+MainWindow::on_mopW_PushButton_PauseAudio_clicked()
+{
+	moAudioPlayer.mvPause();
+}
+
+
+
+
+
+
+
+
+
+
+
+// ****************************************************************************
+void
+MainWindow::on_mopW_TableWidget_Search_cellPressed(int , int)
+{
+	mvSignalsTableWidget_Search();
+}
+
+
+// ****************************************************************************
+void
+MainWindow::on_mopW_TableWidget_Search_cellChanged(int aiRow, int aiColumn)
+{
+	// testa apenas elemento (zero,zero), por tabela modificada
+	// Diminui overhead
+	if(0==aiRow  &&  0==aiColumn) {
+		mvSignalsTableWidget_Search();
+	}
+}
+
+
+// **************************************************************************
+void
+MainWindow::mvSignalsTableWidget_Search()
+{
+	int iRow = ui->mopW_TableWidget_Search->currentRow();
+
+	mvBtnAdd_TestEnable();
+
+//	moAudioPlayer.mvStop();
+	if(iRow!=-1) {
+		auto& oTrackInfo = movSearchResult[ uint32_t(iRow) ];
+
+		if(oTrackInfo.sPreview_url != "") {
+			MediaPlayer_c::PlaylistItem_s oItem ;
+			std::vector<MediaPlayer_c::PlaylistItem_s> ovPlaylistTemp ;
+
+			oItem.sName     = oTrackInfo.sName;
+			oItem.sAlbum    = oTrackInfo.oAlbum.sName;
+			oItem.sPlayLink = oTrackInfo.sPreview_url;
+
+			ovPlaylistTemp.push_back(oItem);
+
+			moAudioPlayer.mvSetPlaylist(ovPlaylistTemp);
+		}
+	}
+}
+
+
+
+
+
+
+
+
+// ****************************************************************************
+void MainWindow::on_mopW_TableWidget_Playlists_cellPressed(int , int)
+// Seleciona uma das playlists!
+{
+	mvSignalsTableWidget_Playlists();
+}
+
+
+// ****************************************************************************
+void
+MainWindow::on_mopW_TableWidget_Playlists_cellChanged(int aiRow, int aiColumn)
+{
+	// testa apenas elemento (zero,zero), por tabela modificada
+	// Diminui overhead
+	if(0==aiRow  &&  0==aiColumn) {
+		mvSignalsTableWidget_Playlists();
+	}
+}
+
+
+// **************************************************************************
+void
+MainWindow::mvSignalsTableWidget_Playlists()
+{
+	int iRow = ui->mopW_TableWidget_Playlists->currentRow();
+
+	moManageSetLists.mvSetActiveSetlist(iRow);
+
+	mvBtnAdd_TestEnable();
+
+//	moAudioPlayer.mvStop();
+	if(iRow!=-1) {
+		ManageSetlists_c::UsersData_s::SetLists_s::Track_s oTrackInfo;
+
+		std::vector<MediaPlayer_c::PlaylistItem_s> ovPlaylistTemp ;
+		int iSize = ui->mopW_TableWidget_Tracks->rowCount() ;
+		for(int i=0 ; i<iSize ; i++) {
+			MediaPlayer_c::PlaylistItem_s oItem ;
+			auto oItemTrackList = moManageSetLists.moGetDataTrack(i);
+
+			oItem.sName     = oItemTrackList.sTrackName;
+			oItem.sAlbum    = oItemTrackList.sAlbumName;
+			oItem.sPlayLink = oItemTrackList.sPreviewURL;
+
+			ovPlaylistTemp.push_back(oItem);
+		}
+		moAudioPlayer.mvSetPlaylist(ovPlaylistTemp);
+
+	}
+}
+
+
+
+
+
+
+
+void MainWindow::on_mopW_TableWidget_Tracks_cellPressed(int, int)
+{
+	mvSignalsTableWidget_Tracks();
+}
+
+
+// **************************************************************************
+void MainWindow::on_mopW_TableWidget_Tracks_cellChanged(int aiRow, int aiColumn)
+{
+	// testa apenas elemento (zero,zero), por tabela modificada
+	// Diminui overhead
+	if(0==aiRow  &&  0==aiColumn) {
+		mvSignalsTableWidget_Tracks();
+	}
+}
+
+
+// **************************************************************************
+void
+MainWindow::mvSignalsTableWidget_Tracks()
+{
+	int iRow = ui->mopW_TableWidget_Tracks->currentRow();
+
+	bool bRowExist = iRow!=-1;
+	ui->mopW_PushButton_DelTrack->setEnabled(bRowExist);
+
+	mvBtnAdd_TestEnable();
+
+//	moAudioPlayer.mvStop();
+	if(bRowExist) {
+		ManageSetlists_c::UsersData_s::SetLists_s::Track_s oTrackInfo;
+		oTrackInfo = moManageSetLists.moGetDataTrack(iRow);
+		QString sLink = oTrackInfo.sPreviewURL ;
+
+		if(sLink!="") {
+			MediaPlayer_c::PlaylistItem_s oItem ;
+			std::vector<MediaPlayer_c::PlaylistItem_s> ovPlaylistTemp ;
+
+			auto oItemTrackList = moManageSetLists.moGetDataTrack(iRow);
+
+			oItem.sName     = oItemTrackList.sTrackName;
+			oItem.sAlbum    = oItemTrackList.sAlbumName;
+			oItem.sPlayLink = oItemTrackList.sPreviewURL;
+
+			ovPlaylistTemp.push_back(oItem);
+
+			moAudioPlayer.mvSetPlaylist(ovPlaylistTemp);
+		}
+	}
+}
+
+
+// **************************************************************************
+void
+MainWindow::mvBtnAdd_TestEnable()
+{
+	int iRowPlaylists = ui->mopW_TableWidget_Playlists->currentRow();
+	int iRowSearch    = ui->mopW_TableWidget_Search->currentRow();
+
+	bool bLigarBtn = (iRowPlaylists >= 0) && (iRowSearch >= 0);
+	ui->mopW_PushButton_AdicionarTrack->setEnabled( bLigarBtn );
+}
+

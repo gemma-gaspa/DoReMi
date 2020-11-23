@@ -173,7 +173,7 @@ void
 ManageSetlists_c::mvAddTrack(UsersData_s::SetLists_s::Track_s& aorTrack)
 {
 	if(miCurrentSetlistIndex >=0 && miCurrentUserIndex >=0) {
-		auto& orTracks = movUsersData[uint32_t(miCurrentUserIndex)].ovSetLists[uint32_t(miCurrentSetlistIndex)].ovTracks ;
+		auto& orTracks = movUsersData[ uint32_t(miCurrentUserIndex) ].ovSetLists[ uint32_t(miCurrentSetlistIndex) ].ovTracks ;
 		orTracks.push_back(aorTrack);
 		mvDataToTracksTable();
 	}
@@ -185,12 +185,12 @@ void
 ManageSetlists_c::mvDelTrack(int aiIndex)
 {
 	if(miCurrentUserIndex>=0  && miCurrentUserIndex<int(movUsersData.size()) ) {
-		auto& orSL = movUsersData[uint32_t(miCurrentUserIndex)].ovSetLists;
+		auto& orSL = movUsersData[ uint32_t(miCurrentUserIndex) ].ovSetLists;
 
 		if(aiIndex>=0 && aiIndex<int(orSL.size())) {
 
 			if(miCurrentSetlistIndex>=0 && miCurrentSetlistIndex<int(orSL.size())){
-				auto& orTrk = orSL[uint32_t(miCurrentSetlistIndex)].ovTracks;
+				auto& orTrk = orSL[ uint32_t(miCurrentSetlistIndex) ].ovTracks;
 
 				orTrk.erase(orTrk.begin()+aiIndex);
 				mvDataToTracksTable();
@@ -308,12 +308,13 @@ ManageSetlists_c::mvDataToComboBox()
 
 
 // **************************************************************************
-ManageSetlists_c::UsersData_s
-ManageSetlists_c::moGetDataItem(uint16_t auItem)
+ManageSetlists_c::UsersData_s::SetLists_s::Track_s
+ManageSetlists_c::moGetDataTrack(int aiTrackIndex)
 {
-	UsersData_s oRet;
-	if(auItem < movUsersData.size()) {
-		oRet = movUsersData[auItem];
+	UsersData_s::SetLists_s::Track_s oRet;
+
+	if(miCurrentSetlistIndex >=0 && miCurrentUserIndex >=0) {
+		oRet = movUsersData[ uint32_t(miCurrentUserIndex) ].ovSetLists[ uint32_t(miCurrentSetlistIndex) ].ovTracks[ uint32_t(aiTrackIndex) ];
 	}
 	return oRet;
 }

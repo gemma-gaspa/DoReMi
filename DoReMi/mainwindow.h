@@ -2,14 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <ManageSetlists_c.h>
 
-// Projeto
+// Prj
 #include "DialogClient_d.h"
+#include "ManageSetlists_c.h"
 #include "SpotifyAPI/SpotifyAPI_c.h"
 
 // Qt
-#include <QNetworkAccessManager>
+#include "MediaPlayer_c.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -31,10 +31,6 @@ private slots:
 
 	void on_mopW_ComboBox_Users_currentIndexChanged(int index);
 
-	void on_mopW_TableWidget_Playlists_currentCellChanged(int currentRow, int, int previousRow, int);
-
-	void on_mopW_TableWidget_Search_currentCellChanged(int currentRow, int currentColumn, int, int previousColumn);
-
 	void on_mopW_PushButton_AdicionarTrack_clicked();
 
 	void on_mopW_PushButton_AddUser_clicked();
@@ -51,15 +47,35 @@ private slots:
 
 	void on_mopW_PushButton_DelTrack_clicked();
 
-	void on_mopW_TableWidget_Tracks_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
+	void on_mopW_PushButton_PlayAudio_clicked();
+
+	void on_mopW_PushButton_PauseAudio_clicked();
+
+	void on_mopW_TableWidget_Search_cellChanged(int aiRow, int aiColumn);
+	void on_mopW_TableWidget_Playlists_cellChanged(int aiRow, int aiColumn);
+	void on_mopW_TableWidget_Tracks_cellChanged(int aiRow, int aiColumn);
+
+	void on_mopW_TableWidget_Search_cellPressed(int, int );
+	void on_mopW_TableWidget_Playlists_cellPressed(int, int );
+	void on_mopW_TableWidget_Tracks_cellPressed(int , int );
 
 private:
 	Ui::MainWindow* ui;
 
-	std::vector<SpotifyAPI_c::SearchTrackItems_s> movResult;
+	std::vector<SpotifyAPI_c::SearchTrackItems_s> movSearchResult;
 
 	ManageSetlists_c moManageSetLists ;
 	SpotifyAPI_c     moSpotifyAPI ; // Manager de comunicacao com a API do Spotify
+
+	MediaPlayer_c moAudioPlayer;
+
+	void mvBtnAdd_TestEnable();
+
+	void mvSignalsTableWidget_Search() ;
+	void mvSignalsTableWidget_Playlists() ;
+	void mvSignalsTableWidget_Tracks() ;
+
 };
 #endif // MAINWINDOW_H
 
