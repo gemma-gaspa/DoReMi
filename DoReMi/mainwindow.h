@@ -37,6 +37,12 @@ private slots:
 
 	void on_mopW_PushButton_AdicionarTrack_clicked();
 
+	void on_mopW_PushButton_AddUser_clicked();
+
+	void on_mopW_PushButton_DelUser_clicked();
+
+	void on_mopW_LineEdit_NewUser_textChanged(const QString &asrNewUser);
+
 private:
 	Ui::MainWindow *ui;
 

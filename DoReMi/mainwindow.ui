@@ -295,7 +295,7 @@
     <property name="title">
      <string>Usuário:</string>
     </property>
-    <widget class="QPushButton" name="mopW_PushButton_TestaSpotify_10">
+    <widget class="QPushButton" name="mopW_PushButton_AddUser">
      <property name="geometry">
       <rect>
        <x>240</x>
@@ -333,7 +333,7 @@
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="mopW_PushButton_TestaSpotify_9">
+    <widget class="QPushButton" name="mopW_PushButton_DelUser">
      <property name="geometry">
       <rect>
        <x>240</x>
@@ -346,7 +346,7 @@
       <string>-</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="mopW_LineEdit_NewUser">
      <property name="geometry">
       <rect>
        <x>20</x>

@@ -62,6 +62,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 	// Alguns botoes desligados:
 	ui->mopW_PushButton_AdicionarTrack->setEnabled( false );
+	ui->mopW_PushButton_AddUser->setEnabled(false);
+
 
 
 
@@ -218,4 +220,37 @@ void MainWindow::on_mopW_PushButton_AdicionarTrack_clicked()
 	}
 
 	moManageSetLists.mvAddTrack(oTrack);
+}
+
+
+// **************************************************************************
+//
+void MainWindow::on_mopW_PushButton_AddUser_clicked()
+{
+	QString sName = ui->mopW_LineEdit_NewUser->text();
+	moManageSetLists.mvAddUser(sName);
+}
+
+
+// **************************************************************************
+//
+void
+MainWindow::on_mopW_PushButton_DelUser_clicked()
+{
+	int iIndex = ui->mopW_ComboBox_Users->currentIndex();
+	moManageSetLists.mvDelUser(iIndex);
+}
+
+
+// **************************************************************************
+void
+MainWindow::on_mopW_LineEdit_NewUser_textChanged(const QString& asrNewUser)
+{
+	bool bDuplicate = false ;
+	for(uint16_t u=0 ; u<ui->mopW_ComboBox_Users->count() ; u++) {
+		bDuplicate |= (asrNewUser == ui->mopW_ComboBox_Users->itemText(u));
+	}
+
+	bool bEnable = (asrNewUser!="") && !bDuplicate ;
+	ui->mopW_PushButton_AddUser->setEnabled(bEnable);
 }

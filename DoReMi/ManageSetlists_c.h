@@ -46,6 +46,12 @@ public:
 	void mvSetActiveUser(int aiIndex);
 	void mvSetActiveSetlist(int aiIndex);
 
+	void mvAddUser(const QString& aorName);
+	void mvDelUser(int aiIndex) ;
+
+	void mvAddSetlist(const QString& aorName);
+	void mvDelSetlist(int aiIndex) ;
+
 	void mvAddTrack(UsersData_s::SetLists_s::Track_s& aorTrack);
 	void mvDelTrack(int aiIndex) ;
 

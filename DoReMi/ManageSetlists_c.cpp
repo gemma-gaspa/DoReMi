@@ -121,6 +121,44 @@ ManageSetlists_c::mvToFile()
 
 // **************************************************************************
 void
+ManageSetlists_c::mvAddUser(const QString& aorName)
+{
+	UsersData_s oNewUser ;
+	oNewUser.sName = aorName;
+	movUsersData.push_back(oNewUser);
+	mvDataToComboBox();
+}
+
+
+// **************************************************************************
+void
+ManageSetlists_c::mvDelUser(int aiIndex)
+{
+	if( aiIndex>=0 && aiIndex<int(movUsersData.size()) ) {
+		movUsersData.erase(  movUsersData.begin()+aiIndex  );
+	}
+	mvDataToComboBox();
+}
+
+
+// **************************************************************************
+void
+ManageSetlists_c::mvAddSetlist(const QString& aorName)
+{
+
+}
+
+
+// **************************************************************************
+void
+ManageSetlists_c::mvDelSetlist(int aiIndex)
+{
+
+}
+
+
+// **************************************************************************
+void
 ManageSetlists_c::mvAddTrack(UsersData_s::SetLists_s::Track_s& aorTrack)
 {
 	if(miCurrentSetlistIndex >=0 && miCurrentUserIndex >=0) {
@@ -235,9 +273,10 @@ void
 ManageSetlists_c::mvDataToComboBox()
 {
 	if(nullptr != mopW_ComboBoxUsers) {
+		mopW_ComboBoxUsers->clear();
+
 		int i = mopW_ComboBoxUsers->currentIndex();
 		for(uint16_t u=0 ; u<movUsersData.size() ; u++){
-
 			mopW_ComboBoxUsers->addItem(movUsersData[u].sName);
 		}
 		mopW_ComboBoxUsers->setCurrentIndex(i); // no seletcion
