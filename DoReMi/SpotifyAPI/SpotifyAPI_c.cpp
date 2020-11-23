@@ -328,19 +328,29 @@ SpotifyAPI_c::mvRenewTokenCommon() {
 	}
 
 	if(bReturned) {
-		QJsonParseError oErrorParser;
-		QJsonDocument   oJsonDoc = QJsonDocument::fromJson(sContent, &oErrorParser);
-		if (!oJsonDoc.isNull()) {
-			msToken            = oJsonDoc["access_token"].toString().toUtf8();
-			QString sTokenType = oJsonDoc["token_type"  ].toString(); // Espera: "Bearer"
-			miLifeTime_ms      = oJsonDoc["expires_in"  ].toInt()*(1000*3)/(4*1); // fire on 3/4 of the time
-			QString x4         = oJsonDoc["scope     "  ].toString();
+		if(sError == "TLS initialization failed") {
+			meConnectionStatus = ConnectionStatus_e::eTLS_INIT_FAIL;
 
-			//moTimerRenewToken.setInterval(miLifeTime_ms);
-			meConnectionStatus = ("Bearer" == sTokenType) ? ConnectionStatus_e::eOK :ConnectionStatus_e::eERROR ;
+		} else {
+			QJsonParseError oErrorParser;
+			QJsonDocument   oJsonDoc = QJsonDocument::fromJson(sContent, &oErrorParser);
+			if (!oJsonDoc.isNull()) {
+				msToken            = oJsonDoc["access_token"].toString().toUtf8();
+				QString sTokenType = oJsonDoc["token_type"  ].toString(); // Espera: "Bearer"
+				miLifeTime_ms      = oJsonDoc["expires_in"  ].toInt()*(1000*3)/(4*1); // fire on 3/4 of the time
+				QString x4         = oJsonDoc["scope     "  ].toString();
 
-			moTimerRenewToken.start(miLifeTime_ms) ; // E vamos nos de novo...
+				//moTimerRenewToken.setInterval(miLifeTime_ms);
+				meConnectionStatus = ("Bearer" == sTokenType) ? ConnectionStatus_e::eOK :ConnectionStatus_e::eERROR_BEARER ;
+				moTimerRenewToken.start(miLifeTime_ms) ; // E vamos nos de novo...
+
+			} else {
+				meConnectionStatus = ConnectionStatus_e::ePARSER_ERROR;
+			}
 		}
+
+	} else  {
+		meConnectionStatus = ConnectionStatus_e::eTIMEOUT;
 	}
 
 	uint32_t uTimeRet_ms = uNumIter*muTimeQuantaWait ;

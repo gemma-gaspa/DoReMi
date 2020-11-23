@@ -103,7 +103,10 @@ public:
 	enum class ConnectionStatus_e {
 		eDISABLE,
 		eOK,
-		eERROR
+		eERROR_BEARER,
+		eTIMEOUT,
+		eTLS_INIT_FAIL,
+		ePARSER_ERROR,
 	};
 
 	ConnectionStatus_e meGetConnectionStatus() const ;
