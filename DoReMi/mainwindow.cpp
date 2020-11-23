@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	ui->setupUi(this);
 
+	setFixedSize(size()); // Nao permite redimensionamento
+
 	// Configura tabela Search
 	{
 		ui->mopW_TableWidget_Search->insertColumn(0);
@@ -292,7 +294,6 @@ MainWindow::on_mopW_PushButton_PlayAudio_clicked()
 {
 
 	moAudioPlayer.mvPlay();
-
 	// ▐ ▌■
 }
 
@@ -304,6 +305,12 @@ MainWindow::on_mopW_PushButton_PauseAudio_clicked()
 	moAudioPlayer.mvPause();
 }
 
+
+// **************************************************************************
+void MainWindow::on_mopW_PushButton_StopAudio_clicked()
+{
+	moAudioPlayer.mvStop();
+}
 
 
 
@@ -340,9 +347,9 @@ MainWindow::mvSignalsTableWidget_Search()
 {
 	int iRow = ui->mopW_TableWidget_Search->currentRow();
 
-	mvBtnAdd_TestEnable();
+	mvBtnAdd_Test();
 
-//	moAudioPlayer.mvStop();
+	moAudioPlayer.mvStop();
 	if(iRow!=-1) {
 		auto& oTrackInfo = movSearchResult[ uint32_t(iRow) ];
 
@@ -396,9 +403,9 @@ MainWindow::mvSignalsTableWidget_Playlists()
 
 	moManageSetLists.mvSetActiveSetlist(iRow);
 
-	mvBtnAdd_TestEnable();
+	mvBtnAdd_Test();
 
-//	moAudioPlayer.mvStop();
+	moAudioPlayer.mvStop();
 	if(iRow!=-1) {
 		ManageSetlists_c::UsersData_s::SetLists_s::Track_s oTrackInfo;
 
@@ -451,9 +458,9 @@ MainWindow::mvSignalsTableWidget_Tracks()
 	bool bRowExist = iRow!=-1;
 	ui->mopW_PushButton_DelTrack->setEnabled(bRowExist);
 
-	mvBtnAdd_TestEnable();
+	mvBtnAdd_Test();
 
-//	moAudioPlayer.mvStop();
+	moAudioPlayer.mvStop();
 	if(bRowExist) {
 		ManageSetlists_c::UsersData_s::SetLists_s::Track_s oTrackInfo;
 		oTrackInfo = moManageSetLists.moGetDataTrack(iRow);
@@ -477,9 +484,13 @@ MainWindow::mvSignalsTableWidget_Tracks()
 }
 
 
+
+
+
+
 // **************************************************************************
 void
-MainWindow::mvBtnAdd_TestEnable()
+MainWindow::mvBtnAdd_Test()
 {
 	int iRowPlaylists = ui->mopW_TableWidget_Playlists->currentRow();
 	int iRowSearch    = ui->mopW_TableWidget_Search->currentRow();
@@ -487,4 +498,5 @@ MainWindow::mvBtnAdd_TestEnable()
 	bool bLigarBtn = (iRowPlaylists >= 0) && (iRowSearch >= 0);
 	ui->mopW_PushButton_AdicionarTrack->setEnabled( bLigarBtn );
 }
+
 

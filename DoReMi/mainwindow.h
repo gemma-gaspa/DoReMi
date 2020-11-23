@@ -60,6 +60,8 @@ private slots:
 	void on_mopW_TableWidget_Playlists_cellPressed(int, int );
 	void on_mopW_TableWidget_Tracks_cellPressed(int , int );
 
+	void on_mopW_PushButton_StopAudio_clicked();
+
 private:
 	Ui::MainWindow* ui;
 
@@ -70,7 +72,7 @@ private:
 
 	MediaPlayer_c moAudioPlayer;
 
-	void mvBtnAdd_TestEnable();
+	void mvBtnAdd_Test();
 
 	void mvSignalsTableWidget_Search() ;
 	void mvSignalsTableWidget_Playlists() ;

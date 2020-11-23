@@ -27,8 +27,7 @@ MediaPlayer_c::mvSetPlaylist(std::vector<PlaylistItem_s>& aorPlaylist)
 void
 MediaPlayer_c::mvPlay()
 {
-	muPlayPosition=0;
-	mvPlayNext() ;
+	mvPlayNext(moMediaPlayer.state()) ;
 }
 
 
@@ -36,23 +35,38 @@ MediaPlayer_c::mvPlay()
 void
 MediaPlayer_c::mvPlayNext(QMediaPlayer::State aeState)
 {
-	if(QMediaPlayer::State::StoppedState != aeState) {
-		return ;
+	switch(aeState) {
+		case QMediaPlayer::State::PausedState :
+		{
+			if(!mbKeepPaused) {
+				moMediaPlayer.play();
+			}
+			mbKeepPaused = false ;
+		}
+		break;
+
+		// Next track logic:
+		case QMediaPlayer::State::StoppedState :
+		{
+			if(muPlayPosition<movPlaylist.size()) {
+
+				// Play Next track
+				QUrl sLink = movPlaylist[muPlayPosition].sPlayLink ;
+				moMediaPlayer.setMedia(sLink);
+
+				muPlayPosition++;
+				moMediaPlayer.play();
+			} else {
+				muPlayPosition=0;
+			}
+		}
+		break;
+
+		default: ;
 	}
 
-
-	if(muPlayPosition<movPlaylist.size()) {
-		QMediaPlayer::Error eError;
-		QString	            sError;
-
-		QString sLink = movPlaylist[muPlayPosition].sPlayLink ;
-		moMediaPlayer.setMedia(QUrl(sLink));
-		moMediaPlayer.play();
-
-		eError = moMediaPlayer.error();
-		sError = moMediaPlayer.errorString();
-		muPlayPosition++;
-	}
+	//QString             sError = moMediaPlayer.errorString();
+	//QMediaPlayer::Error eError = moMediaPlayer.error();
 }
 
 
@@ -60,7 +74,10 @@ MediaPlayer_c::mvPlayNext(QMediaPlayer::State aeState)
 void
 MediaPlayer_c::mvPause()
 {
-	moMediaPlayer.pause();
+	if(QMediaPlayer::State::PlayingState == moMediaPlayer.state()) {
+		mbKeepPaused = true ;
+		moMediaPlayer.pause();
+	}
 }
 
 
@@ -68,6 +85,9 @@ MediaPlayer_c::mvPause()
 void
 MediaPlayer_c::mvStop()
 {
+	bool bForceStop = QMediaPlayer::State::StoppedState != moMediaPlayer.state() ;
+
+	muPlayPosition = bForceStop ? uint32_t(-1) : 0;
 	moMediaPlayer.stop();
 }
 

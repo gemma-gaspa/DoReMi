@@ -31,12 +31,14 @@ signals:
 
 
 private:
-	void mvPlayNext(QMediaPlayer::State aeState = QMediaPlayer::State::StoppedState);
+	void mvPlayNext(QMediaPlayer::State aeState);
 
-	uint32_t muPlayPosition = 0;
 	std::vector<PlaylistItem_s> movPlaylist;
 
 	QMediaPlayer moMediaPlayer;
+	uint32_t muPlayPosition = 0;
+
+	bool mbKeepPaused  = false ;
 };
 
 #endif // MEDIA_PLAYER_C_H

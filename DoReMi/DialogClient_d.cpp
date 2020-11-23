@@ -142,7 +142,9 @@ DialogClient_d::on_mopW_PushButton_Adopt_clicked()
 		morSpotifyUserSecrets.Secret = oCrypto.msDecryptToByteArray(oUserData.sClient_Secret);
 	}
 
-	// Password
+	// Password check:
+
+
 	mvExit();
 }
 
@@ -153,7 +155,3 @@ DialogClient_d::mvExit()
 {
 	this->done(QDialog::Accepted);
 }
-
-
-
-
