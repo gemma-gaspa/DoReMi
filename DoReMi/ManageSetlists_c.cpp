@@ -136,8 +136,8 @@ ManageSetlists_c::mvDelUser(int aiIndex)
 {
 	if( aiIndex>=0 && aiIndex<int(movUsersData.size()) ) {
 		movUsersData.erase(  movUsersData.begin()+aiIndex  );
+		mvDataToComboBox();
 	}
-	mvDataToComboBox();
 }
 
 
@@ -145,7 +145,12 @@ ManageSetlists_c::mvDelUser(int aiIndex)
 void
 ManageSetlists_c::mvAddSetlist(const QString& aorName)
 {
-
+	if(miCurrentUserIndex>=0) {
+		UsersData_s::SetLists_s oNewPlaylist ;
+		oNewPlaylist.sName = aorName;
+		movUsersData[uint32_t(miCurrentUserIndex)].ovSetLists.push_back(oNewPlaylist);
+		mvDataToSetlistTable();
+	}
 }
 
 
@@ -153,7 +158,13 @@ ManageSetlists_c::mvAddSetlist(const QString& aorName)
 void
 ManageSetlists_c::mvDelSetlist(int aiIndex)
 {
-
+	if(miCurrentUserIndex>=0  && miCurrentUserIndex<int(movUsersData.size()) ) {
+		auto& orSL = movUsersData[uint32_t(miCurrentUserIndex)].ovSetLists;
+		if(aiIndex>=0 && aiIndex<int(orSL.size())) {
+			orSL.erase(orSL.begin()+aiIndex);
+			mvDataToSetlistTable();
+		}
+	}
 }
 
 
@@ -301,8 +312,12 @@ void
 ManageSetlists_c::mvSetActiveUser(int aiIndex)
 {
 	if( aiIndex < int(movUsersData.size()) ) {
-		miCurrentUserIndex = aiIndex;
-		mvDataToSetlistTable();
+		if(miCurrentUserIndex != aiIndex) {
+			miCurrentUserIndex = aiIndex;
+			mvDataToSetlistTable();
+			mopW_TableTracks->setRowCount(0); // Erase All
+
+		}
 	} else {
 		miCurrentUserIndex = -1; // sem selecao
 	}

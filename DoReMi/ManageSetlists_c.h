@@ -59,7 +59,7 @@ public:
 	void mvSetWidgets(
 			QTableWidget* aopW_TableSetlists,
 			QTableWidget* aopW_TableTracks,
-			QComboBox* aopW_ComboBoxUsers);
+			QComboBox*    aopW_ComboBoxUsers);
 
 	UsersData_s moGetDataItem(uint16_t auItem);
 

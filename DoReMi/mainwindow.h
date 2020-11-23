@@ -41,10 +41,16 @@ private slots:
 
 	void on_mopW_PushButton_DelUser_clicked();
 
-	void on_mopW_LineEdit_NewUser_textChanged(const QString &asrNewUser);
+	void on_mopW_LineEdit_NewUser_textChanged(const QString& asrNewUser);
+
+	void on_mopW_PushButton_AddPlaylist_clicked();
+
+	void on_mopW_PushButton_DelPlaylist_clicked();
+
+	void on_mopW_LineEdit_NewPlaylist_textChanged(const QString& asrNewPlaylist);
 
 private:
-	Ui::MainWindow *ui;
+	Ui::MainWindow* ui;
 
 	std::vector<SpotifyAPI_c::SearchTrackItems_s> movResult;
 

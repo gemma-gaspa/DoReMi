@@ -172,9 +172,9 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>20</x>
       <y>380</y>
-      <width>71</width>
+      <width>51</width>
       <height>16</height>
      </rect>
     </property>
@@ -195,7 +195,7 @@
      <string>Músicas:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="mopW_PushButton_TestaSpotify_4">
+   <widget class="QPushButton" name="mopW_PushButton_DelPlaylist">
     <property name="geometry">
      <rect>
       <x>284</x>
@@ -357,7 +357,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QPushButton" name="mopW_PushButton_TestaSpotify_11">
+   <widget class="QPushButton" name="mopW_PushButton_AddPlaylist">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -370,12 +370,12 @@
      <string>+</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="mopW_LineEdit_NewPlaylist">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>80</x>
       <y>380</y>
-      <width>201</width>
+      <width>191</width>
       <height>21</height>
      </rect>
     </property>

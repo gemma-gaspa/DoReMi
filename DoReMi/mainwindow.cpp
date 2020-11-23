@@ -62,8 +62,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 	// Alguns botoes desligados:
 	ui->mopW_PushButton_AdicionarTrack->setEnabled( false );
+	ui->mopW_PushButton_AddPlaylist->setEnabled(false);
+
 	ui->mopW_PushButton_AddUser->setEnabled(false);
 	ui->mopW_PushButton_DelUser->setEnabled(false);
+	ui->mopW_LineEdit_NewPlaylist->setEnabled(false);
 
 
 
@@ -169,8 +172,9 @@ void
 MainWindow::on_mopW_ComboBox_Users_currentIndexChanged(int aiIndex)
 {
 	moManageSetLists.mvSetActiveUser(aiIndex);
-	bool bEnableDelBtn = (aiIndex>=0);  //Nenhum item selecionado
-	ui->mopW_PushButton_DelUser->setEnabled(bEnableDelBtn);
+	bool bEnable = (aiIndex>=0);  //Nenhum item selecionado
+	ui->mopW_PushButton_DelUser->setEnabled(bEnable);
+	ui->mopW_LineEdit_NewPlaylist->setEnabled(bEnable);
 }
 
 
@@ -256,6 +260,40 @@ MainWindow::on_mopW_LineEdit_NewUser_textChanged(const QString& asrNewUser)
 		bDuplicate |= (asrNewUser == ui->mopW_ComboBox_Users->itemText(u));
 	}
 
-	bool bEnable = (asrNewUser!="") && !bDuplicate ;
-	ui->mopW_PushButton_AddUser->setEnabled(bEnable);
+	bool bEnableAdd = (asrNewUser!="") && !bDuplicate ;
+	ui->mopW_PushButton_AddUser->setEnabled(bEnableAdd);
+}
+
+
+// **************************************************************************
+void
+MainWindow::on_mopW_PushButton_AddPlaylist_clicked()
+{
+	QString sNewPlaylist = ui->mopW_LineEdit_NewPlaylist->text();
+	moManageSetLists.mvAddSetlist(sNewPlaylist);
+	ui->mopW_LineEdit_NewPlaylist->setText("");
+}
+
+
+// **************************************************************************
+void MainWindow::on_mopW_PushButton_DelPlaylist_clicked()
+{
+	int aiIndex = ui->mopW_TableWidget_Playlists->currentRow();
+	moManageSetLists.mvDelSetlist(aiIndex) ;
+}
+
+
+// **************************************************************************
+void
+MainWindow::on_mopW_LineEdit_NewPlaylist_textChanged(const QString &asrNewPlaylist)
+{
+	//mopW_LineEdit_NewPlaylist
+	bool bDuplicate = false ;
+	for(uint16_t u=0 ; u<ui->mopW_TableWidget_Playlists->rowCount() ; u++) {
+		QString sItemText = ui->mopW_TableWidget_Playlists->item(u,0)->text();
+		bDuplicate |= (asrNewPlaylist == sItemText);
+	}
+
+	bool bEnableAdd = (asrNewPlaylist!="") && !bDuplicate ;
+	ui->mopW_PushButton_AddPlaylist->setEnabled(bEnableAdd);
 }
