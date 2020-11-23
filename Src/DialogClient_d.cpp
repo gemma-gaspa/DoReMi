@@ -34,7 +34,7 @@ DialogClient_d::DialogClient_d(SpotifyUserSecrets_c& aorSpotifyUserSecrets, QWid
 	// Configura tabela
 	ui->mopW_TableWidget->insertColumn(0);
 	ui->mopW_TableWidget->insertColumn(1);
-	//ui->mopW_TableWidget->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+	ui->mopW_TableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	ui->mopW_TableWidget->resizeColumnToContents(1);
 
 	// https://www.qtcentre.org/threads/21008-Change-QTableWidget-header-name-or-text

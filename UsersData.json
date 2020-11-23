@@ -1,0 +1,263 @@
+[
+    {
+        "sName": "Giuliano",
+        "vSetLists": [
+            {
+                "sName": "Iron Setlist",
+                "vTracks": [
+                    {
+                        "sAlbumName": "Fear of the Dark (2015 Remaster)",
+                        "sArtist": "Iron Maiden",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2730dda9c11454b9053d07f585a",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/263273a91a8f51e8d9e27f3f903d3a8358d14e6f?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1992",
+                        "sTrackName": "Weekend Warrior - 2015 Remaster"
+                    },
+                    {
+                        "sAlbumName": "Seventh Son of a Seventh Son (2015 Remaster)",
+                        "sArtist": "Iron Maiden",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2731d7e954fb2f8b98a4cea3eca",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/ce17cf5903ebc19c359c810e73a15ca525f2bade?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1988",
+                        "sTrackName": "Seventh Son of a Seventh Son - 2015 Remaster"
+                    },
+                    {
+                        "sAlbumName": "Powerslave (2015 Remaster)",
+                        "sArtist": "Iron Maiden",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2730335e5389b34f6acfb73a82d",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/54bff9bedab9968bddaa453ebec5a1f433f7a0d1?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1984",
+                        "sTrackName": "Rime of the Ancient Mariner - 2015 Remaster"
+                    },
+                    {
+                        "sAlbumName": "Fear of the Dark (2015 Remaster)",
+                        "sArtist": "Iron Maiden",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2730dda9c11454b9053d07f585a",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/bb99e155bf752929a0d1339f84675f36ca9a10b2?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1992",
+                        "sTrackName": "Fear of the Dark - 2015 Remaster"
+                    },
+                    {
+                        "sAlbumName": "Fear of the Dark (2015 Remaster)",
+                        "sArtist": "Iron Maiden",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2730dda9c11454b9053d07f585a",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/8b3394e9b2ca92cc3167d9feb36c87bf110476e4?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1992",
+                        "sTrackName": "Wasting Love - 2015 Remaster"
+                    },
+                    {
+                        "sAlbumName": "The Number of the Beast (2015 Remaster)",
+                        "sArtist": "Iron Maiden",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2735c29a88ba5341ca428f0c322",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/66a6b7102df35ce9e83d29f8f5092ad529eaa14e?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1982",
+                        "sTrackName": "Run to the Hills - 2015 Remaster"
+                    },
+                    {
+                        "sAlbumName": "Powerslave (2015 Remaster)",
+                        "sArtist": "Iron Maiden",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2730335e5389b34f6acfb73a82d",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/753168d141f743cce1d13b2dfa76cac58c450ab1?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1984",
+                        "sTrackName": "Aces High - 2015 Remaster"
+                    }
+                ]
+            },
+            {
+                "sName": "Rush Setlist",
+                "vTracks": [
+                    {
+                        "sAlbumName": "The Spirit Of (Live) Radio - Kiel Auditorium, St. Louis, Missouri, USA, 13th February 1980 [Live FM Radio Concert Remastered In Superb Fidelity]",
+                        "sArtist": "Rush",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2735b322357457e9e5b5e2cc1de",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/440f990a6152e8e6b09e78e009ce82003ff13c96?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1980-02-13",
+                        "sTrackName": "La Villa Strangiato - Remastered"
+                    },
+                    {
+                        "sAlbumName": "Through the Prism: The Classical Tribute to Rush",
+                        "sArtist": "Vitamin String Quartet",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b273ffd494ba7d94f2dd64f4de17",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/768c87e8126b61aceef0eaab48b5a2476dc61c4a?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "2007-04-03",
+                        "sTrackName": "2112 Overture"
+                    },
+                    {
+                        "sAlbumName": "Different Stages",
+                        "sArtist": "Rush",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b273f5c76a2e2a3d94710336d228",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/cb189baec348b55a2acb490ee9d8da8a9f9eba0b?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1998-11-10",
+                        "sTrackName": "YYZ - Live"
+                    }
+                ]
+            },
+            {
+                "sName": "Beatles",
+                "vTracks": [
+                    {
+                        "sAlbumName": "Free as a Bird",
+                        "sArtist": "John Lennon",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b273d8bf3933d6f74b0a3affda8c",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/6e2d4b4d6684ef90ebae3d9ca105c436163a3163?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "2020-11-11",
+                        "sTrackName": "Free as a Bird"
+                    },
+                    {
+                        "sAlbumName": "Guitar Heaven: The Greatest Guitar Classics Of All Time (Deluxe Version)",
+                        "sArtist": "Santana",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b273f93cc5905cdd5cb974d4e380",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/db1eb95fdaebd8db24682ae3ed88e9f13dfa9224?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "2010-09-20",
+                        "sTrackName": "While My Guitar Gently Weeps (feat. India.Arie & Yo-Yo Ma)"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "sName": "Gasparini",
+        "vSetLists": [
+            {
+                "sName": "Purple Setlist",
+                "vTracks": [
+                    {
+                        "sAlbumName": "In Concert '72 (2012 Remix)",
+                        "sArtist": "Deep Purple",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b273fcf62411dcafda4f16798d74",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/fb7af3aa2e90bda9f3be5b262f3ef078fc8b8534?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "2012-10-22",
+                        "sTrackName": "Maybe I'm a Leo - Soundcheck"
+                    },
+                    {
+                        "sAlbumName": "Live in Newcastle 2001",
+                        "sArtist": "Deep Purple",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b273936cdc29995e72eb6da7228d",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/a76c5cead1abc4c7abcb8cc735af81a1e48e7d17?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "2019-08-02",
+                        "sTrackName": "Lazy - Live in Newcastle 2001"
+                    },
+                    {
+                        "sAlbumName": "The Book of Taliesyn",
+                        "sArtist": "Deep Purple",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2731fcce5a7b1a7b4fc4793d421",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/d22dc46e4a08ceb0b9d87a21fe6dc40fc6209f48?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1968-10-01",
+                        "sTrackName": "Anthem - 2000 Remaster"
+                    },
+                    {
+                        "sAlbumName": "The Very Best Of",
+                        "sArtist": "Deep Purple",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b273ba2a0edb64155011fc5796e5",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/1317313bc8f5d22c9963eb3f698c0da708f54996?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1998-10-12",
+                        "sTrackName": "Highway Star - 1997 Remix"
+                    }
+                ]
+            },
+            {
+                "sName": "Black Sabbath Setlist",
+                "vTracks": [
+                    {
+                        "sAlbumName": "Black Sabbath (2009 Remastered Version)",
+                        "sArtist": "Black Sabbath",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2731311a92b0ca83a5154c5a5e7",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/0b5e88563e508c4c29a2771e9c481f95c738f0d3?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1970-02-13",
+                        "sTrackName": "Evil Woman"
+                    },
+                    {
+                        "sAlbumName": "Paranoid (2009 Remastered Version)",
+                        "sArtist": "Black Sabbath",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2739683e5d7361bb80bfb00f46d",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/26d6685d5ba71977adc70aacbaf435dfe665fd2e?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1970-09-18",
+                        "sTrackName": "Fairies Wear Boots"
+                    },
+                    {
+                        "sAlbumName": "Paranoid (2009 Remastered Version)",
+                        "sArtist": "Black Sabbath",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2739683e5d7361bb80bfb00f46d",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/26d6685d5ba71977adc70aacbaf435dfe665fd2e?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1970-09-18",
+                        "sTrackName": "Fairies Wear Boots"
+                    },
+                    {
+                        "sAlbumName": "Master of Reality (2009 Remastered Version)",
+                        "sArtist": "Black Sabbath",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b273b7ec2b4b9c76b3b737990a42",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/0710f9eff1e0936c3bf8eba0e1489a7465da84cc?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1971-07-21",
+                        "sTrackName": "Into the Void"
+                    },
+                    {
+                        "sAlbumName": "Paranoid (2009 Remastered Version)",
+                        "sArtist": "Black Sabbath",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2739683e5d7361bb80bfb00f46d",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/b5afd236ad1f6a6df6ba6994c665f648c4d0fda4?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1970-09-18",
+                        "sTrackName": "Iron Man"
+                    },
+                    {
+                        "sAlbumName": "Sabbath Bloody Sabbath (2009 Remastered Version)",
+                        "sArtist": "Black Sabbath",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b273876dd2bbe17e15208b25779b",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/e1dc687b01104a628b7b5e09cacbdd784e8e4a92?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1973-12-01",
+                        "sTrackName": "Sabbath Bloody Sabbath"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "sName": "Lilica",
+        "vSetLists": [
+            {
+                "sName": "Marisa Monte",
+                "vTracks": [
+                    {
+                        "sAlbumName": "O Que Você Quer Saber de Verdade",
+                        "sArtist": "Marisa Monte",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2735b7cd42c778cf9be6b2790e8",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/a05dc6c7e5a223b13dbe97593bfc821d9777e2f6?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "2011-01-01",
+                        "sTrackName": "Ainda Bem"
+                    },
+                    {
+                        "sAlbumName": "Infinito Particular",
+                        "sArtist": "Marisa Monte",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b273b944f430d0489ae7c6a1fd02",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/23fd67628c313100929a24b52a2b215d3ec325ff?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "2006-01-01",
+                        "sTrackName": "Vilarejo"
+                    },
+                    {
+                        "sAlbumName": "Mais",
+                        "sArtist": "Marisa Monte",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b273892f2051533befd8a3cad534",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/0a6c7941a1e70abcc6976f2a7c7b3f9dc9afe28d?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "1991-01-01",
+                        "sTrackName": "Beija Eu"
+                    },
+                    {
+                        "sAlbumName": "Coleção",
+                        "sArtist": "Marisa Monte",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b273e5f9d12436a969f0d35a2bf3",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/de2e00d05e8b6818329dd1fa0f4adb3d8879ab41?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "2016-01-01",
+                        "sTrackName": "Carinhoso"
+                    },
+                    {
+                        "sAlbumName": "Infinito Particular",
+                        "sArtist": "Marisa Monte",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b273b944f430d0489ae7c6a1fd02",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/5d528aa2a372d3f70888f2ad58c22c3194f17550?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "2006-01-01",
+                        "sTrackName": "Pra Ser Sincero"
+                    }
+                ]
+            }
+        ]
+    }
+]

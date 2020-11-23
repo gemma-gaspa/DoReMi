@@ -40,7 +40,7 @@ public:
 
 private:
 	void mvDataToTable() ;
-	constexpr static char msFileName[] = "Tokens.json" ;
+	constexpr static char msFileName[] = "../Tokens.json" ;
 
 	QTableWidget* mopW_TableWidget = nullptr;
 	std::vector<ClientData_s> movClientData ;

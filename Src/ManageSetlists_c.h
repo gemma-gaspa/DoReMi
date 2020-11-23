@@ -70,7 +70,7 @@ private:
 	void mvDataToSetlistTable() ;
 	void mvDataToTracksTable() ;
 	void mvDataToComboBox();
-	constexpr static char msFileName[] = "UsersData.json" ;
+	constexpr static char msFileName[] = "../UsersData.json" ;
 
 	QTableWidget* mopW_TableSetlists = nullptr;
 	QTableWidget* mopW_TableTracks   = nullptr;

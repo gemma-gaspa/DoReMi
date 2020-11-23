@@ -28,7 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
 		ui->mopW_TableWidget_Search->insertColumn(1);
 		ui->mopW_TableWidget_Search->insertColumn(2);
 		ui->mopW_TableWidget_Search->insertColumn(3);
-		//ui->mopW_TableWidget_Search->setResizeMode(QHeaderView::ResizeToContents);
+//		ui->mopW_TableWidget_Search->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+		ui->mopW_TableWidget_Search->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 		ui->mopW_TableWidget_Search->resizeColumnToContents(1);
 
 		QStringList svList = { "Música", "Artista", "Álbum","Data Lançamento"} ;
@@ -44,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
 		ui->mopW_TableWidget_Tracks->insertColumn(1);
 		ui->mopW_TableWidget_Tracks->insertColumn(2);
 		ui->mopW_TableWidget_Tracks->insertColumn(3);
-		//ui->mopW_TableWidget_Tracks->setResizeMode(QHeaderView::ResizeToContents);
+		ui->mopW_TableWidget_Tracks->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 		ui->mopW_TableWidget_Tracks->resizeColumnToContents(1);
 
 		QStringList svList = { "Música", "Artista", "Álbum","Data Lançamento"} ;
@@ -56,7 +57,8 @@ MainWindow::MainWindow(QWidget *parent)
 	{
 		ui->mopW_TableWidget_Playlists->insertColumn(0);
 		ui->mopW_TableWidget_Playlists->insertColumn(1);
-		//ui->mopW_TableWidget_Playlists->setResizeMode(QHeaderView::ResizeToContents);
+//		ui->mopW_TableWidget_Playlists->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+		ui->mopW_TableWidget_Playlists->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 		ui->mopW_TableWidget_Playlists->resizeColumnToContents(1);
 
 		QStringList svList = { "Nome", "Data"} ;
