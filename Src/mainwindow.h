@@ -49,10 +49,9 @@ private slots:
 
 	void on_mopW_PushButton_DelTrack_clicked();
 
-
 	void on_mopW_PushButton_PlayAudio_clicked();
-
 	void on_mopW_PushButton_PauseAudio_clicked();
+	void on_mopW_PushButton_StopAudio_clicked();
 
 	void on_mopW_TableWidget_Search_cellChanged(int aiRow, int aiColumn);
 	void on_mopW_TableWidget_Playlists_cellChanged(int aiRow, int aiColumn);
@@ -62,7 +61,8 @@ private slots:
 	void on_mopW_TableWidget_Playlists_cellPressed(int, int );
 	void on_mopW_TableWidget_Tracks_cellPressed(int , int );
 
-	void on_mopW_PushButton_StopAudio_clicked();
+
+	void on_mopW_VerticalSlider_Volume_valueChanged(int aiValue);
 
 private:
 	Ui::MainWindow* ui;

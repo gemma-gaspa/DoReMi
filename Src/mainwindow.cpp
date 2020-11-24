@@ -77,6 +77,11 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->mopW_LineEdit_NewPlaylist->setEnabled(false);
 
 
+	// Volume:
+	ui->mopW_VerticalSlider_Volume->setMaximum(100);
+	ui->mopW_VerticalSlider_Volume->setValue(25);
+
+
 	moManagePlaylists.mvSetWidgets(
 				ui->mopW_TableWidget_Playlists,
 				ui->mopW_TableWidget_Tracks,
@@ -512,3 +517,11 @@ MainWindow::mvBtnAdd_Test()
 }
 
 
+// **************************************************************************
+void
+MainWindow::on_mopW_VerticalSlider_Volume_valueChanged(int aiValue)
+{
+	float fVolume = float(aiValue) / float(ui->mopW_VerticalSlider_Volume->maximum());
+
+	moAudioPlayer.mvSetVolume(fVolume) ;
+}
