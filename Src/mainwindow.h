@@ -57,7 +57,7 @@ private slots:
 	void on_mopW_TableWidget_Playlists_cellChanged(int aiRow, int aiColumn);
 	void on_mopW_TableWidget_Tracks_cellChanged(int aiRow, int aiColumn);
 
-	void on_mopW_TableWidget_Search_cellPressed(int, int );
+	void on_mopW_TableWidget_Search_cellPressed(int aiRow, int );
 	void on_mopW_TableWidget_Playlists_cellPressed(int, int );
 	void on_mopW_TableWidget_Tracks_cellPressed(int , int );
 

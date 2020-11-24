@@ -10,7 +10,9 @@
 #include <vector>
 
 // Qt
-
+#include <QNetworkReply>
+#include <QObject>
+#include <QTest>
 
 // ****************************************************************************
 MainWindow::MainWindow(QWidget *parent)
@@ -353,9 +355,47 @@ void MainWindow::on_mopW_PushButton_StopAudio_clicked()
 
 // ****************************************************************************
 void
-MainWindow::on_mopW_TableWidget_Search_cellPressed(int , int)
+MainWindow::on_mopW_TableWidget_Search_cellPressed(int aiRow, int)
 {
 	mvSignalsTableWidget_Search();
+
+	auto& ovImgs = movSearchResult[ uint32_t(aiRow) ].oAlbum.ovImages ;
+
+	// Qual a maior imagem?
+	int      iMaxSize   = 0;
+	uint32_t uBiggerIdx = 0 ;
+
+	for(uint32_t u=0 ; u<uint32_t(ovImgs.size()) ; u++) {
+		if( ovImgs[u].iHeight > iMaxSize) {
+			iMaxSize = ovImgs[u].iHeight;
+			uBiggerIdx = u ;
+		}
+	}
+
+	if(0 == iMaxSize) {
+		return;
+	}
+
+	QString sLink = movSearchResult[ uint32_t(aiRow) ].oAlbum.ovImages[uBiggerIdx].sUrl;
+
+	QImage oImg;
+	bool bOK = false ;
+
+	QNetworkAccessManager oNetworkManager ;
+	connect(&oNetworkManager, &QNetworkAccessManager::finished,
+			this,    [&oImg, &bOK](QNetworkReply* aopReply){
+				//Check for errors first
+				oImg.loadFromData(aopReply->readAll());
+				bOK = true;
+			}
+	);
+
+	oNetworkManager.get(QNetworkRequest(QUrl(sLink)));
+
+	while(!bOK) {
+		QTest::qWait(100); // Dorme sem paralisar a lambda por 100ms
+	}
+	ui->label_Img->setPixmap(QPixmap::fromImage(oImg));
 }
 
 
