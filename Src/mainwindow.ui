@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string extracomment="Melhor Playlister do mundo!">DoReMi - Seu SetList de Spotify</string>
+   <string extracomment="Melhor Playlister do mundo!">DoReMi - Seu Playlists de Spotify</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTextBrowser" name="mopW_TextBrowser_Out">

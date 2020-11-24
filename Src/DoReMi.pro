@@ -16,7 +16,7 @@ SOURCES += \
 	DialogFillData_d.cpp \
 	DialogGetPassword_d.cpp \
 	ManageClientsData_c.cpp \
-	ManageSetlists_c.cpp \
+	ManagePlaylists_c.cpp \
 	MediaPlayer_c.cpp \
 	SimpleCrypt/SimpleCryptQt.cpp \
 	SpotifyAPI/SpotifyAPI_c.cpp \
@@ -29,7 +29,7 @@ HEADERS += \
 	DialogFillData_d.h \
 	DialogGetPassword_d.h \
 	ManageClientsData_c.h \
-	ManageSetlists_c.h \
+	ManagePlaylists_c.h \
 	MediaPlayer_c.h \
 	SimpleCrypt/SimpleCryptQt.h \
 	SpotifyAPI/SpotifyAPI_c.h \

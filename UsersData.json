@@ -1,9 +1,9 @@
 [
     {
         "sName": "Giuliano",
-        "vSetLists": [
+        "vPlaylists": [
             {
-                "sName": "Iron Setlist",
+                "sName": "Iron Playlist",
                 "vTracks": [
                     {
                         "sAlbumName": "Fear of the Dark (2015 Remaster)",
@@ -64,7 +64,7 @@
                 ]
             },
             {
-                "sName": "Rush Setlist",
+                "sName": "Rush Playlist",
                 "vTracks": [
                     {
                         "sAlbumName": "The Spirit Of (Live) Radio - Kiel Auditorium, St. Louis, Missouri, USA, 13th February 1980 [Live FM Radio Concert Remastered In Superb Fidelity]",
@@ -117,9 +117,9 @@
     },
     {
         "sName": "Gasparini",
-        "vSetLists": [
+        "vPlaylists": [
             {
-                "sName": "Purple Setlist",
+                "sName": "Purple Playlist",
                 "vTracks": [
                     {
                         "sAlbumName": "In Concert '72 (2012 Remix)",
@@ -156,7 +156,7 @@
                 ]
             },
             {
-                "sName": "Black Sabbath Setlist",
+                "sName": "Black Sabbath Playlist",
                 "vTracks": [
                     {
                         "sAlbumName": "Black Sabbath (2009 Remastered Version)",
@@ -212,7 +212,7 @@
     },
     {
         "sName": "Lilica",
-        "vSetLists": [
+        "vPlaylists": [
             {
                 "sName": "Marisa Monte",
                 "vTracks": [

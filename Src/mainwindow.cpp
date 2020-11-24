@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 
 // Prj
-#include "ManageSetlists_c.h"
+#include "ManagePlaylists_c.h"
 #include "SpotifyAPI/SpotifyUserSecrets_c.h"
 #include "MediaPlayer_c.h"
 
@@ -77,23 +77,18 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->mopW_LineEdit_NewPlaylist->setEnabled(false);
 
 
-
-
-
-
-	//moManageSetLists
-	moManageSetLists.mvSetWidgets(
+	moManagePlaylists.mvSetWidgets(
 				ui->mopW_TableWidget_Playlists,
 				ui->mopW_TableWidget_Tracks,
 				ui->mopW_ComboBox_Users);
-	moManageSetLists.mvFromFile() ;
+	moManagePlaylists.mvFromFile() ;
 }
 
 
 // ****************************************************************************
 MainWindow::~MainWindow()
 {
-	moManageSetLists.mvToFile(); // Salva todos dados no drive.
+	moManagePlaylists.mvToFile(); // Salva todos dados no drive.
 	delete ui;
 }
 
@@ -179,7 +174,7 @@ void MainWindow::on_mopW_PushButton_Search_clicked()
 void
 MainWindow::on_mopW_ComboBox_Users_currentIndexChanged(int aiIndex)
 {
-	moManageSetLists.mvSetActiveUser(aiIndex);
+	moManagePlaylists.mvSetActiveUser(aiIndex);
 	bool bEnable = (aiIndex>=0);  //Nenhum item selecionado
 	ui->mopW_PushButton_DelUser->setEnabled(bEnable);
 	ui->mopW_LineEdit_NewPlaylist->setEnabled(bEnable);
@@ -187,10 +182,10 @@ MainWindow::on_mopW_ComboBox_Users_currentIndexChanged(int aiIndex)
 
 
 // ****************************************************************************
-// Insere musica na setlist!
+// Insere musica na playlist!
 void MainWindow::on_mopW_PushButton_AdicionarTrack_clicked()
 {
-	ManageSetlists_c::UsersData_s::SetLists_s::Track_s oTrack;
+	ManagePlaylists_c::UsersData_s::Playlists_s::Track_s oTrack;
 
 	uint32_t uPos = uint32_t(  ui->mopW_TableWidget_Search->currentRow()  );
 	oTrack.sTrackName   = movSearchResult[uPos].sName ;
@@ -206,7 +201,7 @@ void MainWindow::on_mopW_PushButton_AdicionarTrack_clicked()
 		oTrack.sImage       = movSearchResult[uPos].oAlbum.ovImages[0].sUrl;
 	}
 
-	moManageSetLists.mvAddTrack(oTrack);
+	moManagePlaylists.mvAddTrack(oTrack);
 }
 
 
@@ -215,7 +210,7 @@ void MainWindow::on_mopW_PushButton_AdicionarTrack_clicked()
 void MainWindow::on_mopW_PushButton_AddUser_clicked()
 {
 	QString sName = ui->mopW_LineEdit_NewUser->text();
-	moManageSetLists.mvAddUser(sName);
+	moManagePlaylists.mvAddUser(sName);
 	ui->mopW_LineEdit_NewUser->setText("");
 }
 
@@ -226,7 +221,7 @@ void
 MainWindow::on_mopW_PushButton_DelUser_clicked()
 {
 	int iIndex = ui->mopW_ComboBox_Users->currentIndex();
-	moManageSetLists.mvDelUser(iIndex);
+	moManagePlaylists.mvDelUser(iIndex);
 }
 
 
@@ -249,7 +244,7 @@ void
 MainWindow::on_mopW_PushButton_AddPlaylist_clicked()
 {
 	QString sNewPlaylist = ui->mopW_LineEdit_NewPlaylist->text();
-	moManageSetLists.mvAddSetlist(sNewPlaylist);
+	moManagePlaylists.mvAddPlaylist(sNewPlaylist);
 	ui->mopW_LineEdit_NewPlaylist->setText("");
 }
 
@@ -258,7 +253,7 @@ MainWindow::on_mopW_PushButton_AddPlaylist_clicked()
 void MainWindow::on_mopW_PushButton_DelPlaylist_clicked()
 {
 	int aiIndex = ui->mopW_TableWidget_Playlists->currentRow();
-	moManageSetLists.mvDelSetlist(aiIndex) ;
+	moManagePlaylists.mvDelPlaylist(aiIndex) ;
 }
 
 
@@ -283,7 +278,7 @@ void
 MainWindow::on_mopW_PushButton_DelTrack_clicked()
 {
 	int iIndex = ui->mopW_TableWidget_Tracks->currentRow();
-	moManageSetLists.mvDelTrack(iIndex);
+	moManagePlaylists.mvDelTrack(iIndex);
 }
 
 
@@ -403,19 +398,19 @@ MainWindow::mvSignalsTableWidget_Playlists()
 {
 	int iRow = ui->mopW_TableWidget_Playlists->currentRow();
 
-	moManageSetLists.mvSetActiveSetlist(iRow);
+	moManagePlaylists.mvSetActivePlaylist(iRow);
 
 	mvBtnAdd_Test();
 
 	moAudioPlayer.mvStop();
 	if(iRow!=-1) {
-		ManageSetlists_c::UsersData_s::SetLists_s::Track_s oTrackInfo;
+		ManagePlaylists_c::UsersData_s::Playlists_s::Track_s oTrackInfo;
 
 		std::vector<MediaPlayer_c::PlaylistItem_s> ovPlaylistTemp ;
 		int iSize = ui->mopW_TableWidget_Tracks->rowCount() ;
 		for(int i=0 ; i<iSize ; i++) {
 			MediaPlayer_c::PlaylistItem_s oItem ;
-			auto oItemTrackList = moManageSetLists.moGetDataTrack(i);
+			auto oItemTrackList = moManagePlaylists.moGetDataTrack(i);
 
 			oItem.sName     = oItemTrackList.sTrackName;
 			oItem.sAlbum    = oItemTrackList.sAlbumName;
@@ -464,15 +459,15 @@ MainWindow::mvSignalsTableWidget_Tracks()
 
 	moAudioPlayer.mvStop();
 	if(bRowExist) {
-		ManageSetlists_c::UsersData_s::SetLists_s::Track_s oTrackInfo;
-		oTrackInfo = moManageSetLists.moGetDataTrack(iRow);
+		ManagePlaylists_c::UsersData_s::Playlists_s::Track_s oTrackInfo;
+		oTrackInfo = moManagePlaylists.moGetDataTrack(iRow);
 		QString sLink = oTrackInfo.sPreviewURL ;
 
 		if(sLink!="") {
 			MediaPlayer_c::PlaylistItem_s oItem ;
 			std::vector<MediaPlayer_c::PlaylistItem_s> ovPlaylistTemp ;
 
-			auto oItemTrackList = moManageSetLists.moGetDataTrack(iRow);
+			auto oItemTrackList = moManagePlaylists.moGetDataTrack(iRow);
 
 			oItem.sName     = oItemTrackList.sTrackName;
 			oItem.sAlbum    = oItemTrackList.sAlbumName;

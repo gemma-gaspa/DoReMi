@@ -1,5 +1,5 @@
-#ifndef MANAGE_SETLISTS_C_H
-#define MANAGE_SETLISTS_C_H
+#ifndef MANAGE_PALYLISTS_C_H
+#define MANAGE_PALYLISTS_C_H
 
 // Prj
 #include "TestProbe/TestProbe_b.h"
@@ -15,7 +15,7 @@
 
 // Classe auxiliar para manusear dados de users entre tela/memória/arquivo
 // Podera ser destacada e seguir "vida propria"
-class ManageSetlists_c : public TestProbe_b {
+class ManagePlaylists_c : public TestProbe_b {
 public:
 
 	const static char msCryptoTest[] ;
@@ -23,7 +23,7 @@ public:
 
 	struct UsersData_s {
 		QString sName;
-		struct SetLists_s {
+		struct Playlists_s {
 			struct Track_s {
 				QString sTrackName;
 				QString sAlbumName;
@@ -38,48 +38,48 @@ public:
 			std::vector<Track_s> ovTracks ;
 		};
 
-		std::vector<SetLists_s> ovSetLists;
+		std::vector<Playlists_s> ovPlaylists;
 	};
 
-	ManageSetlists_c();
+	ManagePlaylists_c();
 
 	void mvFromFile() ;
 	void mvToFile() ;
 
 	void mvSetActiveUser(int aiIndex);
-	void mvSetActiveSetlist(int aiIndex);
+	void mvSetActivePlaylist(int aiIndex);
 
 	void mvAddUser(const QString& aorName);
 	void mvDelUser(int aiIndex) ;
 
-	void mvAddSetlist(const QString& aorName);
-	void mvDelSetlist(int aiIndex) ;
+	void mvAddPlaylist(const QString& aorName);
+	void mvDelPlaylist(int aiIndex) ;
 
-	void mvAddTrack(UsersData_s::SetLists_s::Track_s& aorTrack);
+	void mvAddTrack(UsersData_s::Playlists_s::Track_s& aorTrack);
 	void mvDelTrack(int aiIndex) ;
 
 	bool mbSetOrder(bool abCrescent) ;
 	void mvSetWidgets(
-			QTableWidget* aopW_TableSetlists,
+			QTableWidget* aopW_TablePlaylists,
 			QTableWidget* aopW_TableTracks,
 			QComboBox*    aopW_ComboBoxUsers);
 
-	UsersData_s::SetLists_s::Track_s moGetDataTrack(int aiTrackIndex);
+	UsersData_s::Playlists_s::Track_s moGetDataTrack(int aiTrackIndex);
 
 private:
-	void mvDataToSetlistTable() ;
+	void mvDataToPlaylistTable() ;
 	void mvDataToTracksTable() ;
 	void mvDataToComboBox();
 	constexpr static char msFileName[] = "../UsersData.json" ;
 
-	QTableWidget* mopW_TableSetlists = nullptr;
+	QTableWidget* mopW_TablePlaylists = nullptr;
 	QTableWidget* mopW_TableTracks   = nullptr;
 	QComboBox*    mopW_ComboBoxUsers = nullptr;
 
 	std::vector<UsersData_s> movUsersData ;
 
 	int miCurrentUserIndex = -1;
-	int miCurrentSetlistIndex = -1;
+	int miCurrentPlaylistIndex = -1;
 
 
 private: //TestProbe_b Interface
@@ -91,4 +91,4 @@ private: //TestProbe_b Interface
 
 } ;
 
-#endif // MANAGE_SETLISTS_C_H
+#endif // MANAGE_PALYLISTS_C_H

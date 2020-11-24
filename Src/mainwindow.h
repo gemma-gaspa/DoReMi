@@ -5,7 +5,7 @@
 
 // Prj
 #include "DialogClient_d.h"
-#include "ManageSetlists_c.h"
+#include "ManagePlaylists_c.h"
 #include "MediaPlayer_c.h"
 #include "SpotifyAPI/SpotifyAPI_c.h"
 #include "TestProbe/TestProbe_b.h"
@@ -69,7 +69,7 @@ private:
 
 	std::vector<SpotifyAPI_c::SearchTrackItems_s> movSearchResult;
 
-	ManageSetlists_c moManageSetLists ;
+	ManagePlaylists_c moManagePlaylists ;
 	SpotifyAPI_c     moSpotifyAPI ; // Manager de comunicacao com a API do Spotify
 
 	MediaPlayer_c moAudioPlayer;

@@ -71,16 +71,15 @@ ManageClientsData_c::mvToFile()
 
 		// https://forum.qt.io/topic/75800/how-to-add-qjsonarray-to-qjsonobject
 		// Cria elemento da array
-		QJsonObject data = QJsonObject {
-			qMakePair(QString("sName"         ), QJsonValue(        oElem.sName         )),
-			qMakePair(QString("sClient_ID"    ), QJsonValue(QString(oElem.sClient_ID    ))),
-			qMakePair(QString("sClient_Secret"), QJsonValue(QString(oElem.sClient_Secret))),
-			qMakePair(QString("sCryptoTest"   ), QJsonValue(QString(oElem.sCryptoTest   ))),
-			qMakePair(QString("sLembrete"     ), QJsonValue(        oElem.sReminder     )),
-			qMakePair(QString("sDateTime"     ), QJsonValue(        oElem.sDateTime     ))
-		};
+		QJsonObject oJsonObj  ;
+		oJsonObj["sName"         ] =         oElem.sName          ;
+		oJsonObj["sClient_ID"    ] = QString(oElem.sClient_ID    );
+		oJsonObj["sClient_Secret"] = QString(oElem.sClient_Secret);
+		oJsonObj["sCryptoTest"   ] = QString(oElem.sCryptoTest   );
+		oJsonObj["sLembrete"     ] =         oElem.sReminder      ;
+		oJsonObj["sDateTime"     ] =         oElem.sDateTime      ;
 
-		oArray.append(data);
+		oArray.append(oJsonObj);
 	}
 
 	QByteArray sRawDataFile = QJsonDocument(oArray).toJson() ;
