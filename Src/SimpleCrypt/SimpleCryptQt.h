@@ -60,6 +60,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   algorithm is changed in a later version, by prepending a version identifier to the cypertext.
   */
 
+// Copiado daqui:
+// https://wiki.qt.io/Simple_encryption_with_SimpleCrypt
 
 class SimpleCryptQt: public TestProbe_b
 {

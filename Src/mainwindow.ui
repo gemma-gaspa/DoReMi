@@ -405,6 +405,30 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>mopW_PushButton_ConfigClienteSpotify</tabstop>
+  <tabstop>mopW_LineEdit_MaxTracks</tabstop>
+  <tabstop>mopW_CheckBox_30s</tabstop>
+  <tabstop>mopW_LineEdit_Search</tabstop>
+  <tabstop>mopW_PushButton_Search</tabstop>
+  <tabstop>mopW_TableWidget_Search</tabstop>
+  <tabstop>mopW_LineEdit_NewUser</tabstop>
+  <tabstop>mopW_PushButton_AddUser</tabstop>
+  <tabstop>mopW_ComboBox_Users</tabstop>
+  <tabstop>mopW_PushButton_DelUser</tabstop>
+  <tabstop>mopW_LineEdit_NewPlaylist</tabstop>
+  <tabstop>mopW_PushButton_AddPlaylist</tabstop>
+  <tabstop>mopW_TableWidget_Playlists</tabstop>
+  <tabstop>mopW_PushButton_DelPlaylist</tabstop>
+  <tabstop>mopW_TableWidget_Tracks</tabstop>
+  <tabstop>mopW_PushButton_AdicionarTrack</tabstop>
+  <tabstop>mopW_TextBrowser_Out</tabstop>
+  <tabstop>graphicsView</tabstop>
+  <tabstop>mopW_PushButton_PlayAudio</tabstop>
+  <tabstop>mopW_PushButton_PauseAudio</tabstop>
+  <tabstop>mopW_PushButton_StopAudio</tabstop>
+  <tabstop>mopW_PushButton_DelTrack</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
