@@ -112,6 +112,43 @@
                         "sTrackName": "While My Guitar Gently Weeps (feat. India.Arie & Yo-Yo Ma)"
                     }
                 ]
+            },
+            {
+                "sName": "Bach",
+                "vTracks": [
+                    {
+                        "sAlbumName": "Musical walk through monuments of Gdansk",
+                        "sArtist": "Johann Sebastian Bach",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b27360df0655fbcb4b1617aecd6f",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/3516a2e2c2108470b340d5f6a518a31c794f3345?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "2010-12-10",
+                        "sTrackName": "Aria on the G String"
+                    },
+                    {
+                        "sAlbumName": "Bach's Christmas 2",
+                        "sArtist": "Grayson Christmas Players",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2733f581ecd8b55b996fd7e9c22",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/8652ba38306f1dd8bd4e237c2266dba2d1e6dc43?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "2008-10-17",
+                        "sTrackName": "Tocatta and Fugue in D minor, BWV.565"
+                    },
+                    {
+                        "sAlbumName": "The Best of The Classics Volume 16",
+                        "sArtist": "Carl Philipp Emanuel Bach",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b273f2f5efa916f25588589da4be",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/5158e49ee5b2006095de46f0cc6764b3a05f1376?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "2014-07-11",
+                        "sTrackName": "Solfeggieto, Wq. 117:2 (Clarinet Solo)"
+                    },
+                    {
+                        "sAlbumName": "Je n'aime pas le classique mais ça j'aime bien",
+                        "sArtist": "Johann Sebastian Bach",
+                        "sImage": "https://i.scdn.co/image/ab67616d0000b2736b7ad250c5f4c880fdeb6e5d",
+                        "sPreviewURL": "https://p.scdn.co/mp3-preview/1ff25749fdf2a6befb9ee5171dea5831a5439c26?cid=c7964eed70724a76b54e42cae78177b6",
+                        "sReleaseDate": "2010-08-02",
+                        "sTrackName": "Menuet and Badinerie"
+                    }
+                ]
             }
         ]
     },
