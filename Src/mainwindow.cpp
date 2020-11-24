@@ -105,9 +105,18 @@ MainWindow::on_mopW_PushButton_ConfigClienteSpotify_clicked()
 	oDialogClient.setModal(true);
 	oDialogClient.exec();
 
-	uint32_t uDelay_ms = 3500 ;
-	uint32_t uRespTime_ms = moSpotifyAPI.mvSetConnection(oSpotifyUserSecrets, uDelay_ms);
-	uRespTime_ms;
+	uint32_t uTimeout_ms = 3500 ;
+	uint32_t uRespTime_ms = moSpotifyAPI.mvSetConnection(oSpotifyUserSecrets, uTimeout_ms);
+
+
+	ui->mopW_TextBrowser_Out->clear();
+	ui->mopW_TextBrowser_Out->setText("Tempo total de acesso: " + QString::number(uRespTime_ms/1000.0) + 's');
+
+	SpotifyAPI_c::ConnectionStatus_e eStatus = moSpotifyAPI.meGetConnectionStatus() ;
+	ui->mopW_TextBrowser_Out->append("\nCódigo de erro: " + QString::number(int(eStatus)));
+
+	QString sError = moSpotifyAPI.msGetLastError() ;
+	ui->mopW_TextBrowser_Out->append("\n" + sError);
 }
 
 
@@ -137,8 +146,14 @@ void MainWindow::on_mopW_PushButton_Search_clicked()
 				uSearchFlags,
 				movSearchResult);
 
-	ui->mopW_TextBrowser_Out->setText("Tempo total de acesso: "+QString::number(uAccessTime_ms/1000.0));
+	ui->mopW_TextBrowser_Out->clear();
+	ui->mopW_TextBrowser_Out->setText("Tempo total de acesso: "+QString::number(uAccessTime_ms/1000.0) + 's');
 
+	SpotifyAPI_c::ConnectionStatus_e eStatus = moSpotifyAPI.meGetConnectionStatus() ;
+	ui->mopW_TextBrowser_Out->append("\nCódigo de erro: " + QString::number(int(eStatus)));
+
+	QString sError = moSpotifyAPI.msGetLastError() ;
+	ui->mopW_TextBrowser_Out->append("\n" + sError);
 
 	// Populate Data
 	for(uint16_t u=0 ; u<movSearchResult.size() ; u++) {

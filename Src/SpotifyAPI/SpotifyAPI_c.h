@@ -112,16 +112,20 @@ public:
 	};
 
 	ConnectionStatus_e meGetConnectionStatus() const ;
+	QString            msGetLastError() const ;
 
 private slots:
 	void     mvRenewTokenSlot() ;
 
 private:
-	uint32_t muTimeout_ms = 3500 ;
+	uint32_t muTimeout_ms        = 3500 ;
+	uint32_t muTimeQuantaWait_ms =   20 ;
+	const uint32_t muMAX_SEARCH_TRACKS = 50 ;
+
+	QString msLastError ;
 
 	uint32_t mvRenewTokenCommon() ;
 
-	const uint32_t muMAX_SEARCH_TRACKS = 50;
 
 	struct SearchStepInfo_s {
 		QString sPrevious ;
@@ -150,7 +154,6 @@ private:
 
 	const static QString msApiBase ; // link de acesso
 
-	uint32_t muTimeQuantaWait = 20 ;
 
 	struct ReturnMsg {
 		QString  cShortMsg;

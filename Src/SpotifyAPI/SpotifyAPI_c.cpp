@@ -79,12 +79,21 @@ SpotifyAPI_c::mvSetConnection(const SpotifyUserSecrets_c& aorSpotifyUserSecrets,
 
 // ****************************************************************************
 SpotifyAPI_c::ConnectionStatus_e
-SpotifyAPI_c::meGetConnectionStatus() const
+SpotifyAPI_c::meGetConnectionStatus()
+const
 {
 	// Fazer algum teste de conexao
 	return meConnectionStatus ;
 }
 
+
+// ****************************************************************************
+QString
+SpotifyAPI_c::msGetLastError()
+const
+{
+	return msLastError ;
+}
 
 
 // ****************************************************************************
@@ -147,8 +156,8 @@ SpotifyAPI_c::movSearchTrackAuxiliar(
 	oTimeOut.start(  int(muTimeout_ms)  ); // Inicia contagem de timeout
 	uint32_t uNumIter= 0 ;
 
-	for( ; uNumIter<(muTimeout_ms/muTimeQuantaWait) && !bReturned; uNumIter++) {
-		QTest::qWait(int(muTimeQuantaWait)); // Dorme sem paralisar a lambda por 100ms
+	for( ; uNumIter<(muTimeout_ms/muTimeQuantaWait_ms) && !bReturned; uNumIter++) {
+		QTest::qWait(int(muTimeQuantaWait_ms)); // Dorme sem paralisar a lambda por 100ms
 	}
 
 	if(bReturned) {
@@ -203,10 +212,18 @@ SpotifyAPI_c::movSearchTrackAuxiliar(
 
 				avrReturnTracks.push_back(oItemTrack);
 			}
+		} else {
+			msLastError = "Json decode failure" ;
 		}
+	} else {
+		msLastError = "Timeout" ;
 	}
 
-	uint32_t uTimeRet_ms = uNumIter*muTimeQuantaWait ;
+	if(sError!="Unknown error") {
+		msLastError += "\n   " + sError ;
+	}
+
+	uint32_t uTimeRet_ms = uNumIter*muTimeQuantaWait_ms ;
 	return uTimeRet_ms ;
 }
 
@@ -258,6 +275,7 @@ SpotifyAPI_c::movSearchTrack(
 			// inserir até encher
 		} while (!bStop) ;
 	}
+
 	return uSumTime ;
 }
 
@@ -266,7 +284,7 @@ SpotifyAPI_c::movSearchTrack(
 void
 SpotifyAPI_c::mvSetTimeQuantaWait(uint32_t auTimeQuantaWait)
 {
-	muTimeQuantaWait = auTimeQuantaWait;
+	muTimeQuantaWait_ms = auTimeQuantaWait;
 }
 
 
@@ -323,13 +341,14 @@ SpotifyAPI_c::mvRenewTokenCommon() {
 	oTimeOut.start(  int(muTimeout_ms)  ); // Inicia contagem de timeout
 
 	uint32_t uNumIter= 0 ; // Iteracoes de 100ms
-	for( ; uNumIter<(muTimeout_ms/muTimeQuantaWait) && !bReturned; uNumIter++) {
-		QTest::qWait(int(muTimeQuantaWait)); // Dorme sem paralisar a lambda por 100ms
+	for( ; uNumIter<(muTimeout_ms/muTimeQuantaWait_ms) && !bReturned; uNumIter++) {
+		QTest::qWait(int(muTimeQuantaWait_ms)); // Dorme sem paralisar a lambda por 100ms
 	}
 
 	if(bReturned) {
 		if(sError == "TLS initialization failed") {
 			meConnectionStatus = ConnectionStatus_e::eTLS_INIT_FAIL;
+			msLastError = "TLS initialization failed" ;
 
 		} else {
 			QJsonParseError oErrorParser;
@@ -346,6 +365,7 @@ SpotifyAPI_c::mvRenewTokenCommon() {
 
 			} else {
 				meConnectionStatus = ConnectionStatus_e::ePARSER_ERROR;
+				msLastError = "JSON Parser Error" ;
 			}
 		}
 
@@ -353,7 +373,11 @@ SpotifyAPI_c::mvRenewTokenCommon() {
 		meConnectionStatus = ConnectionStatus_e::eTIMEOUT;
 	}
 
-	uint32_t uTimeRet_ms = uNumIter*muTimeQuantaWait ;
+	if(sError!="Unknown error") {
+		msLastError += "\n   " + sError ;
+	}
+
+	uint32_t uTimeRet_ms = uNumIter*muTimeQuantaWait_ms ;
 	return uTimeRet_ms ;
 }
 
