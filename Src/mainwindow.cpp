@@ -75,6 +75,9 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->mopW_PushButton_AddUser->setEnabled(false);
 	ui->mopW_PushButton_DelUser->setEnabled(false);
 	ui->mopW_LineEdit_NewPlaylist->setEnabled(false);
+	ui->mopW_LineEdit_Search->setEnabled(false);
+	ui->mopW_PushButton_Search->setEnabled(false);
+
 
 
 	// Volume:
@@ -102,6 +105,10 @@ MainWindow::~MainWindow()
 void
 MainWindow::on_mopW_PushButton_ConfigClienteSpotify_clicked()
 {
+	// Se der certo, ligamos de novo!
+	ui->mopW_LineEdit_Search->setEnabled(false);
+	ui->mopW_PushButton_Search->setEnabled(false);
+
 	// Abre nova tela de Dialogo
 	// https://www.youtube.com/watch?v=tP70B-pdTH0&ab_channel=ProgrammingKnowledge
 	SpotifyUserSecrets_c oSpotifyUserSecrets;
@@ -122,6 +129,12 @@ MainWindow::on_mopW_PushButton_ConfigClienteSpotify_clicked()
 
 	QString sError = moSpotifyAPI.msGetLastError() ;
 	ui->mopW_TextBrowser_Out->append("\n" + sError);
+
+	if(SpotifyAPI_c::ConnectionStatus_e::eOK == eStatus) {
+		ui->mopW_LineEdit_Search->setEnabled(true);
+		ui->mopW_PushButton_Search->setEnabled(true);
+
+	}
 }
 
 
