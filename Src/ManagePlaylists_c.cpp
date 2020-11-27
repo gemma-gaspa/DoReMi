@@ -82,19 +82,19 @@ ManagePlaylists_c::mvToFile()
 		oJsonUserData["sName"] = movUsersData[uUsr].sName;
 
 		QJsonArray oJsonArrayPlaylists ;
-		for(uint16_t uSl=0 ; uSl<movUsersData[uUsr].ovPlaylists.size(); uSl++) {
+		for(uint16_t uPl=0 ; uPl<movUsersData[uUsr].ovPlaylists.size(); uPl++) {
 			QJsonObject oJsonPlaylist ;
-			oJsonPlaylist["sName"] = movUsersData[uUsr].ovPlaylists[uSl].sName;
+			oJsonPlaylist["sName"] = movUsersData[uUsr].ovPlaylists[uPl].sName;
 
 			QJsonArray oJsonArrayTracks ;
-			for(uint16_t uTr=0 ; uTr<movUsersData[uUsr].ovPlaylists[uSl].ovTracks.size(); uTr++) {
+			for(uint16_t uTr=0 ; uTr<movUsersData[uUsr].ovPlaylists[uPl].ovTracks.size(); uTr++) {
 				QJsonObject oJsonTrackData ;
-				oJsonTrackData["sTrackName"  ] = movUsersData[uUsr].ovPlaylists[uSl].ovTracks[uTr].sTrackName;
-				oJsonTrackData["sAlbumName"  ] = movUsersData[uUsr].ovPlaylists[uSl].ovTracks[uTr].sAlbumName;
-				oJsonTrackData["sArtist"     ] = movUsersData[uUsr].ovPlaylists[uSl].ovTracks[uTr].sArtist;
-				oJsonTrackData["sImage"      ] = movUsersData[uUsr].ovPlaylists[uSl].ovTracks[uTr].sImage;
-				oJsonTrackData["sPreviewURL" ] = movUsersData[uUsr].ovPlaylists[uSl].ovTracks[uTr].sPreviewURL;
-				oJsonTrackData["sReleaseDate"] = movUsersData[uUsr].ovPlaylists[uSl].ovTracks[uTr].sReleaseDate;
+				oJsonTrackData["sTrackName"  ] = movUsersData[uUsr].ovPlaylists[uPl].ovTracks[uTr].sTrackName;
+				oJsonTrackData["sAlbumName"  ] = movUsersData[uUsr].ovPlaylists[uPl].ovTracks[uTr].sAlbumName;
+				oJsonTrackData["sArtist"     ] = movUsersData[uUsr].ovPlaylists[uPl].ovTracks[uTr].sArtist;
+				oJsonTrackData["sImage"      ] = movUsersData[uUsr].ovPlaylists[uPl].ovTracks[uTr].sImage;
+				oJsonTrackData["sPreviewURL" ] = movUsersData[uUsr].ovPlaylists[uPl].ovTracks[uTr].sPreviewURL;
+				oJsonTrackData["sReleaseDate"] = movUsersData[uUsr].ovPlaylists[uPl].ovTracks[uTr].sReleaseDate;
 
 				oJsonArrayTracks.append(oJsonTrackData);
 				//qMakePair(QString("sClient_ID"    ), QJsonValue(QString(oElem.sClient_ID    ))),
@@ -159,9 +159,9 @@ void
 ManagePlaylists_c::mvDelPlaylist(int aiIndex)
 {
 	if(miCurrentUserIndex>=0  && miCurrentUserIndex<int(movUsersData.size()) ) {
-		auto& orSL = movUsersData[uint32_t(miCurrentUserIndex)].ovPlaylists;
-		if(aiIndex>=0 && aiIndex<int(orSL.size())) {
-			orSL.erase(orSL.begin()+aiIndex);
+		auto& orPL = movUsersData[uint32_t(miCurrentUserIndex)].ovPlaylists;
+		if(aiIndex>=0 && aiIndex<int(orPL.size())) {
+			orPL.erase(orPL.begin()+aiIndex);
 			mvDataToPlaylistTable();
 		}
 	}
@@ -185,16 +185,13 @@ void
 ManagePlaylists_c::mvDelTrack(int aiIndex)
 {
 	if(miCurrentUserIndex>=0  && miCurrentUserIndex<int(movUsersData.size()) ) {
-		auto& orSL = movUsersData[ uint32_t(miCurrentUserIndex) ].ovPlaylists;
+		auto& orPL = movUsersData[ uint32_t(miCurrentUserIndex) ].ovPlaylists;
 
-		if(aiIndex>=0 && aiIndex<int(orSL.size())) {
+		if(miCurrentPlaylistIndex>=0 && miCurrentPlaylistIndex<int(orPL.size())){
+			auto& orTrk = orPL[ uint32_t(miCurrentPlaylistIndex) ].ovTracks;
 
-			if(miCurrentPlaylistIndex>=0 && miCurrentPlaylistIndex<int(orSL.size())){
-				auto& orTrk = orSL[ uint32_t(miCurrentPlaylistIndex) ].ovTracks;
-
-				orTrk.erase(orTrk.begin()+aiIndex);
-				mvDataToTracksTable();
-			}
+			orTrk.erase(orTrk.begin()+aiIndex);
+			mvDataToTracksTable();
 		}
 	}
 }
@@ -205,8 +202,8 @@ void
 ManagePlaylists_c::mvSetWidgets(QTableWidget *aopW_TablePlaylists, QTableWidget* aopW_TableTracks, QComboBox* aopW_ComboBoxUsers)
 {
 	mopW_TablePlaylists = aopW_TablePlaylists ;
-	mopW_TableTracks   = aopW_TableTracks;
-	mopW_ComboBoxUsers = aopW_ComboBoxUsers ;
+	mopW_TableTracks    = aopW_TableTracks;
+	mopW_ComboBoxUsers  = aopW_ComboBoxUsers ;
 }
 
 
@@ -218,18 +215,18 @@ ManagePlaylists_c::mvDataToPlaylistTable()
 		mopW_TablePlaylists->setRowCount(0); // Erase All
 
 		if( movUsersData.size() != 0  &&  miCurrentUserIndex >=0 ) {
-			auto& orSL = movUsersData[size_t(miCurrentUserIndex)].ovPlaylists;
+			auto& orPL = movUsersData[size_t(miCurrentUserIndex)].ovPlaylists;
 
 			// Fill the table
-			for(uint16_t uSL=0 ; uSL<orSL.size() ; uSL++) {
-				mopW_TablePlaylists->insertRow(uSL);
+			for(uint16_t uPL=0 ; uPL<orPL.size() ; uPL++) {
+				mopW_TablePlaylists->insertRow(uPL);
 				// Nao ha vazamento de memoria: QTableWidget apagara os QTableWidgetItem
-				QString sStr = orSL[uSL].sName;
+				QString sStr = orPL[uPL].sName;
 				QTableWidgetItem* opName = new QTableWidgetItem(sStr);
 
 				// Itens nao-editaveis:
 				opName->setFlags( opName->flags() &~Qt::ItemIsEditable );
-				mopW_TablePlaylists->setItem(uSL, 0, opName);
+				mopW_TablePlaylists->setItem(uPL, 0, opName);
 			}
 			mopW_TablePlaylists->repaint();
 		}
@@ -245,10 +242,10 @@ ManagePlaylists_c::mvDataToTracksTable()
 		mopW_TableTracks->setRowCount(0); // Erase All
 
 		if( movUsersData.size() != 0) {
-			auto& orSL = movUsersData[size_t(miCurrentUserIndex)].ovPlaylists;
+			auto& orPL = movUsersData[size_t(miCurrentUserIndex)].ovPlaylists;
 
-			if(orSL.size() >0) {
-				auto& orTracks = orSL[size_t(miCurrentPlaylistIndex)].ovTracks;
+			if(orPL.size() >0) {
+				auto& orTracks = orPL[size_t(miCurrentPlaylistIndex)].ovTracks;
 
 
 				// Fill the table
