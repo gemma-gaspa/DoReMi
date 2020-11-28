@@ -35,7 +35,7 @@ public:
 	bool mvEnabled() const ;
 
 
-	// Do a or of the intrested flags
+	// Make an or (|) of the intrested flags
 	enum class Flags_e {
 			eIS_PLAYABLE_30s = 0x1
 	};
@@ -126,6 +126,8 @@ private:
 
 	uint32_t mvRenewTokenCommon() ;
 
+	QByteArray msWorkaround___preview_url___(QString asTrackID);
+
 
 	struct SearchStepInfo_s {
 		QString sPrevious ;
@@ -145,8 +147,10 @@ private:
 
 	ConnectionStatus_e meConnectionStatus = ConnectionStatus_e::eDISABLE ;
 
-	const QString msEndpointAuth ;
-	const QString msEndpointSearch ;
+	const static QString msEndpointAuth ;
+	const static QString msEndpointSearch ;
+	const static QString msEndpointTrack ;
+
 
 	enum class Endpoints_e {
 
