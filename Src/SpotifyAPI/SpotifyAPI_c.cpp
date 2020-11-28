@@ -147,7 +147,7 @@ SpotifyAPI_c::movSearchTrackAuxiliar(
 	// https://api.spotify.com/v1/search?q=lazy&type=track
 	// -H "Accept: application/json"
 	// -H "Content-Type: application/json"
-	// -H "Authorization: Bearer BQAV4DAkHQWn6lXjdHvQ3wvrLbfIro5nwhZhxQZudZQDJIc3IifxzWbSwAbbvfNOIP0iXAttDadXkaQsvPbPbzd5wlqrFEDbVpvxvjplowmSxh5ZvhxClzsVe5xl-pch8cPMTpauj02UxjLaVxHrGvI"
+	// -H "Authorization: Bearer BQA...HrGvI"
 	oWebRequest.setRawHeader("Accept:", "application/json");
 	oWebRequest.setRawHeader("Content-Type:", "application/json");
 	oWebRequest.setRawHeader("Authorization:", "Bearer " + msToken);
@@ -430,7 +430,7 @@ SpotifyAPI_c::msWorkaround___preview_url___(QString asTrackID)
 	// https://api.spotify.com/v1/search?q=lazy&type=track
 	// -H "Accept: application/json"
 	// -H "Content-Type: application/json"
-	// -H "Authorization: Bearer BQAV4DAkHQWn6lXjdHvQ3wvrLbfIro5nwhZhxQZudZQDJIc3IifxzWbSwAbbvfNOIP0iXAttDadXkaQsvPbPbzd5wlqrFEDbVpvxvjplowmSxh5ZvhxClzsVe5xl-pch8cPMTpauj02UxjLaVxHrGvI"
+	// -H "Authorization: Bearer BQA...HrGvI"
 	oWebRequest.setRawHeader("Accept:", "application/json");
 	oWebRequest.setRawHeader("Content-Type:", "application/json");
 	oWebRequest.setRawHeader("Authorization:", "Bearer " + msToken);
